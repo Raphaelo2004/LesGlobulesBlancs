@@ -1,0 +1,53 @@
+services:
+   web:
+      build: 
+         context: .
+         dockerfile: Dockerfile
+      container_name: symfony_web
+      restart: always
+      working_dir: /var/www/html
+      networks:
+         - rezo_symfony_web
+      ports:
+         - "8000:8000"
+      volumes:
+         - ./app/cpam:/var/www/html
+   db:
+      image: postgres:15
+      container_name: les_globules_blancs_db
+      restart: always
+      networks:
+         - rezo_symfony_web
+         - rezo_les_globules_blancs_pma
+      ports:
+         - "5432:5432"
+      volumes:
+          - mysql_data:/var/lib/postgresql/data
+      environment:
+         POSTGRES_DB: ${MY_DATABASE}
+         POSTGRES_USER: ${MY_USER}
+         POSTGRES_PASSWORD: ${MY_PASSWORD}
+
+   pgadmin:
+      image: dpage/pgadmin4
+      container_name: les_globules_blancs_pma
+      restart: always
+      environment:
+         PGADMIN_DEFAULT_EMAIL: ${PG_EMAIL}
+         PGADMIN_DEFAULT_PASSWORD: ${PG_PASSWORD}
+         PGADMIN_CONFIG_SERVEUR_MODE: ${PG_MODE}
+         PGADMIN_LISTEN_PORT: ${PG_PORT}
+      networks:
+         - rezo_les_globules_blancs_pma
+      ports:
+         - "8060:80"
+      depends_on:
+         - db
+      volumes:
+        - ${BDD_CONFIGURATION_FILE}:/pgadmin4/servers.json
+networks:
+   rezo_symfony_web:
+   rezo_les_globules_blancs_pma:
+
+volumes:
+    mysql_data:
