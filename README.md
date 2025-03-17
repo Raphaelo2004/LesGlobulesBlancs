@@ -23,59 +23,23 @@ Ce Serious Game vise à sensibiliser les jeunes adultes (18-25 ans) à divers se
 - HTML, CSS, JavaScript
 - Git
 
-## 🛠️ Installation
-
-Clonez le dépôt :
-
-```bash
-git clone https://github.com/<votre-utilisateur>/serious-game-cpam.git
-```
-
-Installez les dépendances :
-
-```bash
-composer install
-npm install
-```
-
-Configurez la base de données :
-
-```bash
-cp .env.example .env
-```
-
-Créez et migrez la base :
-
-```bash
-php bin/console doctrine:database:create
-php bin/console doctrine:migrations:migrate
-```
-
-Lancez le serveur :
-
-```bash
-symfony serve
-```
 
 ## 📂 Structure du projet
 
 ```
-serious-game-cpam/
-├── assets/
-├── bin/
-├── config/
-├── migrations/
-├── public/
-├── src/
-│   ├── Controller/
-│   ├── Entity/
-│   ├── Repository/
-│   └── ...
-├── templates/
-├── tests/
-├── .env
-├── composer.json
-└── package.json
+sae5-team11
+│
+├── 📁 html
+│   ├── 📄 index.php
+│   ├── 📁 css
+│   │   └── 📄 style.css
+│   └── 📁 js
+│       └── 📄 script.js
+│
+├── 📄 dotenv              
+├── 📄 .env                
+├── 📄 .gitignore  
+└── 📄 README.md 
 ```
 
 ## 👥 Membres de l'équipe
@@ -85,9 +49,6 @@ serious-game-cpam/
 - 👨‍💻 **Raphael**
 - 👨‍💻 **Dorian**
 
-## 📜 Licence
-
-Distribué sous la licence MIT. Voir `LICENSE` pour plus d'informations.
 
 ---
 
