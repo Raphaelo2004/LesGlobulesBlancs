@@ -23,6 +23,15 @@ Ce Serious Game vise à sensibiliser les jeunes adultes (18-25 ans) à divers se
 - HTML, CSS, JavaScript
 - Git
 
+## 📝 Règles de codage
+
+Afin d'assurer un code propre, lisible et maintenable, nous suivons les conventions suivantes :
+
+# 🔹 Nommage des variables et fonctions
+Utiliser le camelCase pour les variables et fonctions en PHP et JavaScript (exempleVariable).
+Utiliser le PascalCase pour les classes (ExempleClasse).
+Les constantes doivent être en UPPER_SNAKE_CASE (NOMBRE_MAX).
+Éviter les abréviations peu claires (nbr ❌ → nombre ✅).
 
 ## 📂 Structure du projet
 
