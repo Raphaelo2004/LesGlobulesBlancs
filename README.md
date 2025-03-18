@@ -30,10 +30,9 @@ Ce Serious Game vise à sensibiliser les jeunes adultes (18-25 ans) à divers se
 
 ## Arborescence du projet
 
-Voici l'arborescence de notre projet **Symfony** :
 
 ```
-/mon_projet_symfony
+/cpam
 │── /bin
 │── /config
 │   │── /packages
