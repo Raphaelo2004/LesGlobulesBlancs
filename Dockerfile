@@ -23,4 +23,5 @@ WORKDIR /var/www/html
 
 EXPOSE 8000
 
+
 ENTRYPOINT [ "bash", "-c", "cd /var/www/html && symfony server:start --allow-all-ip --daemon && tail -f /dev/null" ]
