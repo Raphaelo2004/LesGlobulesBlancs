@@ -1,1 +1,4 @@
-/*# sourceMappingURL=accueil.css.map */
+body {
+  background: url("/assets/images/Appartement.png") no-repeat center center fixed;
+  background-size: cover;
+}/*# sourceMappingURL=accueil.css.map */
