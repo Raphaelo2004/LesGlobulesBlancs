@@ -1,0 +1,148 @@
+/* Variables */
+
+// Couleurs Generale
+$color-black: #000000;
+$color-white: #ffffff;
+$color-gris:  #C1C1C1;
+$color-blue-main:#0C419A;
+
+// Couleurs Niveaux
+
+$color-niv-easy:#56C271;
+$color-niv-normal:#0C419A;
+$color-niv-hard:#E04F39;
+
+// Shadow
+$box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+//Icon
+$icon-size-large:32px;
+
+//Border-radius
+$border-radius: 25px;
+$border-radius-niv: 15px;
+
+/* SCSS */
+// Typographie Global
+
+.flex {
+  display: flex;
+  gap: 10px;
+
+  &--center {
+    @extend .flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &--column {
+    @extend .flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+
+.titre {
+
+    font-family: 'Mic32New', sans-serif;
+
+    &--large,
+    &--medium,
+    &--bold,
+    &--semibold,
+    &--regular,
+    &--light{
+        @extend .para
+    }
+
+    //Size
+    &--large {
+        @extend .titre;
+        font-size:64px;
+    }
+    &--medium {
+        @extend .titre;
+        font-size: 40px;
+    }
+
+    //Weight
+    &--bold {
+        @extend .titre;
+        font-weight: bold;
+    }
+    &--semibold {
+        @extend .titre;
+        font-weight: 600;
+    }
+    &--regular {
+        @extend .titre;
+        font-weight: normal;
+    }
+    &--light {
+        @extend .titre;
+        font-weight: lighter;
+    }
+}
+
+.para{
+
+    font-family: 'Source Sans Pro', sans-serif;
+
+    &--large,
+    &--medium,
+    &--small,
+    &--smaller,
+    &--bold,
+    &--semibold,
+    &--regular,
+    &--light{
+        @extend .para
+    }
+
+    //Size
+    &--large {
+        font-size:24px;
+    }
+    &--medium {
+        font-size: 20px;
+    }
+    &--small {
+        font-size: 16px;
+    }
+    &--smaller {
+        font-size: 12px;
+    }
+
+    //Weight
+    &--bold {
+        font-weight: bold;
+    }
+    &--semibold {
+        font-weight: 600;
+    }
+    &--regular {
+        font-weight: normal;
+    }
+    &--light {
+        font-weight: lighter;
+    }
+}
+
+html,body {
+    height: 100%; 
+    margin: 0;
+    padding: 0;
+}
+
+
+main {
+    background-color: $color-white; 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    height: 100%; 
+    padding: 0px;
+    margin: 0px;
+}
