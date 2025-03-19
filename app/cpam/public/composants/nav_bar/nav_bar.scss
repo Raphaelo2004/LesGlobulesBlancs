@@ -9,10 +9,10 @@
     transform: translateX(-50%); 
 
     width: 95%; 
-    height: 60px;
+    height: 140px;
     border-radius: 50px;
     box-shadow: $box-shadow;
-    margin: 20px 0px;
+    margin: 60px 0px;
     
     display: flex;
     justify-content: space-around;
@@ -35,13 +35,13 @@
         &::before {
             content: '';
             position: absolute;
-            bottom: 45px;
+            bottom: 105px;
 
             left: 50%;
             transform: translateX(-50%); // centrer la ligne
 
-            width: 45px;
-            height: 4px;
+            width: 100px;
+            height: 12px;
             background-color: $color-blue-main;
             
             opacity: 0;
