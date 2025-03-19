@@ -19,10 +19,5 @@
     </head>
     <body>
         {% block body %}{% endblock %}
-
-        {# Inclusion de la barre de navigation #}
-        {% if navItems is defined and activeNav is defined %}
-            {% include 'composants/nav_bar/navigation.html.twig' with { 'navItems': navItems, 'activeNav': activeNav } %}
-        {% endif %}
     </body>
 </html>
