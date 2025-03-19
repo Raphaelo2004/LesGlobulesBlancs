@@ -1,0 +1,31 @@
+@import '../../style_general';
+
+.btn {
+    @extend .para--medium;
+    @extend .para--regular;
+    
+    color: $color-white;
+    width: 80%;
+    padding: 10px 20px;
+    border-radius: $border-radius-niv;
+    border: 4px solid $color-black;
+    background-color: $color-blue-main;
+
+    &--easy,
+    &--normal,
+    &--hard {
+        @extend .btn; // Héritage des styles de .btn
+    }
+
+    &--easy {
+        background-color: $color-niv-easy;
+    }
+
+    &--normal {
+        background-color: $color-niv-normal;
+    }
+
+    &--hard {
+        background-color: $color-niv-hard;
+    }
+}
