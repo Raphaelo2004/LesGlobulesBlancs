@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LeaderboardController!{% endblock %}
+
+{% block body %}
+    {% include 'composants/header/header.html.twig' %}
+    {# Inclusion de la barre de navigation #}
+    {% if navItems is defined and activeNav is defined %}
+        {% include 'composants/nav_bar/navigation.html.twig' with { 'navItems': navItems, 'activeNav': activeNav } %}
+    {% endif %}
+{% endblock %}

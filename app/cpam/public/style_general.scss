@@ -1,133 +1,113 @@
-/* Variables */
-
-// Couleurs Generale
-$color-black: #000000;
-$color-white: #ffffff;
-$color-gris:  #C1C1C1;
-$color-blue-main:#0C419A;
-
-// Couleurs Niveaux
-
-$color-niv-easy:#56C271;
-$color-niv-normal:#0C419A;
-$color-niv-hard:#E04F39;
-
-// Shadow
-$box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-//Icon
-$icon-size-large:32px;
-
-//Border-radius
-$border-radius: 25px;
-$border-radius-niv: 15px;
-
+@import 'variable_general';
 /* SCSS */
 // Typographie Global
 
-.flex {
-  display: flex;
-  gap: 10px;
+.titre {
+    &--regular {
+        font-family: 'Mic32New-Rg';
+    }
 
-  &--center {
-    @extend .flex;
-    justify-content: center;
-    align-items: center;
-  }
+    &--regular-it {
+        font-family: 'Mic32New-RgIt';
+    }
 
-  &--column {
-    @extend .flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+    &--bold {
+        font-family: 'Mic32New-Bd';
+    }
+
+    &--bold-it {
+        font-family: 'Mic32New-BdIt';
+    }
+
+    &--light {
+        font-family: 'Mic32New-Lt';
+    }
+
+    &--light-it {
+        font-family: 'Mic32New-LtIt';
+    }
+
+    &--medium {
+        font-family: 'Mic32New-Md';
+    }
+
+    &--medium-it {
+        font-family: 'Mic32New-MdIt';
+    }
+
+    &--extralarge{
+        font-size: 128px;
+    }
+    &--large{
+        font-size: 80px;
+    }
 }
 
+.para {
 
-.titre {
 
-    font-family: 'Mic32New', sans-serif;
-
-    &--large,
-    &--medium,
-    &--bold,
-    &--semibold,
-    &--regular,
-    &--light{
-        @extend .para
+    &--regular {
+        font-family: 'SourceSansPro-Regular';
     }
 
-    //Size
-    &--large {
-        @extend .titre;
-        font-size:64px;
+    &--italic {
+        font-family: 'SourceSansPro-Italic';
     }
-    &--medium {
-        @extend .titre;
+
+    &--bold {
+        font-family: 'SourceSansPro-Bold';
+    }
+
+    &--bold-it {
+        font-family: 'SourceSansPro-BoldItalic';
+    }
+
+    &--light {
+        font-family: 'SourceSansPro-Light';
+    }
+
+    &--light-it {
+        font-family: 'SourceSansPro-LightItalic';
+    }
+
+    &--extra-light {
+        font-family: 'SourceSansPro-ExtraLight';
+    }
+
+    &--extra-light-it {
+        font-family: 'SourceSansPro-ExtraLightItalic';
+    }
+
+    &--semibold {
+        font-family: 'SourceSansPro-SemiBold';
+    }
+
+    &--semibold-it {
+        font-family: 'SourceSansPro-SemiBoldItalic';
+    }
+
+    &--black {
+        font-family: 'SourceSansPro-Black';
+    }
+
+    &--black-it {
+        font-family: 'SourceSansPro-BlackItalic';
+    }
+
+    &--extralarge{
+        font-size: 48px;
+    }
+    &--large{
         font-size: 40px;
     }
-
-    //Weight
-    &--bold {
-        @extend .titre;
-        font-weight: bold;
+    &--medium{
+        font-size: 32px;
     }
-    &--semibold {
-        @extend .titre;
-        font-weight: 600;
-    }
-    &--regular {
-        @extend .titre;
-        font-weight: normal;
-    }
-    &--light {
-        @extend .titre;
-        font-weight: lighter;
-    }
-}
-
-.para{
-
-    font-family: 'Source Sans Pro', sans-serif;
-
-    &--large,
-    &--medium,
-    &--small,
-    &--smaller,
-    &--bold,
-    &--semibold,
-    &--regular,
-    &--light{
-        @extend .para
+    &--small{
+        font-size: 24px;
     }
 
-    //Size
-    &--large {
-        font-size:24px;
-    }
-    &--medium {
-        font-size: 20px;
-    }
-    &--small {
-        font-size: 16px;
-    }
-    &--smaller {
-        font-size: 12px;
-    }
-
-    //Weight
-    &--bold {
-        font-weight: bold;
-    }
-    &--semibold {
-        font-weight: 600;
-    }
-    &--regular {
-        font-weight: normal;
-    }
-    &--light {
-        font-weight: lighter;
-    }
+    
 }
 
 html,body {
@@ -135,7 +115,6 @@ html,body {
     margin: 0;
     padding: 0;
 }
-
 
 main {
     background-color: $color-white; 

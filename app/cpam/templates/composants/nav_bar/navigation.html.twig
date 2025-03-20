@@ -1,0 +1,16 @@
+<link rel="stylesheet" href="{{ asset('composants/nav_bar/nav_bar.css') }}">
+
+<div class="navbar">
+    {% for key, link in navItems %}
+        {% set isActive = (key == activeNav) ? 'active' : '' %}
+        {% set icon = {
+            'home': 'fa-home',
+            'leaderboard': 'fa-medal',
+            'profil': 'fa-user'
+        }[key] %}
+        
+        <div class="nav-item {{ isActive }}">
+            <a href="{{ link }}"><i class="fas {{ icon }}"></i></a>
+        </div>
+    {% endfor %}
+</div>
