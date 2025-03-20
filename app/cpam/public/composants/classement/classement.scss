@@ -1,0 +1,51 @@
+@import '../../variable_general';
+
+.classement_container {
+    display: flex;
+    flex-direction: column;
+    gap:50px;
+    align-items: center;
+    height: 1100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+}
+
+.classement_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $color-white;
+    border-radius:$border-radius ;
+    width: 100%;
+    padding: 30px 0px;
+    height: 150px;
+    box-shadow: $box-shadow;
+}
+
+.leftside_container{
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.classement_item p{
+    margin: 0px 75px;
+}
+
+.classement_position{
+    color: $color-blue-main;
+    
+}
+
+.classement_position img{
+    height: 100px;
+    position: relative;
+    right: 35px;
+}
+
+.classement_score{
+    color: $color-gris;
+}
