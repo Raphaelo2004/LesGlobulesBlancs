@@ -3,3 +3,7 @@
 {% endblock %}
 
 <button class="{{ class }}" onclick="{{onclick}}"><p class="para--regular para--large">{{contenue | raw}}</p></button>
+
+{% block javascripts %}
+    <script src="{{ asset('composants/button/button.js') }}"></script>
+{% endblock %}
