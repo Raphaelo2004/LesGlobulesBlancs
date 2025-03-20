@@ -1,67 +1,83 @@
 /* Variables */
 /* SCSS */
-.flex, .flex--column, .flex--center {
-  display: flex;
-  gap: 10px;
+.titre--regular {
+  font-family: "Mic32New-Rg";
 }
-.flex--center {
-  justify-content: center;
-  align-items: center;
-}
-.flex--column {
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.titre, .titre--light, .titre--regular, .titre--semibold, .titre--bold, .titre--medium, .titre--large {
-  font-family: "Mic32New", sans-serif;
-}
-.titre--large {
-  font-size: 64px;
-}
-.titre--medium {
-  font-size: 40px;
+.titre--regular-it {
+  font-family: "Mic32New-RgIt";
 }
 .titre--bold {
-  font-weight: bold;
+  font-family: "Mic32New-Bd";
 }
-.titre--semibold {
-  font-weight: 600;
-}
-.titre--regular {
-  font-weight: normal;
+.titre--bold-it {
+  font-family: "Mic32New-BdIt";
 }
 .titre--light {
-  font-weight: lighter;
+  font-family: "Mic32New-Lt";
+}
+.titre--light-it {
+  font-family: "Mic32New-LtIt";
+}
+.titre--medium {
+  font-family: "Mic32New-Md";
+}
+.titre--medium-it {
+  font-family: "Mic32New-MdIt";
+}
+.titre--extralarge {
+  font-size: 128px;
+}
+.titre--large {
+  font-size: 80px;
 }
 
-.para, .para--large, .para--medium, .para--small, .para--smaller, .para--bold, .para--semibold, .para--regular, .para--light, .titre--large, .titre--medium, .titre--bold, .titre--semibold, .titre--regular, .titre--light {
-  font-family: "Source Sans Pro", sans-serif;
+.para--regular {
+  font-family: "SourceSansPro-Regular";
 }
-.para--large {
-  font-size: 24px;
-}
-.para--medium {
-  font-size: 20px;
-}
-.para--small {
-  font-size: 16px;
-}
-.para--smaller {
-  font-size: 12px;
+.para--italic {
+  font-family: "SourceSansPro-Italic";
 }
 .para--bold {
-  font-weight: bold;
+  font-family: "SourceSansPro-Bold";
 }
-.para--semibold {
-  font-weight: 600;
-}
-.para--regular {
-  font-weight: normal;
+.para--bold-it {
+  font-family: "SourceSansPro-BoldItalic";
 }
 .para--light {
-  font-weight: lighter;
+  font-family: "SourceSansPro-Light";
+}
+.para--light-it {
+  font-family: "SourceSansPro-LightItalic";
+}
+.para--extra-light {
+  font-family: "SourceSansPro-ExtraLight";
+}
+.para--extra-light-it {
+  font-family: "SourceSansPro-ExtraLightItalic";
+}
+.para--semibold {
+  font-family: "SourceSansPro-SemiBold";
+}
+.para--semibold-it {
+  font-family: "SourceSansPro-SemiBoldItalic";
+}
+.para--black {
+  font-family: "SourceSansPro-Black";
+}
+.para--black-it {
+  font-family: "SourceSansPro-BlackItalic";
+}
+.para--extralarge {
+  font-size: 48px;
+}
+.para--large {
+  font-size: 40px;
+}
+.para--medium {
+  font-size: 32px;
+}
+.para--small {
+  font-size: 24px;
 }
 
 html, body {

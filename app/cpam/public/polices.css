@@ -1,0 +1,80 @@
+@font-face {
+  font-family: "Mic32New-Bd";
+  src: url("/assets/polices/Mic32New-Bd.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Mic32New-BdIt";
+  src: url("assets/polices/Mic32New-BdIt.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Mic32New-Lt";
+  src: url("assets/polices/Mic32New-Lt.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Mic32New-LtIt";
+  src: url("assets/polices/Mic32New-LtIt.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Mic32New-Md";
+  src: url("assets/polices/Mic32New-Md.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Mic32New-MdIt";
+  src: url("assets/polices/Mic32New-MdIt.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Mic32New-Rg";
+  src: url("assets/polices/Mic32New-Rg.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Mic32New-RgIt";
+  src: url("assets/polices/Mic32New-RgIt.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SourceSansPro-Black";
+  src: url("/assets/polices/SourceSansPro-Black.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SourceSansPro-BlackItalic";
+  src: url("/assets/polices/SourceSansPro-BlackItalic.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SourceSansPro-Bold";
+  src: url("/assets/polices/SourceSansPro-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SourceSansPro-BoldItalic";
+  src: url("/assets/polices/SourceSansPro-BoldItalic.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SourceSansPro-ExtraLight";
+  src: url("/assets/polices/SourceSansPro-ExtraLight.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SourceSansPro-ExtraLightItalic";
+  src: url("/assets/polices/SourceSansPro-ExtraLightItalic.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SourceSansPro-Italic";
+  src: url("/assets/polices/SourceSansPro-Italic.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SourceSansPro-Light";
+  src: url("/assets/polices/SourceSansPro-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SourceSansPro-LightItalic";
+  src: url("/assets/polices/SourceSansPro-LightItalic.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SourceSansPro-Regular";
+  src: url("/assets/polices/SourceSansPro-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SourceSansPro-SemiBold";
+  src: url("/assets/polices/SourceSansPro-SemiBold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SourceSansPro-SemiBoldItalic";
+  src: url("/assets/polices/SourceSansPro-SemiBoldItalic.ttf") format("truetype");
+}/*# sourceMappingURL=polices.css.map */
