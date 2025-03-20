@@ -1,0 +1,30 @@
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('composants/classement/classement.css') }}">
+{% endblock %}
+
+<div class="classement_container">
+    {% for index, score in classement %}
+        <div class="classement_item">
+            <div class="leftside_container">
+                <div class="classement_utilisateur">
+                    <p class="para--semibold para--extralarge">{{ score.getScoreUtilisateur().identifiant }}</p>
+                </div>
+                <div class="classement_score">
+                    <p class="para--regular para--large">{{ score.valeur }}</p>
+                </div>
+            </div>
+            <div class="classement_position">
+                {% if index == 0 %}
+                    <img src="{{ asset('assets/images/medaille_or.png') }}" alt="Médaille Or" />
+                {% elseif index == 1 %}
+                    <img src="{{ asset('assets/images/medaille_argent.png') }}" alt="Médaille Argent" />
+                {% elseif index == 2 %}
+                    <img  src="{{ asset('assets/images/medaille_bronze.png') }}" alt="Médaille Bronze" />
+                {% else %}
+                    <p class="para--black para--extralarge">{{ index + 1 }}</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
