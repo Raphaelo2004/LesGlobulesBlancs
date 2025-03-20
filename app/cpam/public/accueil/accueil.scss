@@ -1,4 +1,9 @@
-body {
+body:has(.background-default){
     background: url('/assets/images/Appartement.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+body:has(.background-alt){
+    background: url('/assets/images/accueil_ferme.png') no-repeat center center fixed;
     background-size: cover;
 }
