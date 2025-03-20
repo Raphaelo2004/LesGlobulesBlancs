@@ -1,4 +1,6 @@
 // Style de la pop-up
+@import '../../variable_general';
+
 .popup-overlay {
     position: fixed;
     top: 0;
@@ -13,9 +15,9 @@
 .popup-container {
     width: 80%;
     background-color: $color-white;
-    border-radius: $border-radius;
+    border-radius: $border-radius-pop-up;
     box-shadow: $box-shadow;
-    padding: 20px;
+    padding: 50px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -30,4 +32,30 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
+.popup-header h1{
+    text-align: center;
+    text-decoration: underline;
+    margin: 20px 0px;
+}
+
+.popup-main{
+    position: relative;
+    margin: 0px 50px;
+}
+
+.conteneur_button_column{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+.conteneur_button_row{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+ 
+}
+
