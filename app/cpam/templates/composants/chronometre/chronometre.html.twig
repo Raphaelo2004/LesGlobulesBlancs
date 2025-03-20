@@ -1,0 +1,14 @@
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('composants/chronometre/chronometre.css') }}">
+{% endblock %}
+
+<div class="chrono-container">
+    <input type="checkbox" id="run">
+    <div class="chrono">
+      <div class="circle"></div>
+      <div class="top-btn"></div>
+      <label for="run" class="chrono-btn"></label>
+      <div class="center"></div>
+      <div class="needle"></div>
+    </div>
+</div>

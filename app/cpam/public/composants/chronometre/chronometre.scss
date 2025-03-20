@@ -1,0 +1,118 @@
+.chrono-container {
+	position: fixed;
+    width: 330px; 
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input {
+	display: none;
+}
+
+.chrono {
+	position: relative;
+
+	.circle {
+		height: 40px;
+		width: 40px;
+		border: 4px solid #000;
+		border-radius: 50%;
+		box-shadow: 0 0 0 5px #DDD, 0 0 0 9px #000;
+		position: absolute;
+		top: -185px;
+		left: -20px;
+	}
+
+	.top-btn {
+		width: 26px;
+		height: 20px;
+		background-color: #DDD;
+		position: absolute;
+		left: -13px;
+		top: -135px;
+		border: solid #000;
+		border-width: 0 4px;
+
+		&:before {
+			content: "";
+			background-color: #DDD;
+			width: 36px;
+			position: absolute;
+			height: 15px;
+			top: -15px;
+			left: -9px;
+			z-index: 3;
+			display: block;
+			border: 4px solid #000;
+			border-radius: 5px;
+		}
+	}
+
+	.chrono-btn {
+		background-color: #F44336;
+		width: 36px;
+		position: absolute;
+		height: 15px;
+		top: -105px;
+		left: 60px;
+		display: block;
+		border: 4px solid #000;
+		border-radius: 5px;
+		transform: rotate(40deg);
+		cursor: pointer;
+	}
+
+	.center {
+		position: absolute;
+		top: -100px;
+		left: -100px;
+		z-index: 9;
+		height: 200px;
+		width: 200px;
+		background-color: #EEE;
+		border-radius: 50%;
+		border: 4px solid #000;
+		box-shadow: 0 0 0 15px #03A9F4, 0 0 0 19px #000;
+	}
+
+	.needle {
+		position: absolute;
+		width: 10px;
+		height: 10px;
+		background-color: #000;
+		border-radius: 50%;
+		z-index: 10;
+		animation: run 60s linear;
+		animation-play-state: paused;
+
+		&:before {
+			content: "";
+			display: block;
+			height: 90px;
+			width: 2px;
+			position: absolute;
+			bottom: -10px;
+			left: 4px;
+			background-color: #000;
+		}
+	}
+}
+
+input:checked ~ .chrono {
+	.btn {
+		left: 58px;
+		top: -102px;
+	}
+
+	.needle {
+		animation-play-state: running;
+	}
+}
+
+@keyframes run {
+	from {
+		transform: rotate(-360deg);
+	}
+}
