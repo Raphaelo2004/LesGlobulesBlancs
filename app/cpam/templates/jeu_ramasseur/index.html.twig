@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}JeuRamasseur{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('jeux/jeu_2/jeu_2.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    {# composant ecran pause #}
+    {% include 'composants/ecran_pause/ecran_pause.html.twig' %}
+
+    {# composant button #}
+
+{% endblock %}

@@ -1,5 +1,5 @@
 /* Variables */
-.btn, .btn--easy, .btn--normal, .btn--hard {
+.btn, .btn--easy, .btn--normal, .btn--hard, .btn--presentation {
   color: #ffffff;
   width: 40%;
   border-radius: 50px;
@@ -15,7 +15,12 @@
 .btn--hard {
   background-color: #E04F39;
 }
+.btn--presentation {
+  background-color: #ffffff;
+  color: #000000;
+  width: 80%;
+}
 
-.btn p, .btn--easy p, .btn--normal p, .btn--hard p {
+.btn p, .btn--easy p, .btn--normal p, .btn--hard p, .btn--presentation p {
   margin: 20px 10px;
 }/*# sourceMappingURL=button.css.map */
