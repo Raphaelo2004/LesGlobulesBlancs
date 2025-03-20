@@ -1,0 +1,121 @@
+$color_1: #fff;
+$color_2: #0C419A;
+$font-family_1: Arial, sans-serif;
+$background-color_1: #0C419A;
+$background-color_2: #093776;
+$background-color_3: transparent;
+
+/* 1) Reset global et box-sizing */
+/* Container principal sur 100% de hauteur */
+/* Header avec un peu de padding pour ne pas coller au bord */
+/* ========== Descendre l'image ========== */
+/* On ajoute par exemple 2rem de marge au-dessus de l'image */
+/* Zone principale */
+/* Alignement à gauche */
+/* Formulaire */
+/* Bouton plus gros + couleur demandée #0C419A */
+/* Le texte sous le bouton, aligné à gauche */
+/* Ligne juste en dessous du texte */
+/* Footer sans background */
+/* ========== Liens du footer ========== */
+/* Media query : pour écran >= 768px, on limite la largeur du form et on le centre */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+html {
+	height: 100%;
+	width: 100%;
+	font-family: $font-family_1;
+}
+body {
+	height: 100%;
+	width: 100%;
+	font-family: $font-family_1;
+}
+.container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+.header {
+	padding: 1rem;
+}
+.logo {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+.form-container {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 1rem;
+}
+.welcome-title {
+	margin-bottom: 1.5rem;
+	font-size: 1.4rem;
+	text-align: left;
+}
+.form-group {
+	margin-bottom: 1.5rem;
+}
+.input-field {
+	width: 100%;
+	padding: 0.75rem;
+	border: 1px solid #ccc;
+	border-radius: 12px;
+	font-size: 1rem;
+}
+.btn-submit {
+	display: block;
+	width: 100%;
+	padding: 1rem;
+	border: none;
+	border-radius: 12px;
+	background-color: $background-color_1;
+	color: $color_1;
+	font-size: 1.2rem;
+	cursor: pointer;
+	&:hover {
+		background-color: $background-color_2;
+	}
+}
+.already {
+	margin-top: 1rem;
+	text-align: left;
+	font-size: 0.9rem;
+}
+.login-link {
+	color: $color_2;
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+.separator {
+	margin-top: 1.5rem;
+	border: 0;
+	border-top: 1px solid #ccc;
+}
+.footer {
+	text-align: center;
+	padding: 1rem;
+	background-color: $background-color_3;
+	font-size: 0.9rem;
+}
+.footer-link {
+	text-decoration: none;
+	color: $color_2;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+@media (min-width: 768px) {
+	.form-container {
+		max-width: 400px;
+		margin: 0 auto;
+	}
+}
