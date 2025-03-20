@@ -28,7 +28,7 @@ class JeuRamasseurController extends AbstractController
         return $this->render('jeu_ramasseur/index.html.twig', [
             'controller_name' => 'JeuRamasseurController',
             'gameItems' => $jeuRamasseurService->getJeuRamasseurItems(),
-            'activeGame' => 'presentation' // Indique la page active
+            'activeGame' => 'presentation', // Indique la page active
             'classement' => $classement, 
         ]);
     }
