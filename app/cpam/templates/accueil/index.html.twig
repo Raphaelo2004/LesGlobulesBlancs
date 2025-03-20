@@ -8,6 +8,33 @@
 
 {% block body %}
    {% include 'composants/header/header.html.twig' %}
+
+    {% set date_actuelle = "now"|date("Y-m-d") %}
+    {% set date_limite = "2025-03-28" %}
+
+    {% set texte_popup = "Bienvenue sur le serious game d’ameli !<br><br>
+                        Des jeux pour prendre en main ta santé sans prise de tête 😉" %}
+
+    {% set div_class = "background-default" %}
+
+    {% if date_actuelle > date_limite %}
+        {% set texte_popup = "Bienvenue sur le serious game d’Ameli !<br><br>
+                            Ameli et ses amis n'ont plus besoin d'aide! <br><br>
+                            Revenez plus tard ! 😉" %}
+        {% set div_class = "background-alt" %} 
+    {% endif %}
+
+    <div class="{{ div_class }}">
+        {% include 'composants/pop-up/pop-up.html.twig' with {
+            titre_popup: "",
+            texte_popup: texte_popup,
+            conteneur_button_style: "conteneur_button_row", 
+            buttons: [
+                { contenue: 'Continuer', class: 'btn', onclick :"fermerPopup()" }
+            ]
+        } %}
+    </div>
+
     {# Inclusion de la barre de navigation #}
     {% if navItems is defined and activeNav is defined %}
         {% include 'composants/nav_bar/navigation.html.twig' with { 'navItems': navItems, 'activeNav': activeNav } %}
