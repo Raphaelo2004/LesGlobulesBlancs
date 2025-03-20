@@ -11,6 +11,17 @@
     {# composant ecran pause #}
     {% include 'composants/ecran_pause/ecran_pause.html.twig' %}
 
-    {# composant button #}
+    <div class="text-box">
+        <p class="para--semibold para--large">Seb est allé aux urgences parce qu’il s’est cassé le pied au foot. Il doit payer une partie des soins (radio, plâtre…) parce qu’il n’a
+            pas de complémentaire santé !
+            <br><br>
+            Mets dans la tirelire tout ce qu’une complémentaire santé
+            prend en charge !
+        </p>
+    </div>
 
+    {# composant button #}
+    <div class="container_button">
+        {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Aider Seb', 'onclick': 'redirigerJeuRamasseur()' } %}
+    </div>
 {% endblock %}
