@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Menu{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('composants/ecran_pause/ecran_pause.css') }}">
+{% endblock %}
+
+{% block body %}
+    <i class="fas fa-cog settings-icon" id="settingsIcon"></i>
+
+    <div class="menu-container">
+        <i class="fas fa-times close-icon" id="closeIcon" style="display: none;"></i>
+
+        <div class="menu" id="menuContainer">
+            {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Reprendre', 'onclick': '' } %}
+            {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Recommencer', 'onclick': '' } %}
+            {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Son <i class=\"fas fa-volume-up\"></i>', 'onclick': '' } %}
+            {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Retour à l’accueil', 'onclick': '' } %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('composants/ecran_pause/ecran_pause.js') }}"></script>
+{% endblock %}

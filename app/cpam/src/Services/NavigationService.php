@@ -7,7 +7,7 @@ class NavigationService
     public function getNavigationItems(): array
     {
         return [
-            "home" => "/home",
+            "home" => "/accueil",
             "leaderboard" => "/leaderboard",
             "profil" => "/profil"
         ];
