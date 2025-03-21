@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
             menuContainer.style.display = 'flex';
             settingsIcon.style.display = 'none';
             closeIcon.style.display = 'block';
-
+          
             pauseChrono();
             pauseCountdown();
         });
@@ -64,11 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.querySelectorAll('audio').forEach(audio => {
                         audio.muted = isMuted;
                     });
-                });
-            }
-            if (buttonText.includes("Retour à l’accueil")) {
-                button.addEventListener('click', function() {
-                    window.location.href = "/accueil";
                 });
             }
         });

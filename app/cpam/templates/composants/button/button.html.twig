@@ -2,8 +2,8 @@
 <link rel="stylesheet" href="{{ asset('composants/button/button.css') }}">
 {% endblock %}
 
-<button class="{{ class }}" onclick="{{onclick}}"><p class="para--regular para--large">{{contenue | raw}}</p></button>
-
-{% block javascripts %}
-    <script src="{{ asset('composants/button/button.js') }}"></script>
-{% endblock %}
+<a class="{{ class }}" 
+{% if route is defined %} href="{{ path(route) }}" {% endif %}
+{% if onclick is defined %} onclick="{{ onclick }}" {% endif %}>
+    <p class="para--regular para--large">{{ contenue | raw }}</p>
+</a>

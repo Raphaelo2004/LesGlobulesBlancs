@@ -16,7 +16,7 @@
             {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Reprendre', 'onclick': '' } %}
             {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Recommencer', 'onclick': '' } %}
             {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Son <i class=\"fas fa-volume-up\"></i>', 'onclick': '' } %}
-            {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Retour à l’accueil', 'onclick': '' } %}
+            {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Retour à l’accueil', 'route' : 'app_accueil'} %}
         </div>
     </div>
 {% endblock %}

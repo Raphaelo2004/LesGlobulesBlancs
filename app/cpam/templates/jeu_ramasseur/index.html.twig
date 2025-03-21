@@ -22,6 +22,6 @@
 
     {# composant button #}
     <div class="container_button">
-        {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Aider Seb', 'onclick': 'redirigerJeuRamasseur()' } %}
+        {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Aider Seb', 'route': 'app_jeu_ramasseur_gameplay' } %}
     </div>
 {% endblock %}
