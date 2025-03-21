@@ -15,15 +15,16 @@ class ClassementService
 
     public function getClassement(): array
     {
-        // Crée une requête DQL pour récupérer les scores et utilisateurs
+        // Requête DQL pour sommer les scores par utilisateur
         $query = $this->entityManager->createQuery(
-            'SELECT s, u 
-             FROM App\Entity\Score s 
-             JOIN s.score_utilisateur u 
-             ORDER BY s.valeur DESC'
+            'SELECT u.identifiant, SUM(s.valeur) as totalScore
+             FROM App\Entity\Score s
+             JOIN s.score_utilisateur u
+             GROUP BY u.identifiant
+             ORDER BY totalScore DESC'
         );
-        
-        // Exécute la requête et retourne les résultats
+    
         return $query->getResult();
     }
+    
 }
