@@ -110,7 +110,7 @@ body {
   color: #000000;
   padding: 20px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -124,7 +124,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
   position: absolute;
   bottom: 300px;
   left: 50%;
