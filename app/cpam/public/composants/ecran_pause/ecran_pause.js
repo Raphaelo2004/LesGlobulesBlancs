@@ -11,16 +11,20 @@ document.addEventListener('DOMContentLoaded', function() {
             settingsIcon.style.display = 'none';
             closeIcon.style.display = 'block';
           
-            pauseChrono();
-            pauseCountdown();
+            if (typeof pauseChrono === 'function' && typeof pauseCountdown === 'function') {
+                pauseChrono();
+                pauseCountdown();
+            }
         });
 
         closeIcon.addEventListener('click', function () {
             menuContainer.style.display = 'none';
             settingsIcon.style.display = 'block';
             closeIcon.style.display = 'none';
-
-            reprendreChrono();
+            
+            if (typeof reprendreChrono === 'function') {
+                reprendreChrono();
+            }
         });
 
         menuContainer.addEventListener('click', function (event) {
@@ -29,7 +33,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 settingsIcon.style.display = 'block';
                 closeIcon.style.display = 'none';
 
-                reprendreChrono();
+                if (typeof reprendreChrono === 'function') {
+                    reprendreChrono();
+                }
             }
         });
 
@@ -42,7 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     closeIcon.style.display = 'none';
                     settingsIcon.style.display = 'block';
 
-                    reprendreChrono();
+                    if (typeof reprendreChrono === 'function') {
+                        reprendreChrono();
+                    }
                 });
             }
             if (buttonText.includes("Recommencer")) {
