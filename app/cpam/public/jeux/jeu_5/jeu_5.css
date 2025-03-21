@@ -1,1 +1,135 @@
-/*# sourceMappingURL=jeu_5.css.map */
+/* Variables */
+/* SCSS */
+.titre--regular {
+  font-family: "Mic32New-Rg";
+}
+.titre--regular-it {
+  font-family: "Mic32New-RgIt";
+}
+.titre--bold {
+  font-family: "Mic32New-Bd";
+}
+.titre--bold-it {
+  font-family: "Mic32New-BdIt";
+}
+.titre--light {
+  font-family: "Mic32New-Lt";
+}
+.titre--light-it {
+  font-family: "Mic32New-LtIt";
+}
+.titre--medium {
+  font-family: "Mic32New-Md";
+}
+.titre--medium-it {
+  font-family: "Mic32New-MdIt";
+}
+.titre--extralarge {
+  font-size: 128px;
+}
+.titre--large {
+  font-size: 80px;
+}
+
+.para--regular {
+  font-family: "SourceSansPro-Regular";
+}
+.para--italic {
+  font-family: "SourceSansPro-Italic";
+}
+.para--bold {
+  font-family: "SourceSansPro-Bold";
+}
+.para--bold-it {
+  font-family: "SourceSansPro-BoldItalic";
+}
+.para--light {
+  font-family: "SourceSansPro-Light";
+}
+.para--light-it {
+  font-family: "SourceSansPro-LightItalic";
+}
+.para--extra-light {
+  font-family: "SourceSansPro-ExtraLight";
+}
+.para--extra-light-it {
+  font-family: "SourceSansPro-ExtraLightItalic";
+}
+.para--semibold {
+  font-family: "SourceSansPro-SemiBold";
+}
+.para--semibold-it {
+  font-family: "SourceSansPro-SemiBoldItalic";
+}
+.para--black {
+  font-family: "SourceSansPro-Black";
+}
+.para--black-it {
+  font-family: "SourceSansPro-BlackItalic";
+}
+.para--extralarge {
+  font-size: 48px;
+}
+.para--large {
+  font-size: 40px;
+}
+.para--medium {
+  font-size: 32px;
+}
+.para--small {
+  font-size: 24px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  background-color: #ffffff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background: url("/assets/images/Jeu5.png") no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  width: auto;
+  margin: 0;
+}
+
+.text-box {
+  width: 80%;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  bottom: 325px;
+  border: 4px solid #000000;
+  z-index: 100;
+}
+
+.container_button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+}/*# sourceMappingURL=jeu_5.css.map */

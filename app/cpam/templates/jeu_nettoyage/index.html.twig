@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}JeuNettoyage{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('jeux/jeu_5/jeu_5.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    {# composant ecran pause #}
+    {% include 'composants/ecran_pause/ecran_pause.html.twig' %}
+
+    <div class="text-box">
+        <p class="para--semibold para--large">Damien a mal aux dents…
+            <br><br>
+            Brosse ses dents avec du dentifrice pour enlever les restes alimentaires et lui faire retrouver le sourire !
+        </p>
+    </div>
+
+    {# composant button #}
+    <div class="container_button">
+        {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Aider Damien','route': 'app_jeu_nettoyage_gameplay'} %}
+    </div>
+{% endblock %}

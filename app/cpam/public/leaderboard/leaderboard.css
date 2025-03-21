@@ -96,6 +96,10 @@ main {
   margin: 0px;
 }
 
+a {
+  text-decoration: none;
+}
+
 .main_container {
   display: flex;
   justify-content: space-around;

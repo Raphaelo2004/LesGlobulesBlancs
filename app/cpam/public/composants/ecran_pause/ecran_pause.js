@@ -45,11 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
                     });
                 }
-                if (buttonText.includes("Retour à l’accueil")) {
-                    button.addEventListener('click', function() {
-                        window.location.href = "/accueil";
-                    });
-                }
             });
         });
 

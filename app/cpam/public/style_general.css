@@ -94,4 +94,8 @@ main {
   height: 100%;
   padding: 0px;
   margin: 0px;
+}
+
+a {
+  text-decoration: none;
 }/*# sourceMappingURL=style_general.css.map */

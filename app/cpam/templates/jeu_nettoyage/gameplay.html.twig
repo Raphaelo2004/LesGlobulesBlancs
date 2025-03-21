@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}JeuNettoyage{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('jeux/jeu_5/jeu_5_gameplay.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    {# composant ecran pause #}
+    {% include 'composants/ecran_pause/ecran_pause.html.twig' %}
+    
+
+{% endblock %}
