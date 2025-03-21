@@ -25,7 +25,8 @@
     {% endif %}
 
     <div class="{{ div_class }}">
-        {% include 'composants/pop-up/pop-up.html.twig' with {
+        {% include 'composants/pop-up/pop-up.html.twig' with {        
+            nom_popup: "welcome",
             titre_popup: "",
             texte_popup: texte_popup,
             conteneur_button_style: "conteneur_button_row", 

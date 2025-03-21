@@ -15,6 +15,7 @@
     {% include 'composants/chronometre/chronometre.html.twig' %}
 
     {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "consignes",
         titre_popup: "Consignes",
         texte_popup: "<ul>
             <li class='para--regular para--large'>Déplacez la tirelire pour attraper les différents objets de la C2S qui tombent du ciel et gagner.</li>
@@ -27,6 +28,35 @@
             { contenue: 'Facile', class: 'btn--easy btn--lvl', onclick :"fermerPopupLvlFacile()" },
             { contenue: 'Normal', class: 'btn--normal btn--lvl', onclick :"fermerPopupLvlNormal()" },
             { contenue: 'Difficile', class: 'btn--hard btn--lvl', onclick :"fermerPopupLvlDifficile()" }
+        ]
+    } %}
+
+    {% set classement_html %} 
+        {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard': true} %} 
+    {% endset %}
+
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "popup_score",
+        titre_popup: "Score : 850",
+        texte_popup: classement_html,
+        conteneur_button_style: "conteneur_button_row", 
+        buttons: [
+            { contenue: 'Continuer', class: 'btn', onclick :"clickContinuer()" },
+            { contenue: 'Partager', class: 'btn', onclick :"clickPartager()" },
+        ]
+    } %}
+
+
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "popup_fin",
+        titre_popup: "",
+        texte_popup: "Bravo tu as <strong>réussi</strong> !<br><br>
+                    La carte Vitale contient les informations personnelles nécessaires au remboursement de tes frais de santé ou en cas d’hospitalisation. C’est la garantie d'être bien remboursé rapidement.<br><br>
+                    En cas de perte, tu peux en commander une nouvelle directement depuis ton compte sur ameli.fr.",
+        conteneur_button_style: "conteneur_button_row", 
+        buttons: [
+            { contenue: 'Rejouer', class: 'btn', route: "app_jeu_ramasseur" },
+            { contenue: 'Quitter', class: 'btn', route: "app_accueil" },
         ]
     } %}
 

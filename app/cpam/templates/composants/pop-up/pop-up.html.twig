@@ -2,9 +2,9 @@
     <link rel="stylesheet" href="{{ asset('composants/pop-up/pop-up.css') }}">
 {% endblock %}
 
-<div class="popup-overlay"></div>
+<div class="{{nom_popup}} popup-overlay"></div>
 
-<div class="popup-container">
+<div class="{{nom_popup}} popup-container">
     <div class="popup-header">
     {% if not titre_popup %}
         <img src="{{ asset('assets/images/LogoCPAM22_RVB.jpg') }}" alt="Logo de la caisses primaires d'assurance maladie">
@@ -19,7 +19,20 @@
 
     <div class="{{conteneur_button_style}}">
         {% for button in buttons %}
-            {% include 'composants/button/button.html.twig' with { 'contenue': button.contenue, 'class': button.class, 'onclick': button.onclick } %}
+            {% if button.route is defined %}
+                {% include 'composants/button/button.html.twig' with { 
+                    'contenue': button.contenue, 
+                    'class': button.class, 
+                    'route': button.route
+                } %}
+            {% else %}
+                {% include 'composants/button/button.html.twig' with { 
+                    'contenue': button.contenue, 
+                    'class': button.class, 
+                    'onclick': button.onclick,
+                } %}
+            {% endif %}
+
         {% endfor %}
     </div>
 </div>
