@@ -52,7 +52,7 @@ Les constantes doivent être en UPPER_SNAKE_CASE (NOMBRE_MAX).
 │── /migrations
 │── /public
 │   │── /assets
-│   │── /build
+│   │── /autres (js, scss)
 │   │── index.php
 │── /src
 │   │── /Controller
@@ -102,61 +102,44 @@ Les constantes doivent être en UPPER_SNAKE_CASE (NOMBRE_MAX).
 
 1. **Cloner le projet** :
    ```sh
-   git clone git@github.com:votre-repo/mon_projet_symfony.git
-   cd mon_projet_symfony
+   git clone https://github.com/Raphaelo2004/LesGlobulesBlancs.git
+   cd LesGlobulesBlancs
    ```
 
 2. **Installer les dépendances** :
-   ```sh
+   # si besoin
+  ```sh
    composer install
    ```
 
 3. **Configurer les variables d’environnement** :
    ```sh
-   cp .env.example .env
-   ```
-   Modifier les variables selon votre configuration.
+   récupérer le .env du projet et celui de symfony
 
-4. **Créer la base de données** :
+4. **Lancer le serveur Symfony** :
    ```sh
+   dans le dossier LesGlobulesBlancs
+
+   docker compose down
+   docker compose up --build
+   ```
+   
+5. **Créer la base de données** :
+   ```sh
+   docker exec -it symfony_web bash  
+
    php bin/console doctrine:database:create
    php bin/console doctrine:migrations:migrate
+
+   se rendre sur "localhost:8060"
+   se connecter avec les informations du .env
+   executer le script de peuplement de la base de données
    ```
 
-5. **Lancer le serveur Symfony** :
-   ```sh
-   symfony server:start
-   ```
+6. **Acceder à l'application** :
+   entrez "localhost:8000" dans votre navigateur
 
 ---
-
-## Contribution
-
-1. **Créer une branche** :
-   ```sh
-   git checkout -b feature/nom-de-la-fonctionnalité
-   ```
-2. **Faire vos modifications**.
-3. **Commit et push** :
-   ```sh
-   git add .
-   git commit -m "Ajout de la fonctionnalité X"
-   git push origin feature/nom-de-la-fonctionnalité
-   ```
-4. **Ouvrir une pull request** sur GitHub.
-
----
-
-## Contact
-
-Équipe de développement :
-- Rémi
-- Alan
-- Raphaël
-- Dorian
-
-Pour toute question, contactez-nous à `support@votreprojet.com`.
-
 
 ## 👥 Membres de l'équipe
 
