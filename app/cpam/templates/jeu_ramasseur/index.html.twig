@@ -9,7 +9,7 @@
 
 {% block body %}
     {# composant ecran pause #}
-    {% include 'composants/ecran_pause/ecran_pause.html.twig' %}
+    {% include 'composants/ecran_pause/ecran_pause.html.twig' with { 'lien': 'app_jeu_ramasseur'} %}
 
     <div class="text-box">
         <p class="para--semibold para--large">Seb est allé aux urgences parce qu’il s’est cassé le pied au foot. Il doit payer une partie des soins (radio, plâtre…) parce qu’il n’a

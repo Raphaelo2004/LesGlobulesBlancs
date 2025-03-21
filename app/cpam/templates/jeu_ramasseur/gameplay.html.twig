@@ -9,7 +9,7 @@
 
 {% block body %}
     {# composant ecran pause #}
-    {% include 'composants/ecran_pause/ecran_pause.html.twig' %}
+    {% include 'composants/ecran_pause/ecran_pause.html.twig' with { 'lien': 'app_jeu_ramasseur'} %}
 
     <div id="countdown" class="countdown-container titre--bold titre--extralarge"></div>
     {% include 'composants/chronometre/chronometre.html.twig' %}

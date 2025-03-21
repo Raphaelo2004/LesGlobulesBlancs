@@ -53,11 +53,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             }
-            if (buttonText.includes("Recommencer")) {
-                button.addEventListener('click', function() {
-                    window.location.href = "/jeu/ramasseur";
-                });
-            }
             if (buttonText.includes("Son")) {
                 let isMuted = false;
                 button.addEventListener('click', function() {

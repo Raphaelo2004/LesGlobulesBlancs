@@ -14,7 +14,9 @@
 
         <div class="menu" id="menuContainer">
             {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Reprendre', 'onclick': '' } %}
-            {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Recommencer', 'onclick': '' } %}
+            {% if lien is defined %}
+                {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Recommencer', 'route' : lien} %}
+            {% endif %}            
             {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Son <i class=\"fas fa-volume-up\"></i>', 'onclick': '' } %}
             {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Retour à l’accueil', 'route' : 'app_accueil'} %}
         </div>
