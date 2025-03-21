@@ -1,3 +1,5 @@
+@import '../../style_general';
+
 .chrono-container {
 	position: fixed;
     width: 330px; 
@@ -5,6 +7,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.countdown-container {
+    position: fixed;
+    top: 400px;
+    left: 50%;  // Centre horizontalement
+    transform: translate(-50%, -50%); 
+    color: $color-white;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+    z-index: 1050;
+    display: none;
 }
 
 input {
