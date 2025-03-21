@@ -1,13 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LeaderboardController!{% endblock %}
+{% block title %}Leaderboard{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('leaderboard/leaderboard.css') }}">
+{% endblock %}
 
 {% block body %}
     {% include 'composants/header/header.html.twig' %}
+    
+    <div class="main_container">
+        {% if classement|length > 0 %}
+            {% set leader = classement[0] %}
+            <div class="number1">
+                <div class="filter_bar">
 
+                </div>
+                <div class="number1_position"><img src="{{ asset('assets/images/medaille_or.png') }}" alt="Médaille Or" /></div>
+                <div class="number1_utilisateur">
+                    <p class="para--bold para--extralarge">{{ leader.identifiant }}</p>
+                </div>
+                <div class="number1_score">
+                    <p class="para--regular para--large">{{ leader.totalScore }}</p>
+                </div>
+            </div>
+            {% set classement = classement|slice(1) %}
+        {% endif %}
 
-    {# Inclusion de la barre de navigation #}
-    {% if navItems is defined and activeNav is defined %}
-        {% include 'composants/nav_bar/navigation.html.twig' with { 'navItems': navItems, 'activeNav': activeNav } %}
-    {% endif %}
+        <div class="classement">
+            {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard' : true} %}
+        <div>
+        {# Inclusion de la barre de navigation #}
+        {% if navItems is defined and activeNav is defined %}
+            {% include 'composants/nav_bar/navigation.html.twig' with { 'navItems': navItems, 'activeNav': activeNav } %}
+        {% endif %}
+    <div>
 {% endblock %}
