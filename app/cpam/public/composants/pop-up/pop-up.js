@@ -7,6 +7,17 @@ document.addEventListener('DOMContentLoaded', function () {
     let countdownInterval; 
     let isCountdownPaused = false;
 
+    fermerPopupAvecNom(".popup_score");
+    fermerPopupAvecNom(".popup_fin");
+
+    function fermerPopupAvecNom(nom_popup) {
+        const popups = document.querySelectorAll(nom_popup);
+
+        popups.forEach(popup => {
+            popup.style.display = 'none';
+        });
+    }
+
     function fermerPopup() {
         const popupOverlay = document.querySelector('.popup-overlay');
         const popupContainer = document.querySelector('.popup-container');
@@ -15,6 +26,16 @@ document.addEventListener('DOMContentLoaded', function () {
             popupOverlay.style.display = 'none';
             popupContainer.style.display = 'none';
         }
+    }
+
+
+    function ouvrirPopup(nom_popup) {
+        const popups = document.querySelectorAll(nom_popup);
+
+        // Parcourt chaque popup et l'affiche en modifiant son style
+        popups.forEach(popup => {
+            popup.style.display = 'block';
+        });
     }
 
     function gererDepart() {
@@ -67,6 +88,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (chronoTimeLeft <= 0) {
                     clearInterval(chronoInterval);
                     chronoCheckbox.checked = false;
+
+                    // afficher popup score
+                    ouvrirPopup(".popup_score");
                 }
             }
             console.log("chronoInterval:", chronoInterval);
@@ -107,6 +131,15 @@ document.addEventListener('DOMContentLoaded', function () {
         gererDepart();
     }
 
+    function clickContinuer() {
+        fermerPopupAvecNom(".popup_score");
+        ouvrirPopup(".popup_fin");
+    }
+
+    function clickPartager() {
+
+    }
+
     window.fermerPopup = fermerPopup;
     window.fermerPopupLvlFacile = fermerPopupLvlFacile;
     window.fermerPopupLvlNormal = fermerPopupLvlNormal;
@@ -115,4 +148,6 @@ document.addEventListener('DOMContentLoaded', function () {
     window.pauseChrono = pauseChrono;
     window.reprendreChrono = reprendreChrono;
     window.pauseCountdown = pauseCountdown;
+    window.clickContinuer = clickContinuer;
+    window.clickPartager = clickPartager;
 });
