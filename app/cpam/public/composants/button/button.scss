@@ -26,6 +26,11 @@
         background-color: $color-niv-hard;
     }
 
+    &--lvl {
+        width: 80%;
+        margin: 10px;
+    }
+
     &--presentation {
         background-color: $color-white;
         color: $color-black;

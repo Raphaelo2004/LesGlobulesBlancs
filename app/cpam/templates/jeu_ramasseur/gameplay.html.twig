@@ -10,6 +10,24 @@
 {% block body %}
     {# composant ecran pause #}
     {% include 'composants/ecran_pause/ecran_pause.html.twig' %}
-    
+
+    <div id="countdown" class="countdown-container titre--bold titre--extralarge"></div>
+    {% include 'composants/chronometre/chronometre.html.twig' %}
+
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        titre_popup: "Consignes",
+        texte_popup: "<ul>
+            <li class='para--regular para--large'>Déplacez la tirelire pour attraper les différents objets de la C2S qui tombent du ciel et gagner.</li>
+            <li class='para--regular para--large'>Si vous attrapez trois objets qui ne font pas partie de la C2S, vous avez perdu.</li>
+            <li class='para--regular para--large'>Plus la difficulté est élevée, plus la vitesse des objets augmente.</li>
+        </ul>
+        <p class='para--regular para--large'>Pour lancer le jeu, sélectionnez la difficulté.</p>",
+        conteneur_button_style: "conteneur_button_column", 
+        buttons: [
+            { contenue: 'Facile', class: 'btn--easy btn--lvl', onclick :"fermerPopupLvlFacile()" },
+            { contenue: 'Normal', class: 'btn--normal btn--lvl', onclick :"fermerPopupLvlNormal()" },
+            { contenue: 'Difficile', class: 'btn--hard btn--lvl', onclick :"fermerPopupLvlDifficile()" }
+        ]
+    } %}
 
 {% endblock %}
