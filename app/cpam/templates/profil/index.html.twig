@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}ProfilController!{% endblock %}
+{% block title %}Profil{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('profil/profil.css') }}">
@@ -9,6 +9,17 @@
 
 {% block body %}
     {% include 'composants/header/header.html.twig' %}
+
+    <div class="profil-container">
+        <h1 class="profil-title titre--large titre--bold">Profil</h1>
+
+        <div class="profil-menu">
+            <a href="{{ path("app_modifier_profil") }}" class="profil-link para--regular para--large">Informations utilisateur</a>
+            <a href="{{ path("app_confidentialite") }}" class="profil-link para--regular para--large">Confidentialité & Sécurité</a>
+            <a href="https://www.instagram.com/mes_tips_sante?igsh=bmppeTNrZW9zcGVw" class="profil-link para--regular para--large">Instagram</a>
+            <a href="{{ path("app_accessibilite") }}" class="profil-link para--regular para--large">Accessibilité</a>
+        </div>
+    </div>
 
     {# Inclusion de la barre de navigation #}
     {% if navItems is defined and activeNav is defined %}

@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /* Variables */
 /* SCSS */
 .titre--regular {
@@ -115,24 +114,44 @@ a {
 .profil-container .profil-title {
   margin-bottom: 125px;
 }
-.profil-container .profil-menu {
+.profil-container .profil-infos {
+  width: 100%;
+  margin: 0 auto;
+}
+.profil-container .profil-infos .profil-form {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
-.profil-container .profil-menu .profil-link {
+.profil-container .profil-infos .profil-form .form-group {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   align-items: center;
-  padding: 15px 10px;
-  text-decoration: none;
-  color: black;
-  border-bottom: 1px solid #ddd;
+  text-align: left;
+  justify-content: space-between;
 }
-.profil-container .profil-menu .profil-link:last-child {
-  border-bottom: none;
+.profil-container .profil-infos .profil-form .form-group label {
+  margin-bottom: 5px;
 }
-.profil-container .profil-menu .profil-link::after {
-  content: "›";
-  font-size: 70px;
-  color: #888;
-}/*# sourceMappingURL=profil.css.map */
+.profil-container .profil-infos .profil-form .form-group .form-input {
+  padding: 10px;
+  font-size: 50px;
+  width: 65%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+}
+.profil-container .profil-infos .profil-form .container-btn {
+  display: block;
+}
+.profil-container .profil-infos .profil-form .container-btn .btn {
+  background-color: #0C419A;
+  color: #ffffff;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  transition: background-color 0.3s;
+  margin-top: 100px;
+  width: 90%;
+  border: 4px solid #000000;
+}/*# sourceMappingURL=modifier_profil.css.map */
