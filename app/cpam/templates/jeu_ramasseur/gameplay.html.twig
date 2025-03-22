@@ -32,7 +32,7 @@
     } %}
 
     {% set classement_html %} 
-        {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard': true} %} 
+        {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard': false} %} 
     {% endset %}
 
     {% include 'composants/pop-up/pop-up.html.twig' with {
