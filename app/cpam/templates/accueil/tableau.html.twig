@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('accueil/tableau.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    {% include 'composants/header/header.html.twig' %}
+
+{% set chemins = [
+    'app_jeu_ramasseur',
+    'app_jeu_ramasseur',
+    'app_jeu_ramasseur',
+    'app_jeu_ramasseur',
+    'app_jeu_nettoyage'
+] %}
+
+{% for i in 0..chemins|length - 1 %}
+    <a class="contour_tableau_jeu tableau_jeu_{{ i + 1 }}" href="{{ path(chemins[i]) }}"></a>
+{% endfor %}
+
+    
+
+    {# Inclusion de la barre de navigation #}
+    {% if navItems is defined and activeNav is defined %}
+        {% include 'composants/nav_bar/navigation.html.twig' with { 'navItems': navItems, 'activeNav': activeNav } %}
+    {% endif %}
+{% endblock %}
