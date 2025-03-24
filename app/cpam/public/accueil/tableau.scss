@@ -1,0 +1,60 @@
+@import '../style_general';
+body{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: url('/assets/images/PanneauLiege.jpg') no-repeat center center fixed;
+}
+
+.contour_tableau_jeu {
+    position: absolute;
+    border: 2px solid white;
+    border-radius: $border-radius;
+    color: white;
+    animation: shine 2s infinite alternate;
+}
+
+@keyframes shine {
+  0% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6); }
+  50% { box-shadow: 0 0 30px rgba(255, 255, 255, 1), 0 0 50px rgba(255, 255, 255, 0.9); }
+  100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6); }
+}
+
+.tableau_jeu_1{
+    top: calc(16.8% + 9vh);
+    left: calc(5% + 3vw);
+    width: calc(47% - 5vw);
+    height: calc(21.9% - 8vh);
+    transform: rotate(-3deg);
+}
+
+.tableau_jeu_2{
+    top: calc(23.5% + 2vh);
+    left: calc(54% + 3vw);
+    width: calc(38.5% - 4vw);
+    height: calc(26% - 5vh);
+    transform: rotate(5deg);
+}
+
+.tableau_jeu_3{
+    top: calc(39.5% + 2vh);
+    left: calc(8% + 3vw);
+    width: calc(40% - 4vw);
+    height: calc(22% - 5vh);
+    transform: rotate(1.5deg);
+}
+
+.tableau_jeu_4{
+    top: calc(46% + 2vh);
+    left: calc(46% + 3vw);
+    width: calc(53% - 4vw);
+    height: calc(22% - 5vh);
+}
+
+.tableau_jeu_5{
+    top: calc(59.3% + 2vh);
+    left: calc(28% + 3vw);
+    width: calc(31.3% - 4vw);
+    height: calc(17.7% - 5vh);
+    transform: rotate(-9deg);
+}

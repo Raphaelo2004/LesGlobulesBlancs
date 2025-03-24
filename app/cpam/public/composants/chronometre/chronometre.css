@@ -96,6 +96,10 @@ main {
   margin: 0px;
 }
 
+a {
+  text-decoration: none;
+}
+
 .chrono-container {
   position: fixed;
   width: 330px;

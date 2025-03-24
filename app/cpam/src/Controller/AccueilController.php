@@ -20,4 +20,17 @@ class AccueilController extends AbstractController
             'activeNav' => 'home' // Indique la page active
         ]);
     }
+
+    /**
+     * @Route("/tableau", name="app_tableau")
+     */
+    public function tableau_jeux(NavigationService $navService): Response
+    {
+        return $this->render('accueil/tableau.html.twig', [
+            'controller_name' => 'AccueilController',
+            'navItems' => $navService->getNavigationItems(),
+            'activeNav' => 'home' // Indique la page active
+        ]);
+    }
+
 }
