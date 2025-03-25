@@ -98,12 +98,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     ouvrirPopup(".popup_score");
                 }
             }
-            console.log("chronoInterval:", chronoInterval);
-            console.log("chronoTimeLeft:", chronoTimeLeft);
-            console.log("isPaused:", isPaused);
-            console.log("countdownInterval:", countdownInterval);
-            console.log("countdown:", countdown);
-            console.log("isCountdownPaused:", isCountdownPaused);
+            // console.log("chronoInterval:", chronoInterval);
+            // console.log("chronoTimeLeft:", chronoTimeLeft);
+            // console.log("isPaused:", isPaused);
+            // console.log("countdownInterval:", countdownInterval);
+            // console.log("countdown:", countdown);
+            // console.log("isCountdownPaused:", isCountdownPaused);
         }, 1000);
 
         chronoNeedle.style.animation = `run ${chronoTimeLeft}s linear`;
@@ -158,6 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     window.fermerPopup = fermerPopup;
+    window.ouvrirPopup = ouvrirPopup;
     window.fermerPopupLvlFacile = fermerPopupLvlFacile;
     window.fermerPopupLvlNormal = fermerPopupLvlNormal;
     window.fermerPopupLvlDifficile = fermerPopupLvlDifficile;

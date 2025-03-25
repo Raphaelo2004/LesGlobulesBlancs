@@ -11,6 +11,11 @@
     {# composant ecran pause #}
     {% include 'composants/ecran_pause/ecran_pause.html.twig' with { 'lien': 'app_jeu_ramasseur'} %}
 
+    <div class="score-container">
+        <h1 class="titre--large titre--bold">Score : <span id="score-value">0</span></h1>
+        <div id="error-container"></div>
+    </div>
+
     <div id="countdown" class="countdown-container titre--bold titre--extralarge"></div>
     {% include 'composants/chronometre/chronometre.html.twig' %}
 
@@ -41,7 +46,7 @@
 
     {% include 'composants/pop-up/pop-up.html.twig' with {
         nom_popup: "popup_score",
-        titre_popup: "Score : 850",
+        titre_popup: "Score : 0",
         texte_popup: classement_html,
         conteneur_button_style: "conteneur_button_row", 
         buttons: [
@@ -50,13 +55,10 @@
         ]
     } %}
 
-
     {% include 'composants/pop-up/pop-up.html.twig' with {
         nom_popup: "popup_fin",
         titre_popup: "",
-        texte_popup: "Bravo tu as <strong>réussi</strong> !<br><br>
-                    La complémentaire santé solidaire (C2S) est une aide pour payer ses dépenses de santé, si tes ressources sont faibles. Avec la C2S tu ne paies pas le médecin, ni tes médicaments en pharmacie. La plupart des lunettes et des soins dentaires sont pris en charge.<br><br>
-                    Tu peux faire une simulation sur ameli.fr pour savoir si tu y as droit !",
+        texte_popup: "",
         conteneur_button_style: "conteneur_button_row", 
         buttons: [
             { contenue: 'Rejouer', class: 'btn', route: "app_jeu_ramasseur" },

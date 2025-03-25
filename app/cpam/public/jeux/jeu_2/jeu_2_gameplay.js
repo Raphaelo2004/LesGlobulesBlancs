@@ -26,11 +26,37 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 let gameInterval;
+let score = 0;
+let errors = 0;
+
+const maxErrors = 3; // Perte après 3 erreurs
+const goodPictos = [
+    "/assets/images/jeu2/pictos_bons/AideAuditive.png",
+    "/assets/images/jeu2/pictos_bons/Dentiste.png",
+    "/assets/images/jeu2/pictos_bons/Hopital.png",
+    "/assets/images/jeu2/pictos_bons/Medecin.png",
+    "/assets/images/jeu2/pictos_bons/Optique.png",
+    "/assets/images/jeu2/pictos_bons/TransportSanitaire.png"
+];
+
+const badPictos = [
+    "/assets/images/jeu2/pictos_faux/ampoule.png",
+    "/assets/images/jeu2/pictos_faux/courrier.png",
+    "/assets/images/jeu2/pictos_faux/etude.png",
+    "/assets/images/jeu2/pictos_faux/livre.png",
+    "/assets/images/jeu2/pictos_faux/maison.png",
+    "/assets/images/jeu2/pictos_faux/puzzle.png",
+    "/assets/images/jeu2/pictos_faux/telephone.png"
+];
 
 function createFallingObject(fallSpeed) {
     const object = document.createElement("img");
-    object.src = "/assets/images/jeu2/pictos_bons/AideAuditive.png"; // Remplace par tes images
-    object.classList.add("falling-object");
+    const isGood = Math.random() > 0.5; // 50% chance d'être un bon ou mauvais objet
+        object.src = isGood ? 
+            goodPictos[Math.floor(Math.random() * goodPictos.length)] :
+            badPictos[Math.floor(Math.random() * badPictos.length)];
+        object.classList.add("falling-object");
+        object.dataset.good = isGood; // Attribut pour identifier l'objet
 
     // Position aléatoire sur l'axe X
     const randomX = Math.random() * (window.innerWidth - 100); // Ajuste en fonction de la taille
@@ -45,9 +71,40 @@ function createFallingObject(fallSpeed) {
         if (positionY < window.innerHeight) {
             positionY += fallSpeed;
             object.style.top = `${positionY}px`;
-            requestAnimationFrame(fall);
+
+            // Vérifier collision avec la tirelire
+            const tirelireRect = tirelire.getBoundingClientRect();
+            const objectRect = object.getBoundingClientRect();
+
+            if (
+                objectRect.bottom >= tirelireRect.top &&
+                objectRect.left < tirelireRect.right &&
+                objectRect.right > tirelireRect.left
+            ) {
+                document.body.removeChild(object);
+                if (object.dataset.good === "true") {
+                    score += 50; // Augmente le score
+                    updateScore();
+                    console.log("Score:", score);
+                } else {
+                    errors++;
+                    updateErrors();
+                    console.log("Erreurs:", errors);
+                    if (errors >= maxErrors) {
+                        console.log("Perdu !");
+                        pauseChrono();
+                        pauseCountdown();
+                        updatePopupFin("perdu");
+                        updatePopupScore();
+                        ouvrirPopup(".popup_score");
+                        clearInterval(gameInterval);
+                    }
+                }
+            } else {
+                requestAnimationFrame(fall);
+            }
         } else {
-            document.body.removeChild(object); // Supprime l'objet en bas de l'écran
+            document.body.removeChild(object);
         }
     }
 
@@ -59,14 +116,13 @@ function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
 }
+
 function startGame() {
     const difficulty = getQueryParam("difficulty");
     if (!difficulty) {
         console.warn("Aucune difficulté sélectionnée !");
         return;
     }
-
-    console.log("Difficulté sélectionnée :", difficulty);
 
     let fallSpeed;
     let timeBetweenObj;
@@ -99,6 +155,58 @@ function startGame() {
         setTimeout(() => {
             clearInterval(gameInterval);
             console.log("Fin du jeu ! Plus aucun objet ne tombe.");
+            updatePopupFin("gagne");
+            updatePopupScore();
+            ouvrirPopup(".popup_score");
         }, 60000); // 60 secondes
     }, 3000); // 3 secondes de délai avant le démarrage du jeu
+}
+
+function updateScore() {
+    document.getElementById("score-value").textContent = score;
+
+    const jauge = document.querySelector(".fixed-jauge");
+
+    if (score >= 800) {
+        jauge.src = "/assets/images/Jauge-05.png";
+    } else if (score >= 600) {
+        jauge.src = "/assets/images/Jauge-04.png";
+    } else if (score >= 400) {
+        jauge.src = "/assets/images/Jauge-03.png";
+    } else if (score >= 200) {
+        jauge.src = "/assets/images/Jauge-02.png";
+    }
+}
+
+function updateErrors() {
+    const errorContainer = document.getElementById("error-container");
+    errorContainer.innerHTML = ""; // On vide pour recréer l'affichage
+
+    for (let i = 0; i < errors; i++) {
+        const cross = document.createElement("span");
+        cross.textContent = "❌";
+        cross.style.margin = "5px";
+        cross.style.fontSize = "32px"; // Ajuste la taille de la croix
+        errorContainer.appendChild(cross);
+    }
+}
+
+function updatePopupFin(finPartie) {
+    const popupFinContent = document.querySelector('.popup_fin .popup-main p');
+
+    if (finPartie === "perdu") {
+        popupFinContent.innerHTML = `Dommage, tu as <strong>perdu</strong> !<br><br>
+            La complémentaire santé solidaire (C2S) est une aide pour payer ses dépenses de santé, si tes ressources sont faibles. Avec la C2S tu ne paies pas le médecin, ni tes médicaments en pharmacie. La plupart des lunettes et des soins dentaires sont pris en charge.<br><br>
+            Tu peux faire une simulation sur <a href='https://www.ameli.fr' target='_blank'>ameli.fr</a> pour savoir si tu y as droit !`;
+    } else if (finPartie === "gagne") {
+        popupFinContent.innerHTML = `Bravo, tu as <strong>réussi</strong> !<br><br>
+            La complémentaire santé solidaire (C2S) est une aide pour payer ses dépenses de santé, si tes ressources sont faibles. Avec la C2S tu ne paies pas le médecin, ni tes médicaments en pharmacie. La plupart des lunettes et des soins dentaires sont pris en charge.<br><br>
+            Tu peux faire une simulation sur <a href='https://www.ameli.fr' target='_blank'>ameli.fr</a> pour savoir si tu y as droit !`;
+    }
+}
+
+
+function updatePopupScore() {
+    const popupScoreTitle = document.querySelector('.popup_score .popup-header h1');
+    popupScoreTitle.innerHTML = `Score : ` + score;
 }
