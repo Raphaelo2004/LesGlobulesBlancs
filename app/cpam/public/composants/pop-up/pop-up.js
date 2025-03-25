@@ -33,6 +33,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function pauseChrono() {
+        isPaused = true;
+        clearInterval(chronoInterval); // Stopper complètement le chronomètre
+        const chronoNeedle = document.querySelector('.needle');
+        chronoNeedle.style.animationPlayState = "paused";
+    }
 
     function ouvrirPopup(nom_popup) {
         const popups = document.querySelectorAll(nom_popup);
@@ -110,12 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
         chronoNeedle.style.animationPlayState = "running";
     }
 
-    function pauseChrono() {
-        isPaused = true;
-        clearInterval(chronoInterval); // Stopper complètement le chronomètre
-        const chronoNeedle = document.querySelector('.needle');
-        chronoNeedle.style.animationPlayState = "paused";
-    }
+
 
     function reprendreChrono() {
         gererDepart(); // Relancer le décompte avant de reprendre
@@ -158,6 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     window.fermerPopup = fermerPopup;
+    window.ouvrirPopup = ouvrirPopup;
     window.fermerPopupLvlFacile = fermerPopupLvlFacile;
     window.fermerPopupLvlNormal = fermerPopupLvlNormal;
     window.fermerPopupLvlDifficile = fermerPopupLvlDifficile;
