@@ -6,15 +6,70 @@
     <link rel="stylesheet" href="{{ asset('jeux/jeu_5/jeu_5_gameplay.css') }}">
 {% endblock %}
 
-{% block body %}
-{% include 'composants/ecran_pause/ecran_pause.html.twig' with { 'lien': 'app_jeu_nettoyage'} %}
-    <div id="game">
-        <div id="bouche" class="bouche"><img src="/assets/images/bouche_salle.png" alt="bouche" /></div>
-        <div id="brosse" class="brosse"><img src="/assets/images/bosse a dent_fixe.png" alt="brosse" /></div>
-        <div id="dentifrice" class="dentifrice"><img src="/assets/images/dentifrice.png" alt="dentifirce" /></div>
-    </div>
-{% endblock %}
-
 {% block javascripts %}
     <script src="{{ asset('jeux/jeu_5/jeu_5_gameplay.js') }}"></script>
 {% endblock %}
+
+{% block body %}
+{% include 'composants/ecran_pause/ecran_pause.html.twig' with { 'lien': 'app_jeu_nettoyage'} %}
+
+<div id="countdown" class="countdown-container titre--bold titre--extralarge"></div>
+{% include 'composants/chronometre/chronometre.html.twig' %}
+
+<div id="game">
+    <div id="bouche" class="bouche"><img src="/assets/images/bouche_salle.png" alt="bouche" /></div>
+    <div id="brosse" class="brosse"><img src="/assets/images/bosse a dent_fixe.png" alt="brosse" /></div>
+    <div id="dentifrice" class="dentifrice"><img src="/assets/images/dentifrice.png" alt="dentifirce" /></div>
+</div>
+
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+    nom_popup: "consignes",
+    titre_popup: "Consignes",
+    texte_popup: "
+    <ul>
+        <li class='para--regular para--large'>Mettez du dentifrice sur la brosse à dents.</li>
+        <li class='para--regular para--large'>Nettoyez le plus d’impuretés de la bouche de Damien.</li>
+        <li class='para--regular para--large'>Plus la difficulté est haute, plus le nombre d’impuretés augmente et plus la zone que couvre la brosse à dent pour nettoyer les impuretés est stricte.</li>
+    </ul>
+    <br>
+    <br>
+    <p class='para--regular para--large'>Pour lancer le jeu, sélectionnez la difficulté.</p>",
+    conteneur_button_style: "conteneur_button_column", 
+    buttons: [
+        { contenue: 'Facile', class: 'btn--easy btn--lvl', onclick :"fermerPopupLvlFacile()" },
+        { contenue: 'Normal', class: 'btn--normal btn--lvl', onclick :"fermerPopupLvlNormal()" },
+        { contenue: 'Difficile', class: 'btn--hard btn--lvl', onclick :"fermerPopupLvlDifficile()" }
+    ]
+} %}
+
+{% set classement_html %} 
+    {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard': false} %} 
+{% endset %}
+
+{% include 'composants/pop-up/pop-up.html.twig' with {
+    nom_popup: "popup_score",
+    titre_popup: "Score : 850",
+    texte_popup: classement_html,
+    conteneur_button_style: "conteneur_button_row", 
+    buttons: [
+        { contenue: 'Continuer', class: 'btn', onclick :"clickContinuer()" },
+        { contenue: 'Partager', class: 'btn', onclick :"clickPartager()" },
+    ]
+} %}
+
+
+{% include 'composants/pop-up/pop-up.html.twig' with {
+    nom_popup: "popup_fin",
+    titre_popup: "",
+    texte_popup: "Pour garder le sourire :<br><br>
+1/ brosse-toi correctement les dents 2 fois par jour pendant 2 minutes<br><br>
+2/ consulte ton dentiste au moins une fois par an<br><br>
+L'Assurance Maladie offre des rendez-vous de prévention avec le dentiste appelés « M'T dents » aux jeunes de âgés de 18, 21 et 24 ans !<br><br>",
+    conteneur_button_style: "conteneur_button_row", 
+    buttons: [
+        { contenue: 'Rejouer', class: 'btn', route: "app_jeu_nettoyage" },
+        { contenue: 'Quitter', class: 'btn', route: "app_accueil" },
+    ]
+} %}
+{% endblock %}
+
