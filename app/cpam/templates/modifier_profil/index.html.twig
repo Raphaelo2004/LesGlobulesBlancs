@@ -17,12 +17,12 @@
             <form method="POST" class="profil-form">
                 <div class="form-group">
                     <label class="para--regular para--large" for="identifiant">Identifiant : </label>
-                    <input type="text" id="identifiant" name="identifiant" class="form-input" required>
+                    <input type="text" id="identifiant" name="identifiant" class="form-input" value="{{ identifiant }}" required>
                 </div>
 
                 <div class="form-group">
                     <label class="para--regular para--large" for="email">Adresse email : </label>
-                    <input type="email" id="email" name="email" class="form-input" required>
+                    <input type="email" id="email" name="email" class="form-input" value="{{ email }}" required>
                 </div>
                 <div class="container-btn">
                     <button type="submit" class="btn para--large para--regular">Modifier</button>
