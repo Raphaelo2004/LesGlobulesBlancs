@@ -1,15 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}JeuNettoyage{% endblock %}
+{% block title %}Nettoyage{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('jeux/jeu_5/jeu_5_gameplay.css') }}">
 {% endblock %}
 
-
 {% block body %}
-    {# composant ecran pause #}
-    {% include 'composants/ecran_pause/ecran_pause.html.twig' with { 'lien': 'app_jeu_nettoyage'} %}
-    
+{% include 'composants/ecran_pause/ecran_pause.html.twig' with { 'lien': 'app_jeu_nettoyage'} %}
+    <div id="game">
+        <div id="bouche" class="bouche"><img src="/assets/images/bouche_salle.png" alt="bouche" /></div>
+        <div id="brosse" class="brosse"><img src="/assets/images/bosse a dent_fixe.png" alt="brosse" /></div>
+        <div id="dentifrice" class="dentifrice"><img src="/assets/images/dentifrice.png" alt="dentifirce" /></div>
+    </div>
+{% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('jeux/jeu_5/jeu_5_gameplay.js') }}"></script>
 {% endblock %}
