@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
-use App\Form\Connexion2Type;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,44 +17,48 @@ class LoginController extends AbstractController
      */
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
-        // On utilise l'objet Utilisateur *uniquement* pour hydrater le formulaire
+        // 1) On utilise un objet Utilisateur pour hydrater le formulaire
         $utilisateurFormData = new Utilisateur();
 
-        // Création du formulaire à partir du type Connexion2Type
+        // 2) Création du formulaire à partir de RegistrationFormType
         $form = $this->createForm(RegistrationFormType::class, $utilisateurFormData);
         $form->handleRequest($request);
 
+        // 3) Vérification du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
-            // Récupère les infos du formulaire
+            // a) Récupère les champs saisis
             $identifiantSaisi = $utilisateurFormData->getIdentifiant();
-            $emailSaisi = $utilisateurFormData->getEmail();
+            $emailSaisi       = $utilisateurFormData->getEmail();
 
-            // Recherche en base un utilisateur correspondant
+            // b) Recherche l'utilisateur correspondant
             $utilisateurEnBase = $entityManager
                 ->getRepository(Utilisateur::class)
                 ->findOneBy([
                     'identifiant' => $identifiantSaisi,
-                    'email' => $emailSaisi,
+                    'email'       => $emailSaisi,
                 ]);
 
+            // c) Si on trouve un utilisateur
             if ($utilisateurEnBase) {
-                // Utilisateur trouvé : on le stocke en session
+                // (1) Mettre à jour la date de dernière connexion
+                $utilisateurEnBase->setDateDerniereConnexion(new \DateTime());
+
+                // (2) On enregistre la modification
+                $entityManager->flush();
+
+                // (3) Stocke l'ID utilisateur en session (ou l’objet, etc.)
                 $session = $request->getSession();
-                // Tu peux stocker directement l'ID
                 $session->set('utilisateur_id', $utilisateurEnBase->getId());
 
-                // (Optionnel) Si tu veux stocker l’objet en entier, assure-toi qu’il est sérialisable
-                // $session->set('utilisateur', $utilisateurEnBase);
-
-                // Redirection vers la page d'accueil (ou autre)
+                // (4) Redirection vers la page d'accueil (ou autre)
                 return $this->redirectToRoute('app_accueil');
             } else {
-                // Alerte : identifiants invalides
+                // Utilisateur non trouvé : afficher un message d’erreur
                 $this->addFlash('danger', 'Identifiant ou e-mail incorrect.');
             }
         }
 
-        // Rendu du template
+        // 4) Afficher le formulaire
         return $this->render('login/index.html.twig', [
             'form' => $form->createView(),
         ]);
