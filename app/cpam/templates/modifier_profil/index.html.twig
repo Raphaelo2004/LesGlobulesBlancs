@@ -13,8 +13,7 @@
         <h1 class="profil-title titre--large titre--bold">Modifier votre profil</h1>
 
         <div class="profil-infos">
-            {# <form action="{{ path('app_modifier_profil_traitement') }}" method="POST" class="profil-form"> #}
-            <form method="POST" class="profil-form">
+            <form action="{{ path('app_modifier_profil_traitement') }}" method="POST" class="profil-form">
                 <div class="form-group">
                     <label class="para--regular para--large" for="identifiant">Identifiant : </label>
                     <input type="text" id="identifiant" name="identifiant" class="form-input" value="{{ identifiant }}" required>
