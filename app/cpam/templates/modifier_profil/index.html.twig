@@ -12,6 +12,12 @@
     <div class="profil-container">
         <h1 class="profil-title titre--large titre--bold">Modifier votre profil</h1>
 
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success para--medium para--regular">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <div class="profil-infos">
             <form action="{{ path('app_modifier_profil_traitement') }}" method="POST" class="profil-form">
                 <div class="form-group">

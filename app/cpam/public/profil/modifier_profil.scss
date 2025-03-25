@@ -15,6 +15,17 @@
         margin-bottom: 125px;
     }
 
+    .alert {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        text-align: center;
+    }
+    
+    .alert-success {
+        color: #155724;
+    }
+    
     .profil-infos {
         width: 100%;
         margin: 0 auto;
