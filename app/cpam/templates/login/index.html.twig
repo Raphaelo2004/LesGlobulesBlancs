@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('connexion/connexion.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    
+    <!-- HEADER distinct -->
+    <header class="header">
+        <img src="{{ asset('assets/images/LogoCPAM22_RVB.jpg') }}" alt="Logo" class="logo">
+    </header>
+    
+    <!-- Le contenu centré verticalement -->
+    <div class="content">
+        <main class="form-container">
+            {# Titre principal : on veut un texte "bold" et "large" #}
+            <h2 class="welcome-title titre--bold titre--large">
+                Connectez-vous&nbsp;!
+            </h2>
+
+            {{ form_start(form) }}
+                <div class="form-group">
+                    {# 
+                      Pour le champ identifiant, 
+                      on ajoute les classes "para--regular para--medium" 
+                      pour la taille & police
+                    #}
+                    {{ form_widget(form.identifiant, {
+                        'attr': {
+                            'placeholder': 'identifiant',
+                            'class': 'input-field para--regular para--medium'
+                        }
+                    }) }}
+                </div>
+                
+                <div class="form-group">
+                    {{ form_widget(form.email, {
+                        'attr': {
+                            'placeholder': 'Email Address',
+                            'class': 'input-field para--regular para--medium'
+                        }
+                    }) }}
+                </div>
+
+                {# Bouton : texte "para--regular para--large" pour correspondre à la charte #}
+                <button type="submit" class="btn-submit para--regular para--large">
+                    Se connecter
+                </button>
+            {{ form_end(form) }}
+
+            {# Petit texte en-dessous : "para--regular" et "para--small" #}
+            <p class="already para--regular para--small">
+                Vous ne possédez de compte&nbsp;?
+                <a href="{{ path('app_connexion', { zone: 3 }) }}" class="login-link">
+                    Inscrivez-vous
+                </a>
+            </p>
+
+            <hr class="separator">
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer para--regular para--medium">
+        <a href="/accessibilite" class="footer-link para--regular para--medium">
+            Accessibilité
+        </a>
+        |
+        <a href="/confidentialite-securite" class="footer-link para--regular para--medium">
+            Confidentialité & Sécurité
+        </a>
+        |
+        <a href="https://www.ameli.fr" class="footer-link para--regular para--medium"
+           target="_blank" rel="noopener">
+           Contactez-nous
+        </a>
+    </footer>
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('connexion/connexion.js') }}"></script>
+{% endblock %}

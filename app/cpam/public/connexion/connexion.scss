@@ -1,0 +1,137 @@
+@charset "UTF-8";
+
+// 1) On importe d'abord les variables, puis le style général
+@import '../variable_general';
+@import '../style_general'; // celui qui contient les .titre--... et .para--...
+
+// 2) Mise en page flex sur toute la hauteur
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $color-white;
+}
+
+// 3) Header tout en haut avec le logo
+.header {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+// Le logo, aucune taille max forcée
+.logo {
+  height: auto;
+}
+
+// 4) Zone de contenu qui s'étire et centre le formulaire
+.content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// 5) Conteneur du formulaire
+.form-container {
+  width: 90%;
+  max-width: 700px;
+  text-align: center;
+}
+
+// Titre principal (connexion / inscription)
+.welcome-title {
+  @extend .titre--bold;
+  @extend .titre--large;  // => font-size: 80px
+  margin-bottom: 60px;
+}
+
+// Chaque groupe de champs
+.form-group {
+  margin-bottom: 40px; // Avant 30px => plus d'espace entre les champs
+}
+
+// Champs input pour identifiant / email
+.input-field {
+  width: 100%;
+  padding: 25px;
+
+  // Soit tu laisses font-size fixe, soit tu réutilises .para--xxx
+  @extend .para--regular;   // => font-family: 'SourceSansPro-Regular'
+  @extend .para--medium;    // => font-size: 32px (par exemple)
+
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  outline: none;
+}
+
+// 6) Bouton principal
+.btn-submit {
+  @extend .para--large;     // => font-size: 40px
+  @extend .para--regular;   // => font-family: 'SourceSansPro-Regular'
+
+  background-color: $color-blue-main;
+  color: $color-white;
+  padding: 20px;
+  border: none;
+  border-radius: $border-radius; // => 25px
+  width: 90%;
+  border: 4px solid $color-black;
+  transition: background-color 0.3s;
+
+  // On ajoute de la marge pour l'espacement
+  margin-top: 20px;    // espace supplémentaire au-dessus (dernière input)
+  margin-bottom: 30px; // espace supplémentaire en-dessous (avant .already)
+
+  
+}
+
+// Petit texte en dessous du formulaire
+.already {
+  margin-top: 50px; // Avant 30px => plus d'espace entre le bouton et ce texte
+  @extend .para--regular; // => font-family
+  @extend .para--small;   // => font-size: 24px
+}
+
+// Ligne de séparation
+.separator {
+  margin-top: 40px;
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+}
+
+// 7) Footer collé en bas
+.footer {
+  text-align: center;
+  padding: 30px 20px;
+  @extend .para--regular;
+  @extend .para--medium; // exemple => font-size: 32px
+
+  border-top: 1px solid #ddd;
+}
+
+// Liens du footer
+.footer-link {
+  color: $color-blue-main;
+  margin: 0 15px;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Lien vers connexion / inscription
+.login-link {
+  color: $color-blue-main;
+  @extend .para--semibold; // => font-family: "SourceSansPro-SemiBold"
+  margin-left: 10px;
+  text-decoration: underline;
+}
