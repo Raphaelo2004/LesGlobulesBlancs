@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}JeuTaquin{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('jeux/jeu_1/jeu_1_gameplay.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    {# composant ecran pause #}
+    {% include 'composants/ecran_pause/ecran_pause.html.twig' with { 'lien': 'app_jeu_taquin'} %}
+
+    <div id="countdown" class="countdown-container titre--bold titre--extralarge"></div>
+    {% include 'composants/chronometre/chronometre.html.twig' %}
+
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "consignes",
+        titre_popup: "Consignes",
+        texte_popup: "<ul>
+            <li class='para--regular para--large'>Remettez les morceaux de la carte Vitale dans le bon ordre pour gagner.</li>
+            <li class='para--regular para--large'>Réalisez le taquin avec le moins de coups possible.</li>
+            <li class='para--regular para--large'>Plus la difficulté est élevée, plus la carte Vitale est découpée.</li>
+            <li class='para--regular para--large'>Le chronomètre démarre lorsque vous commencez à modifier le taquin.</li>
+        </ul>
+        <p class='para--regular para--large'>Pour lancer le jeu, sélectionnez la difficulté.</p>",
+        conteneur_button_style: "conteneur_button_column", 
+        buttons: [
+            { contenue: 'Normal', class: 'btn--normal btn--lvl', onclick :"fermerPopupLvlNormal()" },
+            { contenue: 'Difficile', class: 'btn--hard btn--lvl', onclick :"fermerPopupLvlDifficile()" }
+        ]
+    } %}
+
+    {% set classement_html %} 
+        {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard': false} %} 
+    {% endset %}
+
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "popup_score",
+        titre_popup: "Score : 850",
+        texte_popup: classement_html,
+        conteneur_button_style: "conteneur_button_row", 
+        buttons: [
+            { contenue: 'Continuer', class: 'btn', onclick :"clickContinuer()" },
+            { contenue: 'Partager', class: 'btn', onclick :"clickPartager()" },
+        ]
+    } %}
+
+
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "popup_fin",
+        titre_popup: "",
+        texte_popup: "Bravo tu as <strong>réussi</strong> !<br><br>
+                    La carte Vitale contient les informations personnelles nécessaires au remboursement de tes frais de santé ou en cas d’hospitalisation. C’est la garantie d'être bien remboursé rapidement.<br><br>
+                    En cas de perte, tu peux en commander une nouvelle directement depuis ton compte sur ameli.fr.",
+        conteneur_button_style: "conteneur_button_row", 
+        buttons: [
+            { contenue: 'Rejouer', class: 'btn', route: "app_jeu_taquin" },
+            { contenue: 'Quitter', class: 'btn', route: "app_accueil" },
+        ]
+    } %}
+
+{% endblock %}

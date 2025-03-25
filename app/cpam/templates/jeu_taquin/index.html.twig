@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}JeuTaquin{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('jeux/jeu_1/jeu_1.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    {# composant ecran pause #}
+    {% include 'composants/ecran_pause/ecran_pause.html.twig' with { 'lien': 'app_jeu_taquin'} %}
+
+    <div class="text-box">
+        <p class="para--semibold para--large">Amélie retrouve sa carte Vitale en morceaux après la soirée d’intégration.
+            <br><br>
+            Aide-la à la reconstituer au plus vite !
+        </p>
+    </div>
+
+    {# composant button #}
+    <div class="container_button">
+        {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Aider Amélie', 'route': 'app_jeu_taquin_gameplay' } %}
+    </div>
+{% endblock %}
