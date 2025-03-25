@@ -26,6 +26,11 @@ document.addEventListener('DOMContentLoaded', function () {
             popupOverlay.style.display = 'none';
             popupContainer.style.display = 'none';
         }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.get("difficulty")){
+            startGame();
+        }
     }
 
 
@@ -117,16 +122,28 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function fermerPopupLvlFacile() {
+        const params = new URLSearchParams(window.location.search);
+        params.set('difficulty', 'easy');
+        window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
+
         fermerPopup();
         gererDepart();
     }
 
     function fermerPopupLvlNormal() {
+        const params = new URLSearchParams(window.location.search);
+        params.set('difficulty', 'medium');
+        window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
+
         fermerPopup();
         gererDepart();
     }
 
     function fermerPopupLvlDifficile() {
+        const params = new URLSearchParams(window.location.search);
+        params.set('difficulty', 'hard');
+        window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
+
         fermerPopup();
         gererDepart();
     }

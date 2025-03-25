@@ -14,6 +14,10 @@
     <div id="countdown" class="countdown-container titre--bold titre--extralarge"></div>
     {% include 'composants/chronometre/chronometre.html.twig' %}
 
+    <img src="{{ asset('assets/images/Jauge-01.png') }}" alt="Image fixe" class="fixed-jauge">
+
+    <img src="{{ asset('assets/images/Tirelire.png') }}" alt="tirelire" class="tirelire" id="tirelire">
+
     {% include 'composants/pop-up/pop-up.html.twig' with {
         nom_popup: "consignes",
         titre_popup: "Consignes",
@@ -51,8 +55,8 @@
         nom_popup: "popup_fin",
         titre_popup: "",
         texte_popup: "Bravo tu as <strong>réussi</strong> !<br><br>
-                    La carte Vitale contient les informations personnelles nécessaires au remboursement de tes frais de santé ou en cas d’hospitalisation. C’est la garantie d'être bien remboursé rapidement.<br><br>
-                    En cas de perte, tu peux en commander une nouvelle directement depuis ton compte sur ameli.fr.",
+                    La complémentaire santé solidaire (C2S) est une aide pour payer ses dépenses de santé, si tes ressources sont faibles. Avec la C2S tu ne paies pas le médecin, ni tes médicaments en pharmacie. La plupart des lunettes et des soins dentaires sont pris en charge.<br><br>
+                    Tu peux faire une simulation sur ameli.fr pour savoir si tu y as droit !",
         conteneur_button_style: "conteneur_button_row", 
         buttons: [
             { contenue: 'Rejouer', class: 'btn', route: "app_jeu_ramasseur" },
@@ -60,4 +64,8 @@
         ]
     } %}
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('jeux/jeu_2/jeu_2_gameplay.js') }}"></script>
 {% endblock %}
