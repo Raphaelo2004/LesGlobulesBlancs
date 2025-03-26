@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - Gestion des Utilisateurs{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('admin/admin.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block body %}
+    {% include 'composants/header/header.html.twig' %}
+
+    <div class="admin-container">
+        <h1 class="admin-title titre--large titre--bold">Gestion des utilisateurs</h1>
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th class="para--semibold para--small">Identifiant</th>
+                        <th class="para--semibold para--small">Email</th>
+                        <th class="para--semibold para--small">Dernière connexion</th>
+                        <th class="para--semibold para--small">Nb Partages SMS</th>
+                        <th class="para--semibold para--small">Zone Géographique</th>
+                        <th class="para--semibold para--small">Meilleur Score</th>
+                        <th class="para--semibold para--small">Est administrateur</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for utilisateur in utilisateurs %}
+                        <tr>
+                            <td class="para--regular para--small">{{ utilisateur.identifiant }}</td>
+                            <td class="para--regular para--small">{{ utilisateur.email }}</td>
+                            <td class="para--regular para--small">{{ utilisateur.dateDerniereConnexion ? utilisateur.dateDerniereConnexion|date("d/m/Y H:i") : 'Jamais' }}</td>
+                            <td class="para--regular para--small">{{ utilisateur.nbPartageSMS }}</td>
+                            <td class="para--regular para--small">{{ utilisateur.utilisateurZoneGeographique ? utilisateur.utilisateurZoneGeographique.getNomZone() : 'Non défini' }}</td>
+                            <td class="para--regular para--small">{{ meilleursScores[utilisateur.id] }}</td>
+                            <td class="para--regular para--small">{{ utilisateur.isAdmin is null ? 'Non' : (utilisateur.isAdmin ? 'Oui' : 'Non') }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">Aucun utilisateur trouvé.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Graphique des statistiques des jeux -->
+        <div class="game-stats">
+            <h2 class="titre--large titre--bold">Statistiques des Jeux</h2>
+            <canvas id="gameStatsChart"></canvas>
+        </div>
+
+        <!-- Injecter les données dans un élément JSON pour être récupérées par JS -->
+        <div id="gameStatsData" style="display:none;">{{ gameStats|json_encode()|raw }}</div>
+    </div>
+
+    {% if navItems is defined and activeNav is defined %}
+        {% include 'composants/nav_bar/navigation.html.twig' with { 'navItems': navItems, 'activeNav': activeNav } %}
+    {% endif %}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('admin/admin.js') }}"></script>
+{% endblock %}
