@@ -47,18 +47,24 @@ class LoginController extends AbstractController
 
             // c) Si on trouve un utilisateur
             if ($utilisateurEnBase) {
-                // Utilisateur trouvé : stocke son ID en session et redirige vers l'accueil
+                // (1) Mettre à jour la date de dernière connexion
+                $utilisateurEnBase->setDateDerniereConnexion(new \DateTime());
+
+                // (2) Enregistrer la modification en base
+                $entityManager->flush();
+
+                // (3) Stocker l'ID utilisateur en session
                 $session->set('utilisateur_id', $utilisateurEnBase->getId());
+
+                // (4) Rediriger vers la page d'accueil
                 return $this->redirectToRoute('app_accueil');
             } else {
                 // Utilisateur non trouvé : affiche un message d'erreur
-
                 $this->addFlash('danger', 'Identifiant ou e-mail incorrect.');
             }
         }
 
         // Rendu du template avec le formulaire
-
         return $this->render('login/index.html.twig', [
             'form' => $form->createView(),
         ]);
