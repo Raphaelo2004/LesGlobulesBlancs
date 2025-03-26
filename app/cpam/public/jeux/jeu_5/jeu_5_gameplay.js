@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let holdingDentifrice = false;
     let holdingBrosse = false;
     let brosseHits = 0;
+    let score = 0;
 
     document.querySelectorAll("a").forEach(link => {
         link.addEventListener("click", () => {
@@ -119,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     bacterie.dataset.hits = hits;
     
                     // Vérifier si le nombre de hits a atteint le nombre requis
-                                    if (hits >= bacterie.dataset.hitsRequired) {
+                    if (hits >= bacterie.dataset.hitsRequired) {
                     // Remplacer la bactérie par une mousse
                     let mousse = document.createElement("img");
                     const randomMousseIndex = Math.floor(Math.random() * 6) + 1; // Choisir une mousse entre mousse_1 et mousse_6
@@ -140,6 +141,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     // Supprimer la bactérie de la liste et du DOM
                     bacterie.remove();
+                    score += 50; // Augmente le score
+                    updateScore();
                     bacteriaList = bacteriaList.filter(b => b !== bacterie);
                     bacteriaList = bacteriaList.filter(b => b !== bacterie);
 
@@ -172,11 +175,21 @@ document.addEventListener("DOMContentLoaded", () => {
             img.src = "/assets/images/bouche_propre.png";
             img.style.opacity = 1;
             pauseChrono();
+            updatePopupScore();
             setTimeout(() => {
                 ouvrirPopup('.popup_score');
             }, 2000);
         }, 1000);   
         
+    }
+
+    function updatePopupScore() {
+        const popupScoreTitle = document.querySelector('.popup_score .popup-header h1');
+        popupScoreTitle.innerHTML = `Score : ` + score;
+    }
+    
+    function updateScore() {
+        document.getElementById("score-value").textContent = score;
     }
 });
 

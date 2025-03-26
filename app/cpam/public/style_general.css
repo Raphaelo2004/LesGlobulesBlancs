@@ -98,4 +98,17 @@ main {
 
 a {
   text-decoration: none;
+}
+
+.score-container {
+  text-align: center;
+  display: block;
+  position: fixed;
+  top: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+}
+.score-container h1 {
+  color: #ffffff;
 }/*# sourceMappingURL=style_general.css.map */
