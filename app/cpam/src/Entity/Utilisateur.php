@@ -50,6 +50,11 @@ class Utilisateur
      */
     private $utilisateur_score;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isAdmin;
+
     public function __construct()
     {
         $this->utilisateur_score = new ArrayCollection();
@@ -146,6 +151,18 @@ class Utilisateur
                 $utilisateurScore->setScoreUtilisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsAdmin(): ?bool
+    {
+        return $this->isAdmin;
+    }
+
+    public function setIsAdmin(?bool $isAdmin): self
+    {
+        $this->isAdmin = $isAdmin;
 
         return $this;
     }
