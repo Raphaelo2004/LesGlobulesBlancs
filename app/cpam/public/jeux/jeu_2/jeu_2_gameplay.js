@@ -77,7 +77,8 @@ function createFallingObject(fallSpeed) {
             const objectRect = object.getBoundingClientRect();
 
             if (
-                objectRect.bottom >= tirelireRect.top &&
+                objectRect.bottom >= tirelireRect.top &&  // L'objet atteint le haut de la tirelire
+                objectRect.top <= tirelireRect.bottom && // L'objet est encore dans la tirelire
                 objectRect.left < tirelireRect.right &&
                 objectRect.right > tirelireRect.left
             ) {
