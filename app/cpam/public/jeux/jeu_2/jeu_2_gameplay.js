@@ -84,7 +84,7 @@ function createFallingObject(fallSpeed) {
             ) {
                 document.body.removeChild(object);
                 if (object.dataset.good === "true") {
-                    score += 50; // Augmente le score
+                    score += 30; // Augmente le score
                     updateScore();
                     console.log("Score:", score);
                 } else {
