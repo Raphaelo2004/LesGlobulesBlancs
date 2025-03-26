@@ -129,3 +129,16 @@ main {
 a{
     text-decoration: none;
 }
+
+.score-container {
+    text-align: center;
+    display: block;
+    position: fixed;
+    top: 220px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    h1{
+        color: $color-white;
+    }
+}

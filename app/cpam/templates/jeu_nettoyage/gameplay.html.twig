@@ -13,6 +13,11 @@
 {% block body %}
 {% include 'composants/ecran_pause/ecran_pause.html.twig' with { 'lien': 'app_jeu_nettoyage'} %}
 
+<div class="score-container">
+    <h1 class="titre--large titre--bold">Score : <span id="score-value">0</span></h1>
+    <div id="error-container"></div>
+</div>
+
 <div id="countdown" class="countdown-container titre--bold titre--extralarge"></div>
 {% include 'composants/chronometre/chronometre.html.twig' %}
 
@@ -60,11 +65,13 @@
 
 {% include 'composants/pop-up/pop-up.html.twig' with {
     nom_popup: "popup_fin",
-    titre_popup: "",
-    texte_popup: "Pour garder le sourire :<br><br>
+    titre_popup: " ",
+    texte_popup: "
+    <img src='/assets/images/LOGO_MTdents.png' alt='MTdents' style='position: fixed; top: -200px; left: 350px;'/>
+    Pour garder le sourire :<br><br>
 1/ brosse-toi correctement les dents 2 fois par jour pendant 2 minutes<br><br>
 2/ consulte ton dentiste au moins une fois par an<br><br>
-L'Assurance Maladie offre des rendez-vous de prévention avec le dentiste appelés « M'T dents » aux jeunes de âgés de 18, 21 et 24 ans !<br><br>",
+<a href='https://www.ameli.fr/cotes-d-armor/assure/sante/themes/carie-dentaire/mt-dents-tous-les-ans'>L'Assurance Maladie offre des rendez-vous de prévention avec le dentiste appelés « M'T dents » aux jeunes de âgés de 18, 21 et 24 ans !</a><br><br>",
     conteneur_button_style: "conteneur_button_row", 
     buttons: [
         { contenue: 'Rejouer', class: 'btn', route: "app_jeu_nettoyage" },

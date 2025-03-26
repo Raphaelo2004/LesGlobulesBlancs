@@ -31,16 +31,3 @@ body {
     height: auto;
     transition: transform 0.1s linear;
 }
-
-.score-container {
-    text-align: center;
-    display: block;
-    position: fixed;
-    top: 220px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    h1{
-        color: $color-white;
-    }
-}
