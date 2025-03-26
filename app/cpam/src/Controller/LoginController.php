@@ -18,10 +18,17 @@ class LoginController extends AbstractController
      */
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
-        // On utilise l'objet Utilisateur *uniquement* pour hydrater le formulaire
+        $session = $request->getSession();
+        
+        // Si la session contient déjà l'ID de l'utilisateur, rediriger vers l'accueil
+        if ($session->has('utilisateur_id')) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
+        // Utiliser l'objet Utilisateur uniquement pour hydrater le formulaire
         $utilisateurFormData = new Utilisateur();
 
-        // Création du formulaire à partir du type Connexion2Type
+        // Création du formulaire à partir du type RegistrationFormType
         $form = $this->createForm(RegistrationFormType::class, $utilisateurFormData);
         $form->handleRequest($request);
 
@@ -39,23 +46,16 @@ class LoginController extends AbstractController
                 ]);
 
             if ($utilisateurEnBase) {
-                // Utilisateur trouvé : on le stocke en session
-                $session = $request->getSession();
-                // Tu peux stocker directement l'ID
+                // Utilisateur trouvé : stocke son ID en session et redirige vers l'accueil
                 $session->set('utilisateur_id', $utilisateurEnBase->getId());
-
-                // (Optionnel) Si tu veux stocker l’objet en entier, assure-toi qu’il est sérialisable
-                // $session->set('utilisateur', $utilisateurEnBase);
-
-                // Redirection vers la page d'accueil (ou autre)
                 return $this->redirectToRoute('app_accueil');
             } else {
-                // Alerte : identifiants invalides
+                // Utilisateur non trouvé : affiche un message d'erreur
                 $this->addFlash('danger', 'Identifiant ou e-mail incorrect.');
             }
         }
 
-        // Rendu du template
+        // Rendu du template avec le formulaire
         return $this->render('login/index.html.twig', [
             'form' => $form->createView(),
         ]);

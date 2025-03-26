@@ -23,11 +23,6 @@
 
             {{ form_start(form) }}
                 <div class="form-group">
-                    {# 
-                      Pour le champ identifiant, 
-                      on ajoute les classes "para--regular para--medium" 
-                      pour la taille & police
-                    #}
                     {{ form_widget(form.identifiant, {
                         'attr': {
                             'placeholder': 'identifiant',
@@ -45,13 +40,19 @@
                     }) }}
                 </div>
 
-                {# Bouton : texte "para--regular para--large" pour correspondre à la charte #}
                 <button type="submit" class="btn-submit para--regular para--large">
                     Se connecter
                 </button>
+                {# Affichage des messages Flash en rouge, sous le dernier champ et avant le bouton #}
+                  {% for label, messages in app.flashes %}
+                      {% for message in messages %}
+                          <div class=" para--regular para--medium alert alert-{{ label }}" style="color: red;">
+                              {{ message }}
+                          </div>
+                      {% endfor %}
+                  {% endfor %}
             {{ form_end(form) }}
 
-            {# Petit texte en-dessous : "para--regular" et "para--small" #}
             <p class="already para--regular para--small">
                 Vous ne possédez de compte&nbsp;?
                 <a href="{{ path('app_connexion', { zone: 3 }) }}" class="login-link">
