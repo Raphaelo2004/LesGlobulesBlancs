@@ -31,6 +31,11 @@
         ]
     } %}
 
+    {# Zone du jeu Taquin #}
+    <div id="game-container">
+        <div id="grille"></div>
+    </div>
+
     {% set classement_html %} 
         {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard': false} %} 
     {% endset %}
@@ -60,4 +65,8 @@
         ]
     } %}
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('jeux/jeu_1/jeu_1_gameplay.js') }}"></script>
 {% endblock %}
