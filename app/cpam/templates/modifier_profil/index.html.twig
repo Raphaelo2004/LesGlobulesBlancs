@@ -12,17 +12,22 @@
     <div class="profil-container">
         <h1 class="profil-title titre--large titre--bold">Modifier votre profil</h1>
 
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success para--medium para--regular">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <div class="profil-infos">
-            {# <form action="{{ path('app_modifier_profil_traitement') }}" method="POST" class="profil-form"> #}
-            <form method="POST" class="profil-form">
+            <form action="{{ path('app_modifier_profil_traitement') }}" method="POST" class="profil-form">
                 <div class="form-group">
                     <label class="para--regular para--large" for="identifiant">Identifiant : </label>
-                    <input type="text" id="identifiant" name="identifiant" class="form-input" required>
+                    <input type="text" id="identifiant" name="identifiant" class="form-input" value="{{ identifiant }}" required>
                 </div>
 
                 <div class="form-group">
                     <label class="para--regular para--large" for="email">Adresse email : </label>
-                    <input type="email" id="email" name="email" class="form-input" required>
+                    <input type="email" id="email" name="email" class="form-input" value="{{ email }}" required>
                 </div>
                 <div class="container-btn">
                     <button type="submit" class="btn para--large para--regular">Modifier</button>

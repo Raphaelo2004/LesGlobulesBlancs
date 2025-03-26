@@ -33,6 +33,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function pauseChrono() {
+        isPaused = true;
+        clearInterval(chronoInterval); // Stopper complètement le chronomètre
+        const chronoNeedle = document.querySelector('.needle');
+        chronoNeedle.style.animationPlayState = "paused";
+    }
 
     function ouvrirPopup(nom_popup) {
         const popups = document.querySelectorAll(nom_popup);
@@ -98,24 +104,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     ouvrirPopup(".popup_score");
                 }
             }
-            console.log("chronoInterval:", chronoInterval);
-            console.log("chronoTimeLeft:", chronoTimeLeft);
-            console.log("isPaused:", isPaused);
-            console.log("countdownInterval:", countdownInterval);
-            console.log("countdown:", countdown);
-            console.log("isCountdownPaused:", isCountdownPaused);
+            // console.log("chronoInterval:", chronoInterval);
+            // console.log("chronoTimeLeft:", chronoTimeLeft);
+            // console.log("isPaused:", isPaused);
+            // console.log("countdownInterval:", countdownInterval);
+            // console.log("countdown:", countdown);
+            // console.log("isCountdownPaused:", isCountdownPaused);
         }, 1000);
 
         chronoNeedle.style.animation = `run ${chronoTimeLeft}s linear`;
         chronoNeedle.style.animationPlayState = "running";
     }
 
-    function pauseChrono() {
-        isPaused = true;
-        clearInterval(chronoInterval); // Stopper complètement le chronomètre
-        const chronoNeedle = document.querySelector('.needle');
-        chronoNeedle.style.animationPlayState = "paused";
-    }
+
 
     function reprendreChrono() {
         gererDepart(); // Relancer le décompte avant de reprendre
@@ -158,6 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     window.fermerPopup = fermerPopup;
+    window.ouvrirPopup = ouvrirPopup;
     window.fermerPopupLvlFacile = fermerPopupLvlFacile;
     window.fermerPopupLvlNormal = fermerPopupLvlNormal;
     window.fermerPopupLvlDifficile = fermerPopupLvlDifficile;

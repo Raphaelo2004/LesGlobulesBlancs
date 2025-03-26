@@ -2,8 +2,6 @@
 
 $fond_jeu_5: #1A203B;
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
 body {
     background-color: $fond_jeu_5;
     touch-action: none;
@@ -56,5 +54,6 @@ body {
 
 .bouche img{
     width: 100%;
+    transition: opacity 1s ease-in-out; /* 1s pour une transition d'une seconde */
 }
 

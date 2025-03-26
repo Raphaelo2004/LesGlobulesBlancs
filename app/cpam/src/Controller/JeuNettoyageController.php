@@ -38,6 +38,10 @@ class JeuNettoyageController extends AbstractController
      */
     public function gameplay(): Response
     {
-        return $this->render('jeu_nettoyage/gameplay.html.twig');
+        $classement = $this->classementService->getClassement();
+
+        return $this->render('jeu_nettoyage/gameplay.html.twig', [
+            'classement' => $classement
+        ]);
     }
 }
