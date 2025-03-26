@@ -43,7 +43,21 @@ document.addEventListener('DOMContentLoaded', function () {
             responsive: true,
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        font: {
+                            family: 'Source Sans Pro', // Appliquer la police Source Sans Pro à la légende
+                            size: 14 // Taille de la police pour l'axe Y
+                        }
+                    }
+                },
+                x: {
+                    ticks: {
+                        font: {
+                            family: 'Source Sans Pro', // Appliquer la police Source Sans Pro à la légende
+                            size: 14 // Taille de la police pour l'axe X
+                        }
+                    }
                 }
             }
         }
