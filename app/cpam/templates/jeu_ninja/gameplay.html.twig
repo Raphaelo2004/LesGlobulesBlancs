@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}JeuNinja{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('jeux/jeu_4/jeu_4_gameplay.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    {# composant ecran pause #}
+    {% include 'composants/ecran_pause/ecran_pause.html.twig' with { 'lien': 'app_jeu_ninja'} %}
+
+    <div class="score-container">
+        <h1 class="titre--large titre--bold">Score : <span id="score-value">0</span></h1>
+        <div id="error-container"></div>
+    </div>
+
+    <div id="countdown" class="countdown-container titre--bold titre--extralarge"></div>
+    {% include 'composants/chronometre/chronometre.html.twig' %}
+
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "consignes",
+        titre_popup: "Consignes",
+        texte_popup: "<ul>
+            <li class='para--regular para--large'>Coupez un maximum d'aliments moins bons pour sa santé.</li>
+            <li class='para--regular para--large'>Couper un aliment bon pour sa santé vous fait perdre des points.</li>
+            <li class='para--regular para--large'>Laisser tomber un aliment mauvais pour sa santé vous fait également perdre des points.</li>
+        </ul>
+        <p class='para--regular para--large'>Les objets sont de plus en plus nombreux et tombent de plus en plus vite.</p>",
+        conteneur_button_style: "conteneur_button_column",
+        buttons: [
+            { contenue: 'Jouer', class: 'btn--normal btn--lvl', onclick :"fermerPopupLvlNormal()" }
+        ]
+    } %}
+
+    {% set classement_html %} 
+        {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard': false} %} 
+    {% endset %}
+
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "popup_score",
+        titre_popup: "Score : 0",
+        texte_popup: classement_html,
+        conteneur_button_style: "conteneur_button_row", 
+        buttons: [
+            { contenue: 'Continuer', class: 'btn', onclick :"clickContinuer()" },
+            { contenue: 'Partager', class: 'btn', onclick :"clickPartager()" },
+        ]
+    } %}
+
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "popup_fin",
+        titre_popup: "",
+        texte_popup: "",
+        conteneur_button_style: "conteneur_button_row", 
+        buttons: [
+            { contenue: 'Rejouer', class: 'btn', route: "app_jeu_ninja" },
+            { contenue: 'Quitter', class: 'btn', route: "app_accueil" },
+        ]
+    } %}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('jeux/jeu_4/jeu_4_gameplay.js') }}"></script>
+{% endblock %}
