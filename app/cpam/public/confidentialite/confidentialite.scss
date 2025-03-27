@@ -1,0 +1,42 @@
+@import '../style_general';
+
+.privacy-container {
+    width: 80%;
+    margin: 40px auto;
+    padding: 20px;
+    background: $color-white;
+    border-radius: 8px;
+    padding-bottom: 200px;
+}
+
+.privacy-container h1 {
+    text-align: center;
+    color: $color-blue-main;
+    margin-bottom: 100px;
+}
+
+.privacy-container h2 {
+    color: $color-blue-main;
+    border-bottom: 2px solid $color-blue-main;
+    padding-bottom: 5px;
+    margin-top: 20px;
+}
+
+.privacy-container p {
+    line-height: 1.6;
+    color: $color-black;
+}
+
+.privacy-container ul {
+    list-style-type: disc;
+    padding-left: 50px;
+}
+
+.privacy-container ul li {
+    color: $color-black;
+    margin: 5px 0;
+}
+
+section{
+    margin-bottom: 100px;
+}

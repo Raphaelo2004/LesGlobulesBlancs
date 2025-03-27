@@ -5,22 +5,12 @@ function getQueryParam(param) {
 
 let jeuCommence = false;
 let jeuTermine = false;
+let deplacements = 0;  // Variable pour compter les déplacements
+let difficulty = getQueryParam("difficulty");
 
 function startGame() {
-    const difficulty = getQueryParam("difficulty");
-
-    if (!difficulty) {
-        console.warn("Aucune difficulté sélectionnée !");
-        return;
-    }
-
-    console.log("Difficulté sélectionnée :", difficulty);
-
     let lignes = 3; // Les lignes sont identiques pour normal et difficile
     let colonnes = 4; // Colonnes pour normal
-    if (difficulty === "difficile") {
-        colonnes = 6; // Colonnes pour difficile
-    }
 
     let { grille, vide } = genererGrilleMelangee(lignes, colonnes);
     afficherTaquin(grille, lignes, colonnes, vide, difficulty);
@@ -39,10 +29,10 @@ function lancerMinuteur() {
         if (!jeuTermine) {
             console.log("Temps écoulé ! Vous avez perdu.");
             updatePopupFin("perdu");
-            updatePopupScore();
+            updatePopupScore("perdu");
             ouvrirPopup(".popup_score");
         }
-    }, 180000); // 180 secondes = 3 minutes
+    }, 90000);
 }
 
 function genererGrilleMelangee(lignes, colonnes) {
@@ -104,16 +94,41 @@ function afficherTaquin(grille, lignes, colonnes, vide, difficulty) {
     });
 
     function deplacerPiece(row, col) {
-        if ((Math.abs(row - vide.row) === 1 && col === vide.col) ||
-            (Math.abs(col - vide.col) === 1 && row === vide.row)) {
-            [grille[vide.row][vide.col], grille[row][col]] = [grille[row][col], grille[vide.row][vide.col]];
-            vide = { row, col };
-            afficherTaquin(grille, lignes, colonnes, vide, difficulty);
-            if (verifierVictoire()) {
-                setTimeout(() => afficherImageComplete(), 200);
+        if (!jeuCommence) return; // Bloquer les déplacements si le jeu n'a pas commencé
+    
+        // Déplacer une ligne entière si la case est à l'extrémité de la ligne
+        if (row === vide.row) {
+            if (col < vide.col) {  // Déplacer la ligne à gauche
+                for (let i = vide.col; i > col; i--) {
+                    [grille[row][i], grille[row][i - 1]] = [grille[row][i - 1], grille[row][i]];
+                }
+            } else if (col > vide.col) {  // Déplacer la ligne à droite
+                for (let i = vide.col; i < col; i++) {
+                    [grille[row][i], grille[row][i + 1]] = [grille[row][i + 1], grille[row][i]];
+                }
             }
+            vide = { row, col };  // Mise à jour de la position vide
+        } else if (col === vide.col) {
+            if (row < vide.row) {  // Déplacer la colonne vers le haut
+                for (let i = vide.row; i > row; i--) {
+                    [grille[i][col], grille[i - 1][col]] = [grille[i - 1][col], grille[i][col]];
+                }
+            } else if (row > vide.row) {  // Déplacer la colonne vers le bas
+                for (let i = vide.row; i < row; i++) {
+                    [grille[i][col], grille[i + 1][col]] = [grille[i + 1][col], grille[i][col]];
+                }
+            }
+            vide = { row, col };  // Mise à jour de la position vide
+        }
+        
+        afficherTaquin(grille, lignes, colonnes, vide, difficulty);
+        deplacements++; // Incrémenter le nombre de déplacements
+        document.getElementById("score-value").textContent = deplacements;
+        if (verifierVictoire()) {
+            setTimeout(() => afficherImageComplete(), 200);
         }
     }
+    
 
     function verifierVictoire() {
         let count = 0;
@@ -133,9 +148,48 @@ function afficherImageComplete() {
     imageComplete.classList.add("carte-vitale-complete");
     grilleElement.appendChild(imageComplete);
 
-    updatePopupFin("gagne");
-    updatePopupScore();
-    ouvrirPopup(".popup_score");
+    // Attendre 3 secondes avant d'afficher la popup
+    setTimeout(() => {
+        updatePopupFin("gagne");
+        updatePopupScore("gagne");
+        ouvrirPopup(".popup_score");
+    }, 2500);
+}
+
+function updatePopupFin(finPartie) {
+    const popupFinContent = document.querySelector('.popup_fin .popup-main p');
+
+    if (finPartie === "perdu") {
+        popupFinContent.innerHTML = `Dommage, tu as <strong>perdu</strong> !<br><br>
+            La carte Vitale contient les informations personnelles nécessaires au remboursement de tes frais de santé ou en cas d’hospitalisation. C’est la garantie d'être bien remboursé rapidement.<br><br>
+            En cas de perte, tu peux en commander une nouvelle directement depuis ton compte sur <a href='https://www.ameli.fr' target='_blank'>ameli.fr</a> !`;
+    } else if (finPartie === "gagne") {
+        popupFinContent.innerHTML = `Bravo, tu as <strong>réussi</strong> !<br><br>
+            La carte Vitale contient les informations personnelles nécessaires au remboursement de tes frais de santé ou en cas d’hospitalisation. C’est la garantie d'être bien remboursé rapidement.<br><br>
+            En cas de perte, tu peux en commander une nouvelle directement depuis ton compte sur <a href='https://www.ameli.fr' target='_blank'>ameli.fr</a> !`;
+    }
+}
+
+function updatePopupScore(finPartie) {
+    const popupScoreTitle = document.querySelector('.popup_score .popup-header h1');
+
+    let base_score;
+    let score;
+    if (finPartie === "gagne") {
+        if (difficulty == 'medium') {
+            base_score = 1250;
+        } else {
+            base_score = 1500;
+        }
+        score = Math.max(base_score - (deplacements * 6), 500) 
+             + (deplacements <= 50 ? 200 : 0)   // Bonus de 200 pour 50 coups ou moins
+             + (deplacements <= 80 ? 100 : 0)   // Bonus de 100 pour 80 coups ou moins
+             + (difficulty === "hard" ? 300 : 0); // Bonus de 300 pour niveau "hard"
+    } else {
+        score = 0;
+    }
+    
+    popupScoreTitle.innerHTML = `Score : ` + score;
 }
 
 // Rendre startGame accessible globalement

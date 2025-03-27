@@ -36,6 +36,11 @@
         <div id="grille"></div>
     </div>
 
+    <div class="score-container moves-container">
+        <h1 class="titre--large titre--bold">Nombre de coups : <span id="score-value">0</span></h1>
+        <div id="error-container"></div>
+    </div>
+
     {% set classement_html %} 
         {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard': false} %} 
     {% endset %}
