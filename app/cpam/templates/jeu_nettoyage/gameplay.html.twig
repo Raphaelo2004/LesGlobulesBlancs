@@ -8,6 +8,7 @@
 
 {% block javascripts %}
     <script src="{{ asset('jeux/jeu_5/jeu_5_gameplay.js') }}"></script>
+    <script src="{{ asset('jeux/jeux_global/jeu_global.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -26,6 +27,9 @@
     <div id="brosse" class="brosse"><img src="/assets/images/bosse a dent_fixe.png" alt="brosse" /></div>
     <div id="dentifrice" class="dentifrice"><img src="/assets/images/dentifrice.png" alt="dentifirce" /></div>
 </div>
+{% set classement_html %} 
+    {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard': false} %} 
+{% endset %}
 
     {% include 'composants/pop-up/pop-up.html.twig' with {
     nom_popup: "consignes",
@@ -46,23 +50,6 @@
         { contenue: 'Difficile', class: 'btn--hard btn--lvl', onclick :"fermerPopupLvlDifficile()" }
     ]
 } %}
-
-{% set classement_html %} 
-    {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard': false} %} 
-{% endset %}
-
-{% include 'composants/pop-up/pop-up.html.twig' with {
-    nom_popup: "popup_score",
-    titre_popup: "Score : 850",
-    texte_popup: classement_html,
-    conteneur_button_style: "conteneur_button_row", 
-    buttons: [
-        { contenue: 'Continuer', class: 'btn', onclick :"clickContinuer()" },
-        { contenue: 'Partager', class: 'btn', onclick :"clickPartager()" },
-    ]
-} %}
-
-
 {% include 'composants/pop-up/pop-up.html.twig' with {
     nom_popup: "popup_fin",
     titre_popup: " ",
@@ -78,5 +65,19 @@
         { contenue: 'Quitter', class: 'btn', route: "app_accueil" },
     ]
 } %}
+{% include 'composants/pop-up/pop-up.html.twig' with {
+    nom_popup: "popup_score",
+    titre_popup: "Score : 850",
+    texte_popup: classement_html,
+    conteneur_button_style: "conteneur_button_row", 
+    buttons: [
+        { contenue: 'Continuer', class: 'btn', onclick :"clickContinuer()" },
+        { contenue: 'Partager', class: 'btn', onclick :"clickPartager()" },
+    ]
+} %}
+
+
+
+
 {% endblock %}
 

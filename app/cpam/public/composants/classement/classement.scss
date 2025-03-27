@@ -56,6 +56,16 @@
 
 .current_user_score{
     background-color: $color-current-user-score;
-    position: sticky;
-    bottom: 0px;
 }
+
+
+.connect_user{
+    background-color: $color-current-user-score;
+}
+
+.item_fixe{
+    position: sticky;
+    bottom: 10px;
+    background-color: $color-current-user-score;
+}
+

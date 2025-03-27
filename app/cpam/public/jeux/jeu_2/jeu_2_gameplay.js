@@ -105,7 +105,7 @@ function createFallingObject(fallSpeed) {
                         pauseChrono();
                         pauseCountdown();
                         updatePopupFin("perdu");
-                        updatePopupScore();
+                        updatePopupScore(score);
                         ouvrirPopup(".popup_score");
                         clearInterval(gameInterval);
                     }
@@ -168,9 +168,11 @@ function startGame() {
         setTimeout(() => {
             clearInterval(gameInterval);
             console.log("Fin du jeu ! Plus aucun objet ne tombe.");
+            sendScoreToDatabase(score,2)
+            updatePopupScore(score);
             updatePopupFin("gagne");
-            updatePopupScore();
             applaudissement.play();
+
             ouvrirPopup(".popup_score");
         }, 60000); // 60 secondes
     }, 3000); // 3 secondes de délai avant le démarrage du jeu
@@ -217,10 +219,4 @@ function updatePopupFin(finPartie) {
             La complémentaire santé solidaire (C2S) est une aide pour payer ses dépenses de santé, si tes ressources sont faibles. Avec la C2S tu ne paies pas le médecin, ni tes médicaments en pharmacie. La plupart des lunettes et des soins dentaires sont pris en charge.<br><br>
             Tu peux faire une simulation sur <a href='https://www.ameli.fr' target='_blank'>ameli.fr</a> pour savoir si tu y as droit !`;
     }
-}
-
-
-function updatePopupScore() {
-    const popupScoreTitle = document.querySelector('.popup_score .popup-header h1');
-    popupScoreTitle.innerHTML = `Score : ` + score;
 }

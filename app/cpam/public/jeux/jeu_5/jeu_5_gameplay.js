@@ -1,3 +1,5 @@
+let score = 0;
+
 document.addEventListener("DOMContentLoaded", () => {
     const game = document.getElementById("game");
     const bouche = document.getElementById("bouche");
@@ -9,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let holdingDentifrice = false;
     let holdingBrosse = false;
     let brosseHits = 0;
-    let score = 0;
+    score = 0;
 
     document.querySelectorAll("a").forEach(link => {
         link.addEventListener("click", () => {
@@ -175,7 +177,10 @@ document.addEventListener("DOMContentLoaded", () => {
             img.src = "/assets/images/bouche_propre.png";
             img.style.opacity = 1;
             pauseChrono();
-            updatePopupScore();
+            updatePopupScore(score);
+
+            sendScoreToDatabase(score,5);
+            
             setTimeout(() => {
                 ouvrirPopup('.popup_score');
             }, 2000);
@@ -183,16 +188,8 @@ document.addEventListener("DOMContentLoaded", () => {
         
     }
 
-    function updatePopupScore() {
-        const popupScoreTitle = document.querySelector('.popup_score .popup-header h1');
-        popupScoreTitle.innerHTML = `Score : ` + score;
-    }
-    
-    function updateScore() {
-        document.getElementById("score-value").textContent = score;
-    }
-});
 
+});
 
 let bacteriaList = [];
 

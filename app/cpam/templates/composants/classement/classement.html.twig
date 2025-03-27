@@ -2,53 +2,63 @@
 <link rel="stylesheet" href="{{ asset('composants/classement/classement.css') }}">
 {% endblock %}
 
+{% block javascripts %}
+    <script>
+    const utilisateurId = {{ app.session.get('utilisateur_id')|json_encode|raw }};
+
+    const medailleOr = "{{ asset('assets/images/medaille_or.png') }}";
+    const medailleArgent = "{{ asset('assets/images/medaille_argent.png') }}";
+    const medailleBronze = "{{ asset('assets/images/medaille_bronze.png') }}";
+</script>
+{% endblock %}
+
 <div class="classement_container">
-    {% for index, item in classement %}
-        <div class="classement_item">
-            <div class="leftside_container">
-                <div class="classement_utilisateur">
-                    <p class="para--semibold para--extralarge">{{ item.identifiant }}</p>
-                </div>
-                <div class="classement_score">
-                    <p class="para--regular para--large">{{ item.totalScore }}</p>
-                </div>
+{% for index, item in classement %}
+    <div class="classement_item {% if item.id == utilisateur.id %}connect_user{% endif %}" data-item-id="{{ item.id }}">
+        <div class="leftside_container">
+            <div class="classement_utilisateur">
+                <p class="para--semibold para--extralarge">{{ item.identifiant }}</p>
             </div>
-            <div class="classement_position">
-                {% if isLeaderboard is defined and isLeaderboard %}
-                    {% if index == 0 %}
-                        <img src="{{ asset('assets/images/medaille_argent.png') }}" alt="Médaille Argent" />
-                    {% elseif index == 1 %}
-                        <img src="{{ asset('assets/images/medaille_bronze.png') }}" alt="Médaille Bronze" />
-                    {% else %}
-                        <p class="para--black para--extralarge">{{ index + 2 }}</p>
-                    {% endif %}
-                {% else %}
-                    {% if index == 0 %}
-                        <img src="{{ asset('assets/images/medaille_or.png') }}" alt="Médaille Or" />
-                    {% elseif index == 1 %}
-                        <img src="{{ asset('assets/images/medaille_argent.png') }}" alt="Médaille Argent" />
-                    {% elseif index == 2 %}
-                        <img  src="{{ asset('assets/images/medaille_bronze.png') }}" alt="Médaille Bronze" />
-                    {% else %}
-                        <p class="para--black para--extralarge">{{ index + 1 }}</p>
-                    {% endif %}
-                {% endif %}
+            <div class="classement_score">
+                <p class="para--regular para--large">{{ item.MaxscoreJeu }}</p>
             </div>
         </div>
-    {% endfor %}
-    <div class="classement_item current_user_score">
+        <div class="classement_position">
+            {% if isLeaderboard is defined and isLeaderboard %}
+                {% if index == 0 %}
+                    <img src="{{ asset('assets/images/medaille_argent.png') }}" alt="Médaille Argent" />
+                {% elseif index == 1 %}
+                    <img src="{{ asset('assets/images/medaille_bronze.png') }}" alt="Médaille Bronze" />
+                {% else %}
+                    <p class="para--black para--extralarge">{{ index + 2 }}</p>
+                {% endif %}
+            {% else %}
+                {% if index == 0 %}
+                    <img src="{{ asset('assets/images/medaille_or.png') }}" alt="Médaille Or" />
+                {% elseif index == 1 %}
+                    <img src="{{ asset('assets/images/medaille_argent.png') }}" alt="Médaille Argent" />
+                {% elseif index == 2 %}
+                    <img  src="{{ asset('assets/images/medaille_bronze.png') }}" alt="Médaille Bronze" />
+                {% else %}
+                    <p class="para--black para--extralarge">{{ index + 1 }}</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
+    <div class="classement_item current_user_score" data-user-id="{{utilisateur.id}}">
     <div class="leftside_container">
         <div class="classement_utilisateur">
-            <p class="para--semibold para--extralarge">identifiant</p>
+            <p class="para--semibold para--extralarge">{{ utilisateur.identifiant }}</p>
         </div>
         <div class="classement_score">
-            <p class="para--regular para--large">score</p>
+            <p class="para--regular para--large">{{ scoreUser.score is defined ? scoreUser.score : '-' }}</p>
         </div>
     </div>
-    <div class="classement_position ">       
-            <p class="para--black para--extralarge">position</p>
-    </div>
-</div>
+        <div class="classement_position ">       
+            <p class="para--black para--extralarge">{{ scoreUser.position is defined ? scoreUser.position : '-' }}</p>
+        </div>
+    
 </div>
 
 

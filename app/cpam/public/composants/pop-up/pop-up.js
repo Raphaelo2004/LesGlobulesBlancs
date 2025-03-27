@@ -2,9 +2,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let chronoInterval;
     let chronoTimeLeft;
     if (window.location.href.includes("taquin_gameplay")) {
-        chronoTimeLeft = 90;
+        window.chronoTimeLeft = 90;
     } else {
-        chronoTimeLeft = 60; 
+        window.chronoTimeLeft = 60; 
     }
     let isPaused = false;
     
@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function ouvrirPopup(nom_popup) {
         const popups = document.querySelectorAll(nom_popup);
-
         // Parcourt chaque popup et l'affiche en modifiant son style
         popups.forEach(popup => {
             popup.style.display = 'block';

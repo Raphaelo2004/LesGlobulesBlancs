@@ -10,29 +10,50 @@
     {% include 'composants/header/header.html.twig' %}
     
     <div class="main_container">
-        {% if classement|length > 0 %}
-            {% set leader = classement[0] %}
-            <div class="number1">
-                <div class="filter_bar">
+    {% if classement is not empty %}
+        {% set leader = classement[0] %}
+    {% else %}
+        {% set leader = null %}
+    {% endif %}
 
-                </div>
-                <div class="number1_position"><img src="{{ asset('assets/images/medaille_or.png') }}" alt="Médaille Or" /></div>
-                <div class="number1_utilisateur">
-                    <p class="para--bold para--extralarge">{{ leader.identifiant }}</p>
-                </div>
-                <div class="number1_score">
-                    <p class="para--regular para--large">{{ leader.totalScore }}</p>
-                </div>
-            </div>
-            {% set classement = classement|slice(1) %}
-        {% endif %}
 
-        <div class="classement">
-            {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard' : true} %}
-        <div>
-        {# Inclusion de la barre de navigation #}
-        {% if navItems is defined and activeNav is defined %}
-            {% include 'composants/nav_bar/navigation.html.twig' with { 'navItems': navItems, 'activeNav': activeNav } %}
-        {% endif %}
-    <div>
+
+    <div class="number1">
+        <div class="filter_bar">
+            <!-- Optionnel: ajout de barres de filtres si nécessaire -->
+        </div>
+
+        <div class="number1_position">
+            <img src="{{ asset('assets/images/medaille_or.png') }}" alt="Médaille Or" />
+        </div>
+
+        <div class="number1_utilisateur">
+            {% if leader %}
+                <p class="para--bold para--extralarge">{{ leader.identifiant }}</p>
+            {% else %}
+                <p class="para--bold para--extralarge">{{ identifiant }}</p>
+            {% endif %}
+        </div>
+
+        <div class="number1_score">
+            {% if leader %}
+                <p class="para--regular para--large">{{ leader.MaxscoreJeu }}</p>
+            {% else %}
+                <p class="para--regular para--large">{{ scoreUser.score }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    {% set classement = classement|slice(1) %}
+
+    <div class="classement">
+        {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard' : true} %}
+    </div>
+
+    {# Inclusion de la barre de navigation #}
+    {% if navItems is defined and activeNav is defined %}
+        {% include 'composants/nav_bar/navigation.html.twig' with { 'navItems': navItems, 'activeNav': activeNav } %}
+    {% endif %}
+</div>
+
 {% endblock %}
