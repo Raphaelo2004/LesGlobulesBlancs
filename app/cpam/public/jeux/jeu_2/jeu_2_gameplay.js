@@ -100,11 +100,11 @@ function createFallingObject(fallSpeed) {
                     errors++;
                     updateErrors();
                     console.log("Erreurs:", errors);
-                    if (errors >= maxErrors) {
+                    if (errors == maxErrors) {
+                        sendScoreToDatabase(score,2)
                         console.log("Perdu !");
                         pauseChrono();
                         pauseCountdown();
-                        sendScoreToDatabase(score,2)
                         updatePopupFin("perdu");
                         updatePopupScore(score);
                         ouvrirPopup(".popup_score");
