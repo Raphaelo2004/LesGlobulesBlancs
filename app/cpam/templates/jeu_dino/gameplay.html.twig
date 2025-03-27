@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}JeuDino{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('jeux/jeu_3/jeu_3_gameplay.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    {# composant ecran pause #}
+    {% include 'composants/ecran_pause/ecran_pause.html.twig' with { 'lien': 'app_jeu_dino'} %}
+
+    <div class="iban-container">
+        <img src="{{ asset('assets/images/jeu3/iban_titre.png') }}" alt="Ban Titre" class="iban-image">
+        <img src="{{ asset('assets/images/jeu3/iban_a_remplir.png') }}" alt="Ban Titre" class="iban-vide-image">
+        <div id="error-container"></div>
+    </div>
+
+    <div id="countdown" class="countdown-container titre--bold titre--extralarge"></div>
+    {% include 'composants/chronometre/chronometre.html.twig' %}
+
+
+    <img src="{{ asset('assets/images/Jeu3/dinosaure_1.png') }}" alt="dino" class="dino" id="dino">
+
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "consignes",
+        titre_popup: "Consignes",
+        texte_popup: "<ul>
+            <li class='para--regular para--large'>Récupérez un maximum de chiffres pour compléter l’IBAN et n’oubliez pas de sauter par-dessus les cactus !</li>
+            <br />
+            <li class='para--regular para--large'>Niveau 1 <br />
+            Les nombres apparaissent à l'écran. Si vous ne les récupérez pas, vous perdez des points.</li>
+            <br />
+            <li class='para--regular para--large'>Niveau 2 <br />
+            Les nombres ne sont pas visibles et ne peuvent pas être récupérés directement. Vous devrez les deviner plus tard !</li>
+            <br />
+        </ul>
+        <p class='para--regular para--large'> Utilisez ESPACE pour sauter !</p>",
+        conteneur_button_style: "conteneur_button_column", 
+        buttons: [
+            { contenue: 'Niveau 1', class: 'btn--normal btn--lvl', onclick :"fermerPopupLvlNormal()" },
+            { contenue: 'Niveau 2', class: 'btn--hard btn--lvl', onclick :"fermerPopupLvlDifficile()" }
+        ]
+    } %}
+
+    {% set classement_html %} 
+        {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard': false} %} 
+    {% endset %}
+
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "popup_score",
+        titre_popup: "Score : 0",
+        texte_popup: classement_html,
+        conteneur_button_style: "conteneur_button_row", 
+        buttons: [
+            { contenue: 'Continuer', class: 'btn', onclick :"clickContinuer()" },
+            { contenue: 'Partager', class: 'btn', onclick :"clickPartager()" },
+        ]
+    } %}
+
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "popup_fin",
+        titre_popup: "",
+        texte_popup: "",
+        conteneur_button_style: "conteneur_button_row", 
+        buttons: [
+            { contenue: 'Rejouer', class: 'btn', route: "app_jeu_dino" },
+            { contenue: 'Quitter', class: 'btn', route: "app_accueil" },
+        ]
+    } %}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('jeux/jeu_3/jeu_3_gameplay.js') }}"></script>
+{% endblock %}

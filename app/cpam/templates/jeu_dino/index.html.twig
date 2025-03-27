@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}JeuNettoyage{% endblock %}
+{% block title %}JeuDino{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('jeux/jeu_3/jeu_3.css') }}">
@@ -9,7 +9,7 @@
 
 {% block body %}
     {# composant ecran pause #}
-    {% include 'composants/ecran_pause/ecran_pause.html.twig'  with { 'lien': 'app_jeu_nettoyage'} %}
+    {% include 'composants/ecran_pause/ecran_pause.html.twig'  with { 'lien': 'app_jeu_dino'} %}
     
     <div class="text-box">
         <p class="para--semibold para--large">
