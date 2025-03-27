@@ -18,7 +18,7 @@ class JeuDinoController extends AbstractController
     }
 
     /**
-     * @Route("/jeu/dino", name="app_jeu_dino_gameplay")
+     * @Route("/jeu/dino", name="app_jeu_dino")
      */
     public function index(JeuDinoService $jeuDinoService): Response
     {
