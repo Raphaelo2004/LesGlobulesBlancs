@@ -9,12 +9,6 @@ let deplacements = 0;  // Variable pour compter les déplacements
 let difficulty = getQueryParam("difficulty");
 
 function startGame() {
-
-    if (!difficulty) {
-        console.warn("Aucune difficulté sélectionnée !");
-        return;
-    }
-
     let lignes = 3; // Les lignes sont identiques pour normal et difficile
     let colonnes = 4; // Colonnes pour normal
 
