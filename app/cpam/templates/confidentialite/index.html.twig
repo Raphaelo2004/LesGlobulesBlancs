@@ -1,11 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Confidentialite{% endblock %}
+{% block title %}Confidentialité{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('confidentialite/confidentialite.css') }}">
+{% endblock %}
 
 {% block body %}
     {% include 'composants/header/header.html.twig' %}
 
-    {# Inclusion de la barre de navigation #}
+    <div class="privacy-container">
+        <h1 class="titre--bold titre--large">Politique de Confidentialité</h1>
+
+        <section>
+            <h2 class="para--bold para--extralarge">1. Responsable de traitement</h2>
+            <p class="para--regular para--medium">La CPAM des Côtes d’Armor (ci-après « nous » ou « l’Organisateur ») est responsable du traitement des données à caractère personnel collectées via le serious game en ligne.</p>
+        </section>
+
+        <section>
+            <h2 class="para--bold para--extralarge">2. Données collectées</h2>
+            <p class="para--semibold para--medium">Dans le cadre de votre inscription et de l’utilisation du serious game, nous sommes susceptibles de collecter :</p>
+            <ul>
+                <li class="para--regular para--medium">Vos informations d’identification : adresse e-mail, pseudo (ou identifiant).</li>
+                <li class="para--regular para--medium">Données d’usage : date et heure de connexion, nombre de jeux réalisés, scores, temps de jeu, nombre de partages éventuels, etc.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="para--bold para--extralarge">3. Finalités du traitement</h2>
+            <p class="para--semibold para--medium">Les données personnelles sont collectées et traitées pour :</p>
+            <ul>
+                <li class="para--regular para--medium">Gérer l’accès au serious game et vos parties (création du compte, suivi de progression, classement, envoi éventuel de relances).</li>
+                <li class="para--regular para--medium">Calculer et afficher le score (leaderboard) et permettre l’organisation de la remise de lots, le cas échéant.</li>
+                <li class="para--regular para--medium">Communiquer avec vous : envoi d’e-mails de confirmation, messages de relance, envoi de mail post-jeu.</li>
+                <li class="para--regular para--medium">Analyser l’utilisation du jeu afin d’améliorer l’expérience utilisateur, de produire des statistiques anonymisées.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="para--bold para--extralarge">4. Base légale du traitement</h2>
+            <p class="para--semibold para--medium">Le traitement des données est fondé sur :</p>
+            <ul>
+                <li class="para--regular para--medium">Le <strong>consentement</strong> des utilisateurs qui s’inscrivent et choisissent de participer au serious game.</li>
+                <li class="para--regular para--medium">L’<strong>intérêt légitime</strong> de la CPAM pour promouvoir l’information en santé et encourager la prévention auprès des jeunes.</li>
+            </ul>
+        </section>
+    </div>
+
+
     {% if navItems is defined and activeNav is defined %}
         {% include 'composants/nav_bar/navigation.html.twig' with { 'navItems': navItems, 'activeNav': activeNav } %}
     {% endif %}
