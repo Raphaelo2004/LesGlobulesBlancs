@@ -46,7 +46,7 @@
         </div>
     </div>
 {% endfor %}
-    <div class="classement_item current_user_score" data-user-id="{{utilisateur.id}}">
+<div class="classement_item current_user_score {% if isLeaderboard is defined and isLeaderboard %}item_fixe{% endif %}" data-user-id="{{ utilisateur.id }}">
     <div class="leftside_container">
         <div class="classement_utilisateur">
             <p class="para--semibold para--extralarge">{{ utilisateur.identifiant }}</p>
