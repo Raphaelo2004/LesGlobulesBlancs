@@ -36,9 +36,16 @@ class ScoreController extends AbstractController
         $user = $entityManager->getRepository(Utilisateur::class)->find($utilisateurId);  // Ici tu pourrais rechercher l'utilisateur autrement
         $game = $entityManager->getRepository(Jeu::class)->find($data['gameId']);  // Même chose pour le jeu
 
-        if (!$user || !$game) {
-            return new JsonResponse(['error' => 'Utilisateur ou jeu non trouvé'], JsonResponse::HTTP_NOT_FOUND);
+        if (!$game) {
+            return new JsonResponse(['error' => 'jeu non trouvé'], JsonResponse::HTTP_NOT_FOUND);
         }
+
+        if (!$user) {
+            return new JsonResponse(['error' => 'Utilisateur non trouvé'], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+
+
 
         // Crée une nouvelle instance de Score
         $newScore = new Score();
