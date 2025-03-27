@@ -6,11 +6,11 @@ function getQueryParam(param) {
 let jeuCommence = false;
 let jeuTermine = false;
 let deplacements = 0;  // Variable pour compter les déplacements
-let difficulty = getQueryParam("difficulty");
 
 function startGame() {
     let lignes = 3; // Les lignes sont identiques pour normal et difficile
     let colonnes = 4; // Colonnes pour normal
+    let difficulty = getQueryParam("difficulty");
 
     let { grille, vide } = genererGrilleMelangee(lignes, colonnes);
     afficherTaquin(grille, lignes, colonnes, vide, difficulty);
@@ -178,6 +178,7 @@ function calculeScore(finPartie) {
 
     let base_score;
     let score;
+    let difficulty = getQueryParam("difficulty");
     if (finPartie === "gagne") {
         if (difficulty == 'medium') {
             base_score = 1250;
