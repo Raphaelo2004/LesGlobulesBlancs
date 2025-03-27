@@ -69,8 +69,6 @@ class ClassementService
     // Réindexer les clés pour que les indices commencent à 0
     $totalScore = array_values($totalScore);
     
-    dump($totalScore);
-    
     return $totalScore;
     }
         
