@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     const tirelire = document.getElementById("tirelire");
-
     let isDragging = false;
     let offsetX = 0;
 
@@ -49,6 +48,14 @@ const badPictos = [
     "/assets/images/jeu2/pictos_faux/telephone.png"
 ];
 
+const bgMusic = new Audio("/assets/SONS/JEU 2 - RAMASSEUR/Son ambiance - Ramasseur.mp3");
+bgMusic.loop = true;
+bgMusic.volume = 0.5; // Volume réduit pour ne pas être trop intrusif
+
+const goodSound = new Audio("/assets/SONS/JEU 2 - RAMASSEUR/Bruitage dans tirelire cochon.mp3");
+const badSound = new Audio("/assets/SONS/JEU 2 - RAMASSEUR/FAUX.mp3");
+const applaudissement = new Audio("/assets/SONS/JEU 2 - RAMASSEUR/Applaudissement de fin.mp3");
+
 function createFallingObject(fallSpeed) {
     const object = document.createElement("img");
     const isGood = Math.random() > 0.5; // 50% chance d'être un bon ou mauvais objet
@@ -84,10 +91,12 @@ function createFallingObject(fallSpeed) {
             ) {
                 document.body.removeChild(object);
                 if (object.dataset.good === "true") {
+                    goodSound.play();
                     score += 30; // Augmente le score
                     updateScore();
                     console.log("Score:", score);
                 } else {
+                    badSound.play();
                     errors++;
                     updateErrors();
                     console.log("Erreurs:", errors);
@@ -125,6 +134,9 @@ function startGame() {
         return;
     }
 
+    // Jouer la musique de fond
+    bgMusic.play();
+
     let fallSpeed;
     let timeBetweenObj;
     
@@ -158,6 +170,7 @@ function startGame() {
             console.log("Fin du jeu ! Plus aucun objet ne tombe.");
             updatePopupFin("gagne");
             updatePopupScore();
+            applaudissement.play();
             ouvrirPopup(".popup_score");
         }, 60000); // 60 secondes
     }, 3000); // 3 secondes de délai avant le démarrage du jeu
