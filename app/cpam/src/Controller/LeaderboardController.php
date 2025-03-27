@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Utilisateur;
 use App\Service\ClassementService;
 use App\Services\NavigationService;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,24 +14,49 @@ use Symfony\Component\Routing\Annotation\Route;
 class LeaderboardController extends AbstractController
 {
     private $classementService;
-    public function __construct(ClassementService $classementService)
+    private $entityManager;
+
+    // Injection des dépendances via le constructeur
+    public function __construct(ClassementService $classementService, EntityManagerInterface $entityManager)
     {
         $this->classementService = $classementService;
+        $this->entityManager = $entityManager;
     }
 
     /**
      * @Route("/leaderboard", name="app_leaderboard")
      */
-    public function index(NavigationService $navService): Response
+    public function index(Request $request, NavigationService $navService): Response
     {
-         // Récupérer le classement
-         $classement = $this->classementService->getClassement();
+        $session = $request->getSession();
+        $utilisateurId = $session->get('utilisateur_id');
+        $utilisateur = $this->entityManager->getRepository(Utilisateur::class)->find($utilisateurId);
 
+        $jeuId = $request->query->get('jeu_id'); // Récupérer l'ID du jeu depuis l'URL
+        $scoreUser = null;
+
+        if ($utilisateurId) {
+            if ($jeuId) {
+                // Récupérer le score pour un jeu spécifique
+                $scoreUser = $this->classementService->getScoreUser((int) $jeuId, (int) $utilisateurId);
+            } else {
+                // Récupérer le score total de l'utilisateur
+                $scoreUser = $this->classementService->getScoreTotalUtilisateur((int) $utilisateurId);
+            }
+        }
+
+        // Récupérer le classement des utilisateurs
+        $classement = $this->classementService->getClassementTotal();
+
+        // Renvoyer la réponse avec le rendu de la vue
         return $this->render('leaderboard/index.html.twig', [
             'controller_name' => 'LeaderboardController',
             'navItems' => $navService->getNavigationItems(),
             'activeNav' => 'leaderboard', // Indique la page active
-            'classement' => $classement, 
+            'utilisateur' => $utilisateur,
+            'classement' => $classement,
+            'scoreUser' => $scoreUser,
+            'jeuId' => $jeuId,
         ]);
     }
 }

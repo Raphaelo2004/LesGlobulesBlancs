@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     let chronoInterval; 
-    let chronoTimeLeft = 60; 
+    window.chronoTimeLeft = 60;
     let isPaused = false;
     
     let countdown = 3; 
@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function ouvrirPopup(nom_popup) {
         const popups = document.querySelectorAll(nom_popup);
-
         // Parcourt chaque popup et l'affiche en modifiant son style
         popups.forEach(popup => {
             popup.style.display = 'block';

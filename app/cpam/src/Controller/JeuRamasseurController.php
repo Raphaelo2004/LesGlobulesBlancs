@@ -2,19 +2,24 @@
 
 namespace App\Controller;
 
+use App\Entity\Utilisateur;
 use App\Services\JeuRamasseurService;
 use App\Service\ClassementService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface; 
 
 class JeuRamasseurController extends AbstractController
 {
 
     private $classementService;
-    public function __construct(ClassementService $classementService)
+    private $entityManager;
+    public function __construct(ClassementService $classementService,EntityManagerInterface $entityManager)
     {
         $this->classementService = $classementService;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -22,26 +27,27 @@ class JeuRamasseurController extends AbstractController
      */
     public function index(JeuRamasseurService $jeuRamasseurService): Response
     {
-        // Récupérer le classement
-        $classement = $this->classementService->getClassement();
-
         return $this->render('jeu_ramasseur/index.html.twig', [
             'controller_name' => 'JeuRamasseurController',
             'gameItems' => $jeuRamasseurService->getJeuRamasseurItems(),
             'activeGame' => 'presentation', // Indique la page active
-            'classement' => $classement, 
         ]);
     }
 
     /**
      * @Route("/jeu/ramasseur_gameplay", name="app_jeu_ramasseur_gameplay")
      */
-    public function gameplay(): Response
+    public function gameplay(Request $request,EntityManagerInterface $entityManager): Response
     {
-        $classement = $this->classementService->getClassement();
+        $jeuId = 5;
+        $session = $request->getSession();
+        $utilisateurId = $session->get('utilisateur_id');
+        $utilisateur = $entityManager->getRepository(Utilisateur::class)->find($utilisateurId);
+        $classement = $this->classementService->getClassement(2);
 
         return $this->render('jeu_ramasseur/gameplay.html.twig', [
-            'classement' => $classement
+            'classement' => $classement,
+            'utilisateur' => $utilisateur 
         ]);
     }
 }

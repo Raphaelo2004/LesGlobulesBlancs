@@ -43,7 +43,16 @@
     {% set classement_html %} 
         {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard': false} %} 
     {% endset %}
-
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "popup_fin",
+        titre_popup: "",
+        texte_popup: "",
+        conteneur_button_style: "conteneur_button_row", 
+        buttons: [
+            { contenue: 'Rejouer', class: 'btn', route: "app_jeu_ramasseur" },
+            { contenue: 'Quitter', class: 'btn', route: "app_accueil" },
+        ]
+    } %}
     {% include 'composants/pop-up/pop-up.html.twig' with {
         nom_popup: "popup_score",
         titre_popup: "Score : 0",
@@ -55,19 +64,11 @@
         ]
     } %}
 
-    {% include 'composants/pop-up/pop-up.html.twig' with {
-        nom_popup: "popup_fin",
-        titre_popup: "",
-        texte_popup: "",
-        conteneur_button_style: "conteneur_button_row", 
-        buttons: [
-            { contenue: 'Rejouer', class: 'btn', route: "app_jeu_ramasseur" },
-            { contenue: 'Quitter', class: 'btn', route: "app_accueil" },
-        ]
-    } %}
+
 
 {% endblock %}
 
 {% block javascripts %}
     <script src="{{ asset('jeux/jeu_2/jeu_2_gameplay.js') }}"></script>
+    <script src="{{ asset('jeux/jeux_global/jeu_global.js') }}"></script>
 {% endblock %}

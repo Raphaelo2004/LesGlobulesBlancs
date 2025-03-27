@@ -47,11 +47,19 @@
 }
 
 .classement_score {
-  color: #C1C1C1;
+  color: #888888;
 }
 
 .current_user_score {
   background-color: #F9E1A7;
+}
+
+.connect_user {
+  background-color: #F9E1A7;
+}
+
+.item_fixe {
   position: sticky;
-  bottom: 0px;
+  bottom: 10px;
+  background-color: #F9E1A7;
 }/*# sourceMappingURL=classement.css.map */
