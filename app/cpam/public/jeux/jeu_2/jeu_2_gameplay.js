@@ -104,6 +104,7 @@ function createFallingObject(fallSpeed) {
                         console.log("Perdu !");
                         pauseChrono();
                         pauseCountdown();
+                        sendScoreToDatabase(score,2)
                         updatePopupFin("perdu");
                         updatePopupScore(score);
                         ouvrirPopup(".popup_score");
