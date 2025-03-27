@@ -73,3 +73,12 @@ body::before {
     background-size: cover;
     background-position: center;
 }
+
+.moves-container {
+    display: flex !important;
+    position: relative !important;
+    justify-content: center !important;
+    top: 50% !important;
+    left: 0 !important;
+    transform: translateY(-50%) !important;
+}
