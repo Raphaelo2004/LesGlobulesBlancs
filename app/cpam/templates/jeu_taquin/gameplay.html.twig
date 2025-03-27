@@ -46,18 +46,6 @@
     {% endset %}
 
     {% include 'composants/pop-up/pop-up.html.twig' with {
-        nom_popup: "popup_score",
-        titre_popup: "Score : 850",
-        texte_popup: classement_html,
-        conteneur_button_style: "conteneur_button_row", 
-        buttons: [
-            { contenue: 'Continuer', class: 'btn', onclick :"clickContinuer()" },
-            { contenue: 'Partager', class: 'btn', onclick :"clickPartager()" },
-        ]
-    } %}
-
-
-    {% include 'composants/pop-up/pop-up.html.twig' with {
         nom_popup: "popup_fin",
         titre_popup: "",
         texte_popup: "Bravo tu as <strong>réussi</strong> !<br><br>
@@ -69,9 +57,23 @@
             { contenue: 'Quitter', class: 'btn', route: "app_accueil" },
         ]
     } %}
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "popup_score",
+        titre_popup: "Score : 850",
+        texte_popup: classement_html,
+        conteneur_button_style: "conteneur_button_row", 
+        buttons: [
+            { contenue: 'Continuer', class: 'btn', onclick :"clickContinuer()" },
+            { contenue: 'Partager', class: 'btn', onclick :"clickPartager()" },
+        ]
+    } %}
+
+
+
 
 {% endblock %}
 
 {% block javascripts %}
     <script src="{{ asset('jeux/jeu_1/jeu_1_gameplay.js') }}"></script>
+    <script src="{{ asset('jeux/jeux_global/jeu_global.js') }}"></script>
 {% endblock %}

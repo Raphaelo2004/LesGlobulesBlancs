@@ -39,11 +39,11 @@ class JeuRamasseurController extends AbstractController
      */
     public function gameplay(Request $request,EntityManagerInterface $entityManager): Response
     {
-        $jeuId = 5;
+        $jeuId = 2;
         $session = $request->getSession();
         $utilisateurId = $session->get('utilisateur_id');
         $utilisateur = $entityManager->getRepository(Utilisateur::class)->find($utilisateurId);
-        $classement = $this->classementService->getClassement(2);
+        $classement = $this->classementService->getClassement($jeuId);
 
         return $this->render('jeu_ramasseur/gameplay.html.twig', [
             'classement' => $classement,
