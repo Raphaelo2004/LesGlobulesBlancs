@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let chronoInterval; 
-    window.chronoTimeLeft = 60;
+    let chronoInterval;
+    let chronoTimeLeft;
+    if (window.location.href.includes("taquin_gameplay")) {
+        window.chronoTimeLeft = 90;
+    } else {
+        window.chronoTimeLeft = 60; 
+    }
     let isPaused = false;
     
     let countdown = 3; 

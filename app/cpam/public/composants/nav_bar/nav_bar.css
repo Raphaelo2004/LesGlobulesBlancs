@@ -14,10 +14,23 @@
   align-items: center;
   background-color: #ffffff;
 }
+@media (min-width: 1024px) {
+  .navbar {
+    width: 80%;
+    height: 100px;
+    margin: 40px 0px;
+    font-size: 60px;
+  }
+}
 .navbar .nav-item {
   position: relative;
   font-size: 80px;
   color: #C1C1C1;
+}
+@media (min-width: 1024px) {
+  .navbar .nav-item {
+    font-size: 40px;
+  }
 }
 .navbar .nav-item a {
   text-decoration: none;
@@ -33,6 +46,12 @@
   height: 12px;
   background-color: #0C419A;
   opacity: 0;
+}
+@media (min-width: 1024px) {
+  .navbar .nav-item::before {
+    bottom: 65px;
+    height: 8px;
+  }
 }
 .navbar .nav-item.active {
   color: #0C419A;

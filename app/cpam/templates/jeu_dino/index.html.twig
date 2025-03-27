@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}JeuDino{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('jeux/jeu_3/jeu_3.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    {# composant ecran pause #}
+    {% include 'composants/ecran_pause/ecran_pause.html.twig'  with { 'lien': 'app_jeu_dino'} %}
+    
+    <div class="text-box">
+        <p class="para--semibold para--large">
+        La mère de Pauline l’appelle pour lui dire qu’elle a eu des remboursements de consultations par l’Assurance Maladie qui ne la concernent pas…        
+         <br><br>
+         « T’as bien mis à jour ton RIB à la CPAM ? » 
+        <br><br>
+         Aide Pauline à compléter son RIB !
+</p>
+    </div>
+
+    {# composant button #}
+    <div class="container_button">
+        {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Aider Pauline !','route': 'app_jeu_dino_gameplay'} %}
+    </div>
+{% endblock %}

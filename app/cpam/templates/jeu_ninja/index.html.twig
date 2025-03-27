@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}JeuNinja{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('jeux/jeu_4/jeu_4.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    {# composant ecran pause #}
+    {% include 'composants/ecran_pause/ecran_pause.html.twig' with { 'lien': 'app_jeu_ninja'} %}
+
+    <div class="text-box">
+        <p class="para--semibold para--large">Amélie adore manger des pizzas accompagnées d'un soda, même si elle sait que pas top pour sa santé…
+            <br><br>
+            Coupe les aliments les moins bons pour sa santé !
+        </p>
+    </div>
+
+    {# composant button #}
+    <div class="container_button">
+        {% include 'composants/button/button.html.twig' with { 'class': 'btn--presentation', 'contenue': 'Aider Amélie', 'route': 'app_jeu_ninja_gameplay' } %}
+    </div>
+{% endblock %}
