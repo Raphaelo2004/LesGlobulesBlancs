@@ -22,7 +22,7 @@ class JeuNinjaController extends AbstractController
     public function index(JeuNinjaService $jeuNinjaService): Response
     {
         // Récupérer le classement
-        $classement = $this->classementService->getClassement();
+        $classement = $this->classementService->getClassement(4);
 
         return $this->render('jeu_ninja/index.html.twig', [
             'controller_name' => 'JeuNinjaController',
@@ -37,7 +37,7 @@ class JeuNinjaController extends AbstractController
      */
     public function gameplay(): Response
     {
-        $classement = $this->classementService->getClassement();
+        $classement = $this->classementService->getClassement(4);
 
         return $this->render('jeu_ninja/gameplay.html.twig', [
             'classement' => $classement

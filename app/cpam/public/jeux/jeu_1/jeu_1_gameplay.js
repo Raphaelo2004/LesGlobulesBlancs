@@ -28,8 +28,9 @@ function lancerMinuteur() {
     setTimeout(() => {
         if (!jeuTermine) {
             console.log("Temps écoulé ! Vous avez perdu.");
-            updatePopupFin("perdu");
-            updatePopupScore("perdu");
+            score = calculeScore("perdu");
+            updatePopupScore(score);
+            sendScoreToDatabase(score,1);
             ouvrirPopup(".popup_score");
         }
     }, 90000);
@@ -150,8 +151,11 @@ function afficherImageComplete() {
 
     // Attendre 3 secondes avant d'afficher la popup
     setTimeout(() => {
+        pauseChrono();
         updatePopupFin("gagne");
-        updatePopupScore("gagne");
+        score = calculeScore("gagne");
+        updatePopupScore(score);
+        sendScoreToDatabase(score,5);
         ouvrirPopup(".popup_score");
     }, 2500);
 }
@@ -170,8 +174,7 @@ function updatePopupFin(finPartie) {
     }
 }
 
-function updatePopupScore(finPartie) {
-    const popupScoreTitle = document.querySelector('.popup_score .popup-header h1');
+function calculeScore(finPartie) {
 
     let base_score;
     let score;
@@ -188,8 +191,7 @@ function updatePopupScore(finPartie) {
     } else {
         score = 0;
     }
-    
-    popupScoreTitle.innerHTML = `Score : ` + score;
+    return score;
 }
 
 // Rendre startGame accessible globalement

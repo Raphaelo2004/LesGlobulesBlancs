@@ -23,7 +23,7 @@ class JeuDinoController extends AbstractController
     public function index(JeuDinoService $jeuDinoService): Response
     {
         // Récupérer le classement
-        $classement = $this->classementService->getClassement();
+        $classement = $this->classementService->getClassement(3);
 
         return $this->render('jeu_dino/index.html.twig', [
             'controller_name' => 'JeuDinoController',
@@ -38,7 +38,7 @@ class JeuDinoController extends AbstractController
      */
     public function gameplay(): Response
     {
-        $classement = $this->classementService->getClassement();
+        $classement = $this->classementService->getClassement(3);
 
         return $this->render('jeu_dino/gameplay.html.twig', [
             'classement' => $classement

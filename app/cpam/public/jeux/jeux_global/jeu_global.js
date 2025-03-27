@@ -1,5 +1,4 @@
 function updatePopupScore(score) {
-    console.log(score)
     let userId = document.querySelector('.current_user_score').getAttribute('data-user-id')
 
     let items = document.querySelectorAll('.classement_item');
