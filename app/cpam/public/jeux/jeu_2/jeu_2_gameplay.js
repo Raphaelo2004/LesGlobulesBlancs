@@ -93,7 +93,7 @@ function createFallingObject(fallSpeed) {
                 if (object.dataset.good === "true") {
                     goodSound.play();
                     score += 30; // Augmente le score
-                    updateScore();
+                    updateJauge();
                     console.log("Score:", score);
                 } else {
                     badSound.play();
@@ -178,7 +178,7 @@ function startGame() {
     }, 3000); // 3 secondes de délai avant le démarrage du jeu
 }
 
-function updateScore() {
+function updateJauge() {
     document.getElementById("score-value").textContent = score;
 
     const jauge = document.querySelector(".fixed-jauge");
