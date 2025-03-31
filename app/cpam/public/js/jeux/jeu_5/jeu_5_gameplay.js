@@ -5,7 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const bouche = document.getElementById("bouche");
     const brosse = document.getElementById("brosse");
     const dentifrice = document.getElementById("dentifrice");
-   
+
+    const brossage = new Audio("/assets/SONS/JEU 5 - NETTOYAGE/Brosse à dent bruitage.mp3");
+    const applaudissement = new Audio("/assets/SONS/JEU 5 - NETTOYAGE/Applaudissement de fin.mp3");
+
     let touchedBacteria = new Set();
     let hasDentifrice = false;
     let holdingDentifrice = false;
@@ -169,7 +172,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!touchedBacteria.has(bacterie)) {
                     let hits = parseInt(bacterie.dataset.hits) + 1;
                     bacterie.dataset.hits = hits;
-    
+                    brossage.play();
+                    setTimeout(() => {
+                        brossage.pause();
+                    }, 1000);
                     // Vérifier si le nombre de hits a atteint le nombre requis
                     if (hits >= bacterie.dataset.hitsRequired) {
                     // Remplacer la bactérie par une mousse
@@ -229,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
             pauseChrono();
             updatePopupScore(score);
             sendScoreToDatabase(score,5);
-            
+            applaudissement.play();
             setTimeout(() => {
                 ouvrirPopup('.popup_score');
             }, 2000);
@@ -242,6 +248,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 let bacteriaList = [];
 jeuTermine = false;
+
+const bgMusic = new Audio("/assets/SONS/JEU 5 - NETTOYAGE/Son ambiance - nettoyage.mp3");
+bgMusic.loop = true;
+bgMusic.volume = 0.5; // Volume réduit pour ne pas être trop intrusif
 
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -270,9 +280,10 @@ function startGame() {
         default:
             nombre = 10;
     }
-
+bgMusic.play();
 spawnBacteria(nombre);   
 lancerMinuteur();
+
 }
 
 function lancerMinuteur(){
