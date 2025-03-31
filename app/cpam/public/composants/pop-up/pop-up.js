@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     function reprendreChrono() {
-        gererDepart(); // Relancer le décompte avant de reprendre
+        lancerChrono(); // Relancer le décompte avant de reprendre
     }
 
     function fermerPopupLvlFacile() {

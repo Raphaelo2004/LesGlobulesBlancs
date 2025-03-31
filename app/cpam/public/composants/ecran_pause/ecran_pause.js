@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const menu = document.querySelector('.menu');
     const buttons = document.querySelectorAll('.btn--presentation');
 
+    let isMuted = false;
+
     if (settingsIcon && closeIcon && menuContainer) {
         settingsIcon.addEventListener('click', function () {
             menuContainer.style.display = 'flex';
@@ -14,6 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (typeof pauseChrono === 'function' && typeof pauseCountdown === 'function') {
                 pauseChrono();
                 pauseCountdown();
+            }
+            if (typeof pauseSpecificGame === "function"){
+                pauseSpecificGame();
             }
         });
 
@@ -25,6 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (typeof reprendreChrono === 'function') {
                 reprendreChrono();
             }
+
+            if (typeof reprendreSpecificGame === "function"){
+                reprendreSpecificGame();
+            }
         });
 
         menuContainer.addEventListener('click', function (event) {
@@ -35,6 +44,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (typeof reprendreChrono === 'function') {
                     reprendreChrono();
+                }
+
+                if (typeof reprendreSpecificGame === "function"){
+                    reprendreSpecificGame();
                 }
             }
         });
@@ -51,10 +64,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (typeof reprendreChrono === 'function') {
                         reprendreChrono();
                     }
+
+                    if (typeof reprendreSpecificGame === "function"){
+                        reprendreSpecificGame();
+                    }
                 });
             }
             if (buttonText.includes("Son")) {
-                let isMuted = false;
                 button.addEventListener('click', function() {
                     isMuted = !isMuted;
 
@@ -67,6 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.querySelectorAll('audio').forEach(audio => {
                         audio.muted = isMuted;
                     });
+                    if (typeof bgMusic !== 'undefined') {
+                        bgMusic.muted = isMuted;
+                    }
                 });
             }
         });
