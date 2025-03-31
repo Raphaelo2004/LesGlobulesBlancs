@@ -63,61 +63,62 @@ const goodSound = new Audio("/assets/SONS/JEU 2 - RAMASSEUR/Bruitage dans tireli
 const badSound = new Audio("/assets/SONS/JEU 2 - RAMASSEUR/FAUX.mp3");
 const applaudissement = new Audio("/assets/SONS/JEU 2 - RAMASSEUR/Applaudissement de fin.mp3");
 
+let isGamePaused = false;
+let fallingObjects = [];
+
 function createFallingObject(fallSpeed) {
     const object = document.createElement("img");
-    const isGood = Math.random() > 0.5; // 50% chance d'être un bon ou mauvais objet
-        object.src = isGood ? 
-            goodPictos[Math.floor(Math.random() * goodPictos.length)] :
-            badPictos[Math.floor(Math.random() * badPictos.length)];
-        object.classList.add("falling-object");
-        object.dataset.good = isGood; // Attribut pour identifier l'objet
+    const isGood = Math.random() > 0.5;
+    object.src = isGood ?
+        goodPictos[Math.floor(Math.random() * goodPictos.length)] :
+        badPictos[Math.floor(Math.random() * badPictos.length)];
+    object.classList.add("falling-object");
+    object.dataset.good = isGood;
 
-    // Ajout de la classe 'spin' si la difficulté est "hard"
     const difficulty = getQueryParam("difficulty");
     if (difficulty === "hard") {
-        object.classList.add("spin"); // Ajoute l'animation spin pour les objets en mode difficile
+        object.classList.add("spin");
     }
 
-    // Position aléatoire sur l'axe X
-    const randomX = Math.random() * (window.innerWidth - 100); // Ajuste en fonction de la taille
+    const randomX = Math.random() * (window.innerWidth - 100);
     object.style.left = `${randomX}px`;
+    object.style.top = `0px`;
 
     document.body.appendChild(object);
-
-    // Animation de la chute
+    
     let positionY = 0;
 
     function fall() {
+        if (isGamePaused) return;
+        
         if (positionY < window.innerHeight) {
             positionY += fallSpeed;
             object.style.top = `${positionY}px`;
 
-            // Vérifier collision avec la tirelire
             const tirelireRect = tirelire.getBoundingClientRect();
             const objectRect = object.getBoundingClientRect();
 
             if (
-                objectRect.bottom >= tirelireRect.top &&  // L'objet atteint le haut de la tirelire
-                objectRect.top <= tirelireRect.bottom && // L'objet est encore dans la tirelire
+                objectRect.bottom >= tirelireRect.top &&
+                objectRect.top <= tirelireRect.bottom &&
                 objectRect.left < tirelireRect.right &&
                 objectRect.right > tirelireRect.left
             ) {
                 document.body.removeChild(object);
+                fallingObjects = fallingObjects.filter(o => o.element !== object);
+                
                 if (object.dataset.good === "true") {
                     goodSound.play();
-                    score += 15; // Augmente le score
+                    score += 15;
                     updateJauge();
-                    console.log("Score:", score);
                 } else {
                     badSound.play();
                     shakeScreen();
                     errors++;
                     updateErrors();
-                    console.log("Erreurs:", errors);
-                    if (errors == maxErrors) {
+                    if (errors === maxErrors) {
                         removeAllFallingObjects();
-                        sendScoreToDatabase(score,2)
-                        console.log("Perdu !");
+                        sendScoreToDatabase(score, 2);
                         pauseChrono();
                         pauseCountdown();
                         updatePopupFin("perdu");
@@ -131,17 +132,16 @@ function createFallingObject(fallSpeed) {
             }
         } else {
             document.body.removeChild(object);
-            // Si un bon picto atteint le sol sans être ramassé, cela compte comme une erreur
+            fallingObjects = fallingObjects.filter(o => o.element !== object);
+
             if (object.dataset.good === "true") {
                 badSound.play();
                 shakeScreen();
                 errors++;
                 updateErrors();
-                console.log("Erreurs:", errors);
-                if (errors == maxErrors) {
+                if (errors === maxErrors) {
                     removeAllFallingObjects();
-                    sendScoreToDatabase(score,2)
-                    console.log("Perdu !");
+                    sendScoreToDatabase(score, 2);
                     pauseChrono();
                     pauseCountdown();
                     updatePopupFin("perdu");
@@ -152,6 +152,8 @@ function createFallingObject(fallSpeed) {
             }
         }
     }
+
+    fallingObjects.push({ element: object, positionY, fallSpeed, fall });
 
     fall();
 }
@@ -182,7 +184,7 @@ function startGame() {
             break;
         case "medium":
             fallSpeed = 8; // Vitesse moyenne
-            timeBetweenObj = 1250; // temps moyen
+            timeBetweenObj = 900; // temps moyen
             break;
         case "hard":
             fallSpeed = 12; // Vitesse rapide
@@ -196,7 +198,9 @@ function startGame() {
     // Délai de 3 secondes avant de commencer à faire tomber les objets
     setTimeout(() => {
         gameInterval = setInterval(() => {
-            createFallingObject(fallSpeed);
+            if (!isGamePaused) {  // Empêche la création de nouveaux objets
+                createFallingObject(fallSpeed);
+            }
         }, timeBetweenObj);
 
         // Arrêter le jeu après 60 secondes
@@ -269,4 +273,13 @@ function removeAllFallingObjects() {
     fallingObjects.forEach((object) => {
         object.remove(); // Supprime l'objet du DOM
     });
+}
+
+function pauseSpecificGame() {
+    isGamePaused = true;
+}
+
+function reprendreSpecificGame() {
+    isGamePaused = false;
+    fallingObjects.forEach(obj => requestAnimationFrame(obj.fall));
 }
