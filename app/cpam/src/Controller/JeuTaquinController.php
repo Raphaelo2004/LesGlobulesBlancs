@@ -22,8 +22,16 @@ class JeuTaquinController extends AbstractController
     /**
      * @Route("/jeu/taquin", name="app_jeu_taquin")
      */
-    public function index(JeuTaquinService $jeuTaquinService): Response
+    public function index(Request $request, JeuTaquinService $jeuTaquinService): Response
     {
+        $session = $request->getSession();
+        $utilisateurId = $session->get('utilisateur_id');
+
+        // Vérifier si l'utilisateur est bien connecté
+        if (!$utilisateurId) {
+            return $this->redirectToRoute('app_connexion2');
+        }
+
         // Récupérer le classement
         $classement = $this->classementService->getClassement(1);
 
@@ -40,6 +48,14 @@ class JeuTaquinController extends AbstractController
      */
     public function gameplay(Request $request,EntityManagerInterface $entityManager): Response
     {
+        $session = $request->getSession();
+        $utilisateurId = $session->get('utilisateur_id');
+
+        // Vérifier si l'utilisateur est bien connecté
+        if (!$utilisateurId) {
+            return $this->redirectToRoute('app_connexion2');
+        }
+
         $jeuId = 1;
         $session = $request->getSession();
         $utilisateurId = $session->get('utilisateur_id');
