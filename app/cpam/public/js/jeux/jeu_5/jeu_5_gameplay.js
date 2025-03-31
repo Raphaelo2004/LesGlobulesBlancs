@@ -77,6 +77,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 detectTouch();
             }
 
+            if (holdingBrosse && hasDentifrice) {
+                createTrailingEffect(newLeft, newTop);
+            }
+
             if (holdingDentifrice) {
                 let rectBrosse = brosse.getBoundingClientRect();
                 if (
@@ -88,6 +92,51 @@ document.addEventListener("DOMContentLoaded", () => {
                     updateBrosseImage();
                 }
             }
+        }
+    }
+
+    function createTrailingEffect(left, top) {
+        // Nombre de traînées à créer pour un effet plus dense
+        const numTrails = 5;
+        
+        // Crée plusieurs traînées (bulles) de tailles et opacités aléatoires
+        for (let i = 0; i < numTrails; i++) {
+            let trail = document.createElement('div');
+            trail.classList.add('trail'); // On va lui appliquer un style spécifique pour la traînée
+        
+            // Applique la position à l'élément
+            trail.style.position = 'absolute';
+            trail.style.left = `${left + Math.random() * 30 - 15}px`;  // Légère variation de la position
+            trail.style.top = `${top + Math.random() * 30 - 15}px`;  // Légère variation de la position
+            
+            // Taille aléatoire de la traînée (taille de la bulle)
+            const size = Math.floor(Math.random() * 30) + 20; // Taille entre 20px et 50px
+            trail.style.width = `${size}px`;
+            trail.style.height = `${size}px`;
+            
+            // Forme circulaire
+            trail.style.borderRadius = '50%';
+            
+            // Opacité aléatoire (plus transparent pour les traînées plus anciennes)
+            const opacity = Math.random() * 0.5 + 0.3;  // Opacité entre 0.3 et 0.8
+            trail.style.backgroundColor = `rgba(255, 255, 255, ${opacity})`;
+            
+            // Effet de disparition avec une animation douce
+            trail.style.transition = 'transform 0.3s ease, opacity 0.5s ease-out';
+            trail.style.pointerEvents = 'none'; // Ne pas interférer avec les autres événements
+        
+            // Ajoute la traînée au DOM
+            game.appendChild(trail);
+            
+            // Supprimer la traînée après un délai pour l'effet de disparition
+            setTimeout(() => {
+                trail.style.transform = 'scale(0)';  // Réduit la taille pour l'effet de disparition
+                trail.style.opacity = '0';  // Fait disparaître progressivement
+            }, 10); // Ce délai est ajustable pour synchroniser l'effet
+        
+            setTimeout(() => {
+                trail.remove();
+            }, 500); // La traînée disparaît après 500ms
         }
     }
 
@@ -139,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     mousse.style.top = bacterie.style.top;
 
                     // Ajouter la mousse au jeu
-                    game.appendChild(mousse);
+                    bouche.appendChild(mousse);
 
                     // Supprimer la bactérie de la liste et du DOM
                     bacterie.remove();
@@ -176,9 +225,9 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             img.src = "/assets/images/bouche_propre.png";
             img.style.opacity = 1;
+            jeuTermine = true;
             pauseChrono();
             updatePopupScore(score);
-
             sendScoreToDatabase(score,5);
             
             setTimeout(() => {
@@ -192,6 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 let bacteriaList = [];
+jeuTermine = false;
 
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -221,22 +271,40 @@ function startGame() {
             nombre = 10;
     }
 
-spawnBacteria(nombre);    
+spawnBacteria(nombre);   
+lancerMinuteur();
+}
+
+function lancerMinuteur(){
+    setTimeout(() => {
+        if (!jeuTermine) {
+            console.log("Temps écoulé ! Vous avez perdu.");
+            updatePopupScore(score);
+            sendScoreToDatabase(score,1);
+            ouvrirPopup(".popup_score");
+        }
+    }, 60000);
 }
 
 function spawnBacteria(nombre) {
-    // Coordonnées du centre de l'ovale (qui est la bouche ici)
-    const circleCenterX = game.clientWidth / 2;
-    const circleCenterY = game.clientHeight / 2;
+    const largeur = 580;  // Largeur de l'ovale
+    const hauteur = 700;   // Hauteur de l'ovale
+
+    // Centre de l'ovale
+    const circleCenterX = 0; // Nous utilisons 0 car la div "bouche" est centrée
+    const circleCenterY = 0; // Idem, la div "bouche" est centrée
 
     // Rayon de l'ovale
-    const circleRadiusX = Math.min(game.clientWidth, game.clientHeight) / 2.5; // Rayon horizontal (plus large)
-    const circleRadiusY = Math.min(game.clientWidth, game.clientHeight) / 2.0; // Rayon vertical (plus petit)
+    const circleRadiusX = largeur / 2;
+    const circleRadiusY = hauteur / 2;
+
+    // Récupère la div "bouche" et lui applique la position relative si nécessaire
+    const bouche = document.getElementById('bouche');
 
     // Liste des positions des bactéries (pour vérifier l'écart)
     let bacteriaPositions = [];
 
-    // Tableau des images de bactéries dans le dossier "bacterie"
+    // Tableau des images de bactéries
     const bacteriaImages = [
         "microbe_7.png",
         "microbe_6.png",
@@ -267,7 +335,6 @@ function spawnBacteria(nombre) {
         bacterie.style.objectFit = "contain";
 
         // Calculer le nombre de hits nécessaires en fonction de la taille
-        // Plus la bactérie est grande, plus il faut de hits
         const hitsRequired = Math.ceil(randomSize / 20);  // Par exemple, 1 hit pour 30px, 5 hits pour 110px
         bacterie.dataset.hitsRequired = hitsRequired;  // Stocker le nombre de hits requis
 
@@ -299,10 +366,10 @@ function spawnBacteria(nombre) {
 
         // Placer la bactérie sur le bord de l'ovale
         bacterie.style.position = "absolute";
-        bacterie.style.left = `${bacterieX - randomSize / 2}px`;  // Décalage pour centrer la bactérie
-        bacterie.style.top = `${bacterieY - randomSize / 2}px`;   // Décalage pour centrer la bactérie
+        bacterie.style.left = `${bacterieX + bouche.offsetWidth / 2 - randomSize / 2}px`;  // Décalage pour centrer la bactérie
+        bacterie.style.top = `${bacterieY + bouche.offsetHeight / 2 - randomSize / 2}px`;   // Décalage pour centrer la bactérie
         bacterie.dataset.hits = 0;  // Nombre de hits initial
-        game.appendChild(bacterie);
+        bouche.appendChild(bacterie);
 
         // Ajouter la position de la bactérie à la liste
         bacteriaPositions.push({ x: bacterieX, y: bacterieY });

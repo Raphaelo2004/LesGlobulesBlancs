@@ -29,6 +29,7 @@ function lancerMinuteur() {
         if (!jeuTermine) {
             console.log("Temps écoulé ! Vous avez perdu.");
             score = calculeScore("perdu");
+            updatePopupFin("perdu");
             updatePopupScore(score);
             sendScoreToDatabase(score,1);
             ouvrirPopup(".popup_score");
@@ -155,7 +156,7 @@ function afficherImageComplete() {
         updatePopupFin("gagne");
         score = calculeScore("gagne");
         updatePopupScore(score);
-        sendScoreToDatabase(score,5);
+        sendScoreToDatabase(score,1);
         ouvrirPopup(".popup_score");
     }, 2500);
 }

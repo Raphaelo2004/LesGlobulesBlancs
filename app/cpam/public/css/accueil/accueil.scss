@@ -1,11 +1,4 @@
 @import 'tableau.scss';
-body:has(.background-default){
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background: url('/assets/images/Appartement.png') no-repeat center center fixed;
-    background-size: cover;
-}
 
 body:has(.background-alt){
     background: url('/assets/images/accueil_ferme.png') no-repeat center center fixed;
@@ -14,7 +7,7 @@ body:has(.background-alt){
 
 .tableau_acceuil{
     top: calc(30% + 2vh);
-    left: calc(22% + 3vw);
-    width: calc(38.5% - 4vw);
+    left: calc(26% + 3vw);
+    width: calc(33% - 4vw);
     height: calc(24.5% - 5vh);
 }
