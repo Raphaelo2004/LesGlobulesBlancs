@@ -115,6 +115,7 @@ function createFallingObject(fallSpeed) {
                     updateErrors();
                     console.log("Erreurs:", errors);
                     if (errors == maxErrors) {
+                        removeAllFallingObjects();
                         sendScoreToDatabase(score,2)
                         console.log("Perdu !");
                         pauseChrono();
@@ -138,6 +139,7 @@ function createFallingObject(fallSpeed) {
                 updateErrors();
                 console.log("Erreurs:", errors);
                 if (errors == maxErrors) {
+                    removeAllFallingObjects();
                     sendScoreToDatabase(score,2)
                     console.log("Perdu !");
                     pauseChrono();
@@ -200,7 +202,7 @@ function startGame() {
         // Arrêter le jeu après 60 secondes
         setTimeout(() => {
             clearInterval(gameInterval);
-            console.log("Fin du jeu ! Plus aucun objet ne tombe.");
+            removeAllFallingObjects();
             sendScoreToDatabase(score,2)
             updatePopupScore(score);
             updatePopupFin("gagne");
@@ -260,4 +262,11 @@ function shakeScreen() {
     setTimeout(() => {
         body.classList.remove('shake'); // Retire la classe après l'animation
     }, 500); // La durée du tremblement (500ms)
+}
+
+function removeAllFallingObjects() {
+    const fallingObjects = document.querySelectorAll('.falling-object');
+    fallingObjects.forEach((object) => {
+        object.remove(); // Supprime l'objet du DOM
+    });
 }
