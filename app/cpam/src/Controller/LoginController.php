@@ -56,8 +56,12 @@ class LoginController extends AbstractController
                 // (3) Stocker l'ID utilisateur en session
                 $session->set('utilisateur_id', $utilisateurEnBase->getId());
 
-                // (4) Rediriger vers la page d'accueil
-                return $this->redirectToRoute('app_accueil');
+                // (4) Vérifier si l'utilisateur est administrateur
+                if ($utilisateurEnBase->getIsAdmin()) {
+                    return $this->redirectToRoute('app_admin'); // Redirige vers la page admin
+                } else {
+                    return $this->redirectToRoute('app_accueil'); // Redirige vers la page utilisateur normal
+                }
             } else {
                 // Utilisateur non trouvé : affiche un message d'erreur
                 $this->addFlash('danger', 'Identifiant ou e-mail incorrect.');
