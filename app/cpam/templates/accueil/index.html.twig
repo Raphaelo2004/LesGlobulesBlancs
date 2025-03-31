@@ -8,6 +8,7 @@
 
 {% block body %}
    {% include 'composants/header/header.html.twig' %}
+   <img src="/assets/images/Appartement.png" class="background-img" alt="Background">
 
     {% set date_actuelle = "now"|date("Y-m-d") %}
     {% set date_limite = "2025-08-28" %}
@@ -35,8 +36,10 @@
             ]
         } %}
     </div>
-    
+
+     {% if date_actuelle < date_limite %}
     <a class="contour_tableau_jeu tableau_acceuil" href="{{ path('app_tableau') }}"></a>
+    {% endif %}
 
     {# Inclusion de la barre de navigation #}
     {% if navItems is defined and activeNav is defined %}

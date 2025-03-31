@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* Variables */
 /* SCSS */
 .titre--regular {
@@ -113,11 +114,13 @@ a {
   color: #ffffff;
 }
 
-body {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: url("/assets/images/PanneauLiege.jpg") no-repeat center center fixed;
+.background-img {
+  position: fixed; /* Fixe l'image en arrière-plan */
+  top: 0;
+  left: 0;
+  width: 100%; /* Ajuste à la largeur de l'écran */
+  height: 100%; /* Ajuste à la hauteur de l'écran */
+  z-index: -1; /* Met l'image en arrière-plan */
 }
 
 .contour_tableau_jeu {
@@ -140,50 +143,42 @@ body {
   }
 }
 .tableau_jeu_1 {
-  top: calc(16.8% + 9vh);
-  left: calc(5% + 3vw);
-  width: calc(47% - 5vw);
-  height: calc(21.9% - 8vh);
-  transform: rotate(-3deg);
+  top: calc(18.5% + 9vh);
+  left: calc(8% + 3vw);
+  width: calc(45% - 5vw);
+  height: calc(21% - 8vh);
+  transform: rotate(-3.5deg);
 }
 
 .tableau_jeu_2 {
-  top: calc(23.5% + 2vh);
-  left: calc(54% + 3vw);
-  width: calc(38.5% - 4vw);
-  height: calc(26% - 5vh);
-  transform: rotate(5deg);
+  top: calc(25.3% + 2vh);
+  left: calc(53.5% + 3vw);
+  width: calc(35% - 4vw);
+  height: calc(24.5% - 5vh);
+  transform: rotate(6deg);
 }
 
 .tableau_jeu_3 {
-  top: calc(39.5% + 2vh);
-  left: calc(8% + 3vw);
-  width: calc(40% - 4vw);
-  height: calc(22% - 5vh);
+  top: calc(40.5% + 2vh);
+  left: calc(12% + 3vw);
+  width: calc(36% - 4vw);
+  height: calc(20% - 5vh);
   transform: rotate(1.5deg);
 }
 
 .tableau_jeu_4 {
   top: calc(46% + 2vh);
   left: calc(46% + 3vw);
-  width: calc(53% - 4vw);
-  height: calc(22% - 5vh);
+  width: calc(48.2% - 4vw);
+  height: calc(20.5% - 5vh);
 }
 
 .tableau_jeu_5 {
-  top: calc(59.3% + 2vh);
-  left: calc(28% + 3vw);
-  width: calc(31.3% - 4vw);
-  height: calc(17.7% - 5vh);
+  top: calc(58% + 2vh);
+  left: calc(29.5% + 3vw);
+  width: calc(29.7% - 4vw);
+  height: calc(17% - 5vh);
   transform: rotate(-9deg);
-}
-
-body:has(.background-default) {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: url("/assets/images/Appartement.png") no-repeat center center fixed;
-  background-size: cover;
 }
 
 body:has(.background-alt) {
@@ -193,7 +188,7 @@ body:has(.background-alt) {
 
 .tableau_acceuil {
   top: calc(30% + 2vh);
-  left: calc(22% + 3vw);
-  width: calc(38.5% - 4vw);
+  left: calc(26% + 3vw);
+  width: calc(33% - 4vw);
   height: calc(24.5% - 5vh);
 }/*# sourceMappingURL=accueil.css.map */

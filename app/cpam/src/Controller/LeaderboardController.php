@@ -35,18 +35,19 @@ class LeaderboardController extends AbstractController
         $jeuId = $request->query->get('jeu_id'); // Récupérer l'ID du jeu depuis l'URL
         $scoreUser = null;
 
+        $jeuId = 2;
         if ($utilisateurId) {
             if ($jeuId) {
                 // Récupérer le score pour un jeu spécifique
-                $scoreUser = $this->classementService->getScoreUser((int) $jeuId, (int) $utilisateurId);
+                $scoreUser = $this->classementService->getScoreUtilisateur($jeuId, $utilisateurId);
+                $classement = $this->classementService->getClassement($jeuId);
             } else {
                 // Récupérer le score total de l'utilisateur
                 $scoreUser = $this->classementService->getScoreTotalUtilisateur((int) $utilisateurId);
+                $classement = $this->classementService->getClassementTotal();
             }
         }
-
-        // Récupérer le classement des utilisateurs
-        $classement = $this->classementService->getClassementTotal();
+        
 
         // Renvoyer la réponse avec le rendu de la vue
         return $this->render('leaderboard/index.html.twig', [
