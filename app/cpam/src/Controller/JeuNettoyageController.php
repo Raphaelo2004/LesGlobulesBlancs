@@ -28,8 +28,16 @@ class JeuNettoyageController extends AbstractController
     /**
      * @Route("/jeu/nettoyage", name="app_jeu_nettoyage")
      */
-    public function index(JeuNettoyageService $jeuNettoyageService): Response
+    public function index(Request $request, JeuNettoyageService $jeuNettoyageService): Response
     {
+        $session = $request->getSession();
+        $utilisateurId = $session->get('utilisateur_id');
+
+        // Vérifier si l'utilisateur est bien connecté
+        if (!$utilisateurId) {
+            return $this->redirectToRoute('app_connexion2');
+        }
+
         return $this->render('jeu_nettoyage/index.html.twig', [
             'controller_name' => 'JeuNettoyageController',
             'gameItems' => $jeuNettoyageService->getJeuNettoyageItems(),
@@ -40,8 +48,16 @@ class JeuNettoyageController extends AbstractController
     /**
      * @Route("/jeu/nettoyage_gameplay", name="app_jeu_nettoyage_gameplay")
      */
-    public function gameplay(Request $request,EntityManagerInterface $entityManager): Response
+    public function gameplay(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $session = $request->getSession();
+        $utilisateurId = $session->get('utilisateur_id');
+
+        // Vérifier si l'utilisateur est bien connecté
+        if (!$utilisateurId) {
+            return $this->redirectToRoute('app_connexion2');
+        }
+
         $jeuId = 5;
         $session = $request->getSession();
         $utilisateurId = $session->get('utilisateur_id');
