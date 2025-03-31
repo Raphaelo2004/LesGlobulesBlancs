@@ -24,7 +24,7 @@
         {% set div_class = "background-alt" %} 
     {% endif %}
 
-    <div class="{{ div_class }}">
+    <div id="popup-welcome" class="{{ div_class }}">
         {% include 'composants/pop-up/pop-up.html.twig' with {        
             nom_popup: "welcome",
             titre_popup: "",
@@ -42,4 +42,8 @@
     {% if navItems is defined and activeNav is defined %}
         {% include 'composants/nav_bar/navigation.html.twig' with { 'navItems': navItems, 'activeNav': activeNav } %}
     {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/accueil/accueil.js') }}"></script>
 {% endblock %}
