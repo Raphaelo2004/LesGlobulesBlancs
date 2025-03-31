@@ -11,6 +11,8 @@
     {# composant ecran pause #}
     {% include 'composants/ecran_pause/ecran_pause.html.twig' with { 'lien': 'app_jeu_ramasseur'} %}
 
+    <img src="{{ asset('assets/images/fondRamasseur.jpg') }}" id="fond-ramasseur" alt="fond ramasseur" />
+
     <div class="score-container">
         <h1 class="titre--large titre--bold">Score : <span id="score-value">0</span></h1>
         <div id="error-container"></div>

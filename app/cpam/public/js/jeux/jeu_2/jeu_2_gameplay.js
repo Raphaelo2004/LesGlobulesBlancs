@@ -16,6 +16,13 @@ document.addEventListener("DOMContentLoaded", function () {
         let maxX = window.innerWidth - tirelire.offsetWidth + 150; // Limite droite
         newX = Math.max(150, Math.min(newX, maxX)); // Reste dans l'écran
 
+        // Inverser l'image si la tirelire se déplace vers la droite
+        if (newX > tirelire.offsetLeft) {
+            tirelire.style.transform = "translateX(-50%) scaleX(-1)"; // Image inversée
+        } else {
+            tirelire.style.transform = "translateX(-50%) scaleX(1)"; // Image normale
+        }
+
         tirelire.style.left = newX + "px";
     });
 
@@ -65,6 +72,12 @@ function createFallingObject(fallSpeed) {
         object.classList.add("falling-object");
         object.dataset.good = isGood; // Attribut pour identifier l'objet
 
+    // Ajout de la classe 'spin' si la difficulté est "hard"
+    const difficulty = getQueryParam("difficulty");
+    if (difficulty === "hard") {
+        object.classList.add("spin"); // Ajoute l'animation spin pour les objets en mode difficile
+    }
+
     // Position aléatoire sur l'axe X
     const randomX = Math.random() * (window.innerWidth - 100); // Ajuste en fonction de la taille
     object.style.left = `${randomX}px`;
@@ -92,11 +105,12 @@ function createFallingObject(fallSpeed) {
                 document.body.removeChild(object);
                 if (object.dataset.good === "true") {
                     goodSound.play();
-                    score += 30; // Augmente le score
+                    score += 15; // Augmente le score
                     updateJauge();
                     console.log("Score:", score);
                 } else {
                     badSound.play();
+                    shakeScreen();
                     errors++;
                     updateErrors();
                     console.log("Erreurs:", errors);
@@ -116,6 +130,24 @@ function createFallingObject(fallSpeed) {
             }
         } else {
             document.body.removeChild(object);
+            // Si un bon picto atteint le sol sans être ramassé, cela compte comme une erreur
+            if (object.dataset.good === "true") {
+                badSound.play();
+                shakeScreen();
+                errors++;
+                updateErrors();
+                console.log("Erreurs:", errors);
+                if (errors == maxErrors) {
+                    sendScoreToDatabase(score,2)
+                    console.log("Perdu !");
+                    pauseChrono();
+                    pauseCountdown();
+                    updatePopupFin("perdu");
+                    updatePopupScore(score);
+                    ouvrirPopup(".popup_score");
+                    clearInterval(gameInterval);
+                }
+            }
         }
     }
 
@@ -143,16 +175,16 @@ function startGame() {
     
     switch (difficulty) {
         case "easy":
-            fallSpeed = 3; // Vitesse lente
-            timeBetweenObj = 4000; // temps lent
+            fallSpeed = 6; // Vitesse lente
+            timeBetweenObj = 3000; // temps lent
             break;
         case "medium":
-            fallSpeed = 4; // Vitesse moyenne
-            timeBetweenObj = 3000; // temps moyen
+            fallSpeed = 8; // Vitesse moyenne
+            timeBetweenObj = 1250; // temps moyen
             break;
         case "hard":
-            fallSpeed = 6; // Vitesse rapide
-            timeBetweenObj = 1000; // temps rapide
+            fallSpeed = 12; // Vitesse rapide
+            timeBetweenObj = 500; // temps rapide
             break;
         default:
             fallSpeed = 4; // Valeur par défaut si aucune difficulté n'est définie
@@ -184,9 +216,9 @@ function updateJauge() {
 
     const jauge = document.querySelector(".fixed-jauge");
 
-    if (score >= 800) {
+    if (score >= 1000) {
         jauge.src = "/assets/images/Jauge-05.png";
-    } else if (score >= 600) {
+    } else if (score >= 700) {
         jauge.src = "/assets/images/Jauge-04.png";
     } else if (score >= 400) {
         jauge.src = "/assets/images/Jauge-03.png";
@@ -220,4 +252,12 @@ function updatePopupFin(finPartie) {
             La complémentaire santé solidaire (C2S) est une aide pour payer ses dépenses de santé, si tes ressources sont faibles. Avec la C2S tu ne paies pas le médecin, ni tes médicaments en pharmacie. La plupart des lunettes et des soins dentaires sont pris en charge.<br><br>
             Tu peux faire une simulation sur <a href='https://www.ameli.fr' target='_blank'>ameli.fr</a> pour savoir si tu y as droit !`;
     }
+}
+
+function shakeScreen() {
+    const body = document.querySelector('body');
+    body.classList.add('shake'); // Ajoute la classe "shake" pour déclencher l'animation
+    setTimeout(() => {
+        body.classList.remove('shake'); // Retire la classe après l'animation
+    }, 500); // La durée du tremblement (500ms)
 }
