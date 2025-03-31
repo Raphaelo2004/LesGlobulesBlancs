@@ -12,6 +12,7 @@
 
     <div class="admin-container">
         <h1 class="admin-title titre--large titre--bold">Gestion des utilisateurs</h1>
+
         <div class="admin-table-container">
             <table class="admin-table">
                 <thead>
@@ -53,11 +54,12 @@
 
         <!-- Injecter les données dans un élément JSON pour être récupérées par JS -->
         <div id="gameStatsData" style="display:none;">{{ gameStats|json_encode()|raw }}</div>
-    </div>
 
-    {% if navItems is defined and activeNav is defined %}
-        {% include 'composants/nav_bar/navigation.html.twig' with { 'navItems': navItems, 'activeNav': activeNav } %}
-    {% endif %}
+        <!-- Bouton de déconnexion -->
+        <div class="logout-container">
+            <a href="{{ path('app_deconnexion') }}" class="btn-logout para--regular para--medium">Déconnexion</a>
+        </div>
+    </div>
 {% endblock %}
 
 
