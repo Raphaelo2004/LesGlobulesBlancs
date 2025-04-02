@@ -21,5 +21,12 @@
     </head>
     <body>
         {% block body %}{% endblock %}
+        <script>
+            var jeuNonDisponibleUrl = "{{ path('app_jeu_non_disponible') }}";
+            var accueilUrl = "{{ path('app_accueil') }}";
+            var isUserLoggedIn = {{ app.session.get('utilisateur_id') is not null ? 'true' : 'false' }};
+        </script>
+
+        <script src="{{ asset('js/base.js') }}"></script>
     </body>
 </html>

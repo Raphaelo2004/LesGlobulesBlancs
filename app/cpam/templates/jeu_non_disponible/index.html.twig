@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}JeuRamasseur - Non Disponible{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/jeu_non_disponible/jeu_non_disponible.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="jeu-non-disponible">
+        <div class="message-box">
+            <i class="fas fa-mobile-alt"></i>
+            <h2 class="titre--bold titre-large">Ce jeu est uniquement accessible sur mobile 📱</h2>
+            <p class="para--regular para--small">Veuillez utiliser un appareil mobile pour profiter de l'expérience complète.</p>
+            <a href="{{ path('app_accueil') }}" class="btn-retour para--regular para--small">Retour à l'accueil</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/jeu_non_disponible/jeu_non_disponible.js') }}"></script>
+{% endblock %}
