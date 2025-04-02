@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Entity\Jeu; 
 use App\Service\ClassementService;
 use App\Services\NavigationService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,7 +36,6 @@ class LeaderboardController extends AbstractController
         $jeuId = $request->query->get('jeu_id'); // Récupérer l'ID du jeu depuis l'URL
         $scoreUser = null;
 
-        $jeuId = 2;
         if ($utilisateurId) {
             if ($jeuId) {
                 // Récupérer le score pour un jeu spécifique
@@ -47,6 +47,9 @@ class LeaderboardController extends AbstractController
                 $classement = $this->classementService->getClassementTotal();
             }
         }
+
+        $jeux = $this->entityManager->getRepository(Jeu::class)->findAll();
+        
         
 
         // Renvoyer la réponse avec le rendu de la vue
@@ -58,6 +61,7 @@ class LeaderboardController extends AbstractController
             'classement' => $classement,
             'scoreUser' => $scoreUser,
             'jeuId' => $jeuId,
+            'jeux' => $jeux,
         ]);
     }
 }
