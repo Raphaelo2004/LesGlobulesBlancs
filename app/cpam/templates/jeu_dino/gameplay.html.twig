@@ -4,6 +4,8 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/jeux/jeu_3/jeu_3_gameplay.css') }}">
+    <link rel="stylesheet" href="{{ asset('composants/chronometre/chronometre.css') }}">
+
 {% endblock %}
 
 
@@ -18,11 +20,6 @@
     </div>
 
     <div id="countdown" class="countdown-container titre--bold titre--extralarge"></div>
-    {% include 'composants/chronometre/chronometre.html.twig' %}
-
-
-    <img src="{{ asset('assets/images/Jeu3/dinosaure_1.png') }}" alt="dino" class="dino" id="dino">
-
     {% include 'composants/pop-up/pop-up.html.twig' with {
         nom_popup: "consignes",
         titre_popup: "Consignes",
@@ -43,6 +40,32 @@
             { contenue: 'Niveau 2', class: 'btn--hard btn--lvl', onclick :"fermerPopupLvlDifficile()" }
         ]
     } %}
+
+    {# ----- La pop-up de fin (texte gagné / perdu) ----- #}
+{% include 'composants/pop-up/pop-up.html.twig' with {
+    nom_popup: "popup_fin",
+    titre_popup: " ",
+    texte_popup: "",
+    conteneur_button_style: "conteneur_button_row",
+    buttons: [
+        { contenue: 'Rejouer', class: 'btn', route: "app_jeu_dino" },
+        { contenue: 'Quitter', class: 'btn', route: "app_accueil" },
+    ]
+} %}
+
+{# ----- La pop-up de score ----- #}
+{% include 'composants/pop-up/pop-up.html.twig' with {
+    nom_popup: "popup_score",
+    titre_popup: "Score : ???",
+    texte_popup: "",  
+    conteneur_button_style: "conteneur_button_row",
+    buttons: [
+        { contenue: 'Continuer', class: 'btn', onclick :"clickContinuer()" },
+        { contenue: 'Partager', class: 'btn', onclick :"clickPartager()" },
+    ]
+} %}
+
+
 
 {% endblock %}
 

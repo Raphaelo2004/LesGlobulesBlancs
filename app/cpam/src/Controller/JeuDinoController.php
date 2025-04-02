@@ -1,12 +1,20 @@
 <?php
 
+
 namespace App\Controller;
 
+use App\Entity\Jeu;
+use App\Entity\Score;
+use App\Entity\Utilisateur;
 use App\Services\JeuDinoService;
 use App\Service\ClassementService;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ScoreRepository; 
+use Doctrine\ORM\EntityManagerInterface; 
+
 
 class JeuDinoController extends AbstractController
 {
@@ -36,12 +44,18 @@ class JeuDinoController extends AbstractController
     /**
      * @Route("/jeu/dino_gameplay", name="app_jeu_dino_gameplay")
      */
-    public function gameplay(): Response
+    public function gameplay(Request $request,EntityManagerInterface $entityManager): Response
     {
-        $classement = $this->classementService->getClassement(3);
+        $jeuId = 3;
+        $session = $request->getSession();
+        $utilisateurId = $session->get('utilisateur_id');
+        $utilisateur = $entityManager->getRepository(Utilisateur::class)->find($utilisateurId);
+        $classement = $this->classementService->getClassement($jeuId);
 
         return $this->render('jeu_dino/gameplay.html.twig', [
-            'classement' => $classement
+            'classement' => $classement,
+            'utilisateur' => $utilisateur
+
         ]);
     }
 }
