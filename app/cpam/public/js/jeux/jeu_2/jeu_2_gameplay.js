@@ -131,7 +131,9 @@ function createFallingObject(fallSpeed) {
                 requestAnimationFrame(fall);
             }
         } else {
-            document.body.removeChild(object);
+            if (document.body.contains(object)) {
+                document.body.removeChild(object);
+            }
             fallingObjects = fallingObjects.filter(o => o.element !== object);
 
             if (object.dataset.good === "true") {
