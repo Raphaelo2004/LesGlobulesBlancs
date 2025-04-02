@@ -131,7 +131,7 @@ function createFallingObject(fallSpeed) {
                 requestAnimationFrame(fall);
             }
         } else {
-            if (document.body.contains(object)) {
+           if (document.body.contains(object)) {
                 document.body.removeChild(object);
             }
             fallingObjects = fallingObjects.filter(o => o.element !== object);
@@ -238,14 +238,17 @@ function updateJauge() {
 function updateErrors() {
     const errorContainer = document.getElementById("error-container");
     errorContainer.innerHTML = ""; // On vide pour recréer l'affichage
+        for (let i = 0; i < errors; i++) {
+            if (i <= 2){
+                const cross = document.createElement("span");
+                cross.textContent = "❌";
+                cross.style.margin = "5px";
+                cross.style.fontSize = "32px"; // Ajuste la taille de la croix
+                errorContainer.appendChild(cross);
+            }
 
-    for (let i = 0; i < errors; i++) {
-        const cross = document.createElement("span");
-        cross.textContent = "❌";
-        cross.style.margin = "5px";
-        cross.style.fontSize = "32px"; // Ajuste la taille de la croix
-        errorContainer.appendChild(cross);
-    }
+        }
+    
 }
 
 function updatePopupFin(finPartie) {
