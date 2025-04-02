@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href = jeuNonDisponibleUrl; // Redirige si trop grand
         }
     }
-    if (window.location.pathname !== "/jeu/non/disponible"){
+    if (window.location.pathname !== "/jeu/non/disponible" && window.location.pathname !== "/admin"){
         setInterval(checkSize, 500);
     }
 });
