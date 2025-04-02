@@ -7,14 +7,72 @@ Bienvenue sur le dépôt Git du projet Serious Game CPAM, réalisé par l'équip
 ## 🚀 Description du Projet
 
 Ce Serious Game vise à sensibiliser les jeunes adultes (18-25 ans) à divers services proposés par la CPAM à travers une série de **5 mini-jeux interactifs**.
+Chaque jeu aborde une thématique clé de la santé et des services administratifs d'Ameli de manière ludique et engageante.
 
-## 🎮 Liste des Mini-Jeux
+## 🎮 Liste des Mini-Jeux et Explications
 
-- **Carte Vitale – Taquin express**
-- **C2S – Le ramasseur d’aides**
-- **RIB – Dino Jump**
-- **Examen de prévention – Fruit Santé**
-- **M’T Dents – Nettoyage chrono**
+### Carte Vitale – Taquin express
+Remets les morceaux mélangés de ta carte Vitale dans le bon ordre avant la fin du temps imparti ! Un jeu de puzzle simple et rapide pour sensibiliser à l'importance de la carte Vitale.
+
+### C2S – Le ramasseur d’aides
+Déplace ton personnage pour collecter les aides de la Complémentaire Santé Solidaire (C2S) tout en évitant les obstacles !
+
+### RIB – Dino Jump
+Un jeu inspiré du Chrome Dino Game : saute au bon moment pour éviter les obstacles et assure-toi que ton RIB soit bien enregistré dans ton compte Ameli.
+
+### Examen de prévention – Fruit Santé
+Fais tomber les bons fruits dans le panier pour maintenir une bonne santé ! Un jeu pour rappeler l'importance de l'examen de prévention en santé et des bonnes habitudes alimentaires.
+
+### M’T Dents – Nettoyage chrono
+Brosse les dents rapidement et efficacement avant que le temps ne s’écoule pour apprendre l'importance du programme M’T Dents et des soins dentaires réguliers.
+
+## Parcours Utilisateur
+
+L'expérience utilisateur se déroule en plusieurs étapes :
+
+1. **Connexion / Inscription**
+   - L'utilisateur arrive sur une page de connexion où il peut s'inscrire s'il n'a pas encore de compte.
+   - Lors de la première connexion, un message de bienvenue apparaît pour expliquer l'objectif du jeu. (Ce message ne s'affichera plus par la suite, sauf après une déconnexion et reconnexion.)
+
+2. **Accueil**
+   - L'utilisateur est redirigé vers la page d’accueil, où il peut explorer les différentes fonctionnalités.
+   - Il peut accéder à un tableau interactif pour choisir parmi les 5 mini-jeux proposés.
+
+3. **Expérience de Jeu**
+   - L'utilisateur joue aux différents jeux pour apprendre sur les services de la CPAM de manière ludique.
+   - Un système de score permet d'évaluer ses performances.
+
+4. **Tableau des Scores & Partage**
+   - Les meilleurs scores sont affichés sur un leaderboard, encourageant les utilisateurs à améliorer leurs performances.
+   - Un système de partage SMS permet aux joueurs de partager leurs résultats avec leurs amis.
+
+5. **Profil & Déconnexion**
+   - L'utilisateur peut consulter ses informations, voir ses statistiques de jeu et se déconnecter.
+   - Lors de la déconnexion, la clé `popupWelcomeSeen` est supprimée, réactivant le message de bienvenue lors de la prochaine connexion.
+
+6. **Accès Admin (si administrateur)**
+   - Les administrateurs peuvent gérer les utilisateurs et consulter des statistiques avancées sur les parties jouées.
+
+## Description des Pages
+
+### Page d'accueil
+Présente le projet avec un fond dynamique et un message de bienvenue pour les nouveaux utilisateurs. Permet d’accéder au tableau des jeux.
+
+### Connexion / Inscription
+Interface simple pour se connecter ou créer un compte.
+
+### Tableau des Jeux
+Permet de choisir un des 5 mini-jeux disponibles.
+
+### Pages des Mini-Jeux
+Chaque mini-jeu possède sa propre interface et ses mécaniques interactives.
+
+### Profil Utilisateur
+Affiche les informations de l’utilisateur, ses statistiques et son meilleur score. Inclut un bouton "Se déconnecter".
+
+### Administration (Admin)
+Permet aux administrateurs de gérer les utilisateurs, voir les statistiques des jeux, et consulter les scores des joueurs.
+
 
 ## ⚙️ Technologies utilisées
 
