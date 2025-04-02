@@ -25,8 +25,16 @@ class JeuRamasseurController extends AbstractController
     /**
      * @Route("/jeu/ramasseur", name="app_jeu_ramasseur")
      */
-    public function index(JeuRamasseurService $jeuRamasseurService): Response
+    public function index(Request $request, JeuRamasseurService $jeuRamasseurService): Response
     {
+        $session = $request->getSession();
+        $utilisateurId = $session->get('utilisateur_id');
+
+        // Vérifier si l'utilisateur est bien connecté
+        if (!$utilisateurId) {
+            return $this->redirectToRoute('app_connexion2');
+        }
+
         return $this->render('jeu_ramasseur/index.html.twig', [
             'controller_name' => 'JeuRamasseurController',
             'gameItems' => $jeuRamasseurService->getJeuRamasseurItems(),
@@ -37,8 +45,17 @@ class JeuRamasseurController extends AbstractController
     /**
      * @Route("/jeu/ramasseur_gameplay", name="app_jeu_ramasseur_gameplay")
      */
-    public function gameplay(Request $request,EntityManagerInterface $entityManager): Response
+    public function gameplay(Request $request, EntityManagerInterface $entityManager): Response
     {
+
+        $session = $request->getSession();
+        $utilisateurId = $session->get('utilisateur_id');
+
+        // Vérifier si l'utilisateur est bien connecté
+        if (!$utilisateurId) {
+            return $this->redirectToRoute('app_connexion2');
+        }
+
         $jeuId = 2;
         $session = $request->getSession();
         $utilisateurId = $session->get('utilisateur_id');

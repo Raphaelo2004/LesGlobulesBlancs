@@ -8,9 +8,10 @@
 
 {% block body %}
    {% include 'composants/header/header.html.twig' %}
+   <img src="/assets/images/Appartement.png" class="background-img" alt="Background">
 
     {% set date_actuelle = "now"|date("Y-m-d") %}
-    {% set date_limite = "2025-03-28" %}
+    {% set date_limite = "2025-08-28" %}
 
     {% set texte_popup = "Bienvenue sur le serious game d’ameli !<br><br>
                         Des jeux pour prendre en main ta santé sans prise de tête 😉" %}
@@ -24,7 +25,7 @@
         {% set div_class = "background-alt" %} 
     {% endif %}
 
-    <div class="{{ div_class }}">
+    <div id="popup-welcome" class="{{ div_class }}">
         {% include 'composants/pop-up/pop-up.html.twig' with {        
             nom_popup: "welcome",
             titre_popup: "",
@@ -35,11 +36,17 @@
             ]
         } %}
     </div>
-    
+
+     {% if date_actuelle < date_limite %}
     <a class="contour_tableau_jeu tableau_acceuil" href="{{ path('app_tableau') }}"></a>
+    {% endif %}
 
     {# Inclusion de la barre de navigation #}
     {% if navItems is defined and activeNav is defined %}
         {% include 'composants/nav_bar/navigation.html.twig' with { 'navItems': navItems, 'activeNav': activeNav } %}
     {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/accueil/accueil.js') }}"></script>
 {% endblock %}

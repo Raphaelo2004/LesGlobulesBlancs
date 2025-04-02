@@ -11,6 +11,8 @@
     {# composant ecran pause #}
     {% include 'composants/ecran_pause/ecran_pause.html.twig' with { 'lien': 'app_jeu_ramasseur'} %}
 
+    <img src="{{ asset('assets/images/fondRamasseur.jpg') }}" id="fond-ramasseur" alt="fond ramasseur" />
+
     <div class="score-container">
         <h1 class="titre--large titre--bold">Score : <span id="score-value">0</span></h1>
         <div id="error-container"></div>
@@ -60,7 +62,7 @@
         conteneur_button_style: "conteneur_button_row", 
         buttons: [
             { contenue: 'Continuer', class: 'btn', onclick :"clickContinuer()" },
-            { contenue: 'Partager', class: 'btn', onclick :"clickPartager()" },
+            { contenue: 'Partager', class: 'btn share_score', onclick :"clickPartager()" },
         ]
     } %}
 
@@ -71,4 +73,5 @@
 {% block javascripts %}
     <script src="{{ asset('js/jeux/jeu_2/jeu_2_gameplay.js') }}"></script>
     <script src="{{ asset('js/jeux/jeux_global/jeu_global.js') }}"></script>
+    <script src="{{ asset('js/global/global.js') }}"></script>
 {% endblock %}

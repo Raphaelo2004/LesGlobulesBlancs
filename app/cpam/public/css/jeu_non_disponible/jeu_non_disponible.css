@@ -1,0 +1,164 @@
+/* Variables */
+/* SCSS */
+.titre--regular {
+  font-family: "Mic32New-Rg";
+}
+.titre--regular-it {
+  font-family: "Mic32New-RgIt";
+}
+.titre--bold {
+  font-family: "Mic32New-Bd";
+}
+.titre--bold-it {
+  font-family: "Mic32New-BdIt";
+}
+.titre--light {
+  font-family: "Mic32New-Lt";
+}
+.titre--light-it {
+  font-family: "Mic32New-LtIt";
+}
+.titre--medium {
+  font-family: "Mic32New-Md";
+}
+.titre--medium-it {
+  font-family: "Mic32New-MdIt";
+}
+.titre--extralarge {
+  font-size: 128px;
+}
+.titre--large {
+  font-size: 80px;
+}
+
+.para--regular {
+  font-family: "SourceSansPro-Regular";
+}
+.para--italic {
+  font-family: "SourceSansPro-Italic";
+}
+.para--bold {
+  font-family: "SourceSansPro-Bold";
+}
+.para--bold-it {
+  font-family: "SourceSansPro-BoldItalic";
+}
+.para--light {
+  font-family: "SourceSansPro-Light";
+}
+.para--light-it {
+  font-family: "SourceSansPro-LightItalic";
+}
+.para--extra-light {
+  font-family: "SourceSansPro-ExtraLight";
+}
+.para--extra-light-it {
+  font-family: "SourceSansPro-ExtraLightItalic";
+}
+.para--semibold {
+  font-family: "SourceSansPro-SemiBold";
+}
+.para--semibold-it {
+  font-family: "SourceSansPro-SemiBoldItalic";
+}
+.para--black {
+  font-family: "SourceSansPro-Black";
+}
+.para--black-it {
+  font-family: "SourceSansPro-BlackItalic";
+}
+.para--extralarge {
+  font-size: 48px;
+}
+.para--large {
+  font-size: 40px;
+}
+.para--medium {
+  font-size: 32px;
+}
+.para--small {
+  font-size: 24px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  background-color: #ffffff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.score-container {
+  text-align: center;
+  display: block;
+  position: fixed;
+  top: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+}
+.score-container h1 {
+  color: #ffffff;
+}
+
+.jeu-non-disponible {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #3e81f6, #0C419A);
+  text-align: center;
+  color: #ffffff;
+}
+.jeu-non-disponible .message-box {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  animation: fadeIn 0.8s ease-in-out;
+}
+.jeu-non-disponible .message-box i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+.jeu-non-disponible .message-box h2 {
+  margin-bottom: 0.5rem;
+}
+.jeu-non-disponible .message-box p {
+  opacity: 0.9;
+}
+.jeu-non-disponible .message-box .btn-retour {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.5rem;
+  background: white;
+  color: #0C419A;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}/*# sourceMappingURL=jeu_non_disponible.css.map */

@@ -113,11 +113,66 @@ a {
   color: #ffffff;
 }
 
-body {
-  background: url("/assets/images/fondRamasseur.jpg") no-repeat center center fixed;
-  background-size: cover;
+#fond-ramasseur {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -100;
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.falling-object {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.falling-object {
+  position: absolute;
+  top: 0;
+  width: 80px;
+  height: auto;
+  transition: transform 0.1s linear;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.falling-object.spin {
+  animation: spin 4s linear infinite;
+}
+
+body.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-15px);
+  }
+  50% {
+    transform: translateX(15px);
+  }
+  75% {
+    transform: translateX(-15px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
 .fixed-jauge {
   position: fixed;
   top: 30%;

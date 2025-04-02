@@ -4,12 +4,12 @@
 
 {% block javascripts %}
     <script>
-    const utilisateurId = {{ app.session.get('utilisateur_id')|json_encode|raw }};
-
-    const medailleOr = "{{ asset('assets/images/medaille_or.png') }}";
-    const medailleArgent = "{{ asset('assets/images/medaille_argent.png') }}";
-    const medailleBronze = "{{ asset('assets/images/medaille_bronze.png') }}";
-</script>
+        const utilisateurId = {{ app.session.get('utilisateur_id')|json_encode|raw }};
+        
+        const medailleOr = "{{ asset('assets/images/medaille_or.png') }}";
+        const medailleArgent = "{{ asset('assets/images/medaille_argent.png') }}";
+        const medailleBronze = "{{ asset('assets/images/medaille_bronze.png') }}";
+    </script>
 {% endblock %}
 
 <div class="classement_container">
@@ -46,7 +46,7 @@
         </div>
     </div>
 {% endfor %}
-{% if isLeaderboard is not defined or not isLeaderboard %}
+
 <div class="classement_item current_user_score {% if isLeaderboard is defined and isLeaderboard %}item_fixe{% endif %}" data-user-id="{{ utilisateur.id }}">
     <div class="leftside_container">
         <div class="classement_utilisateur">
@@ -61,5 +61,4 @@
         </div>
     
 </div>
-{% endif %}
 

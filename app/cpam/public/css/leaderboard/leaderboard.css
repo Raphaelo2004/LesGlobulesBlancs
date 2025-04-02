@@ -152,8 +152,44 @@ a {
 
 .filter_bar {
   height: 100px;
-  background-color: #0C419A;
+  background-color: #ffffff;
   border-radius: 50px;
   width: 80%;
-  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 20px;
+  margin: 20px 0;
+}
+
+.share_score, .game_name, .search_player {
+  width: 250px;
+  background: transparent;
+  border: none;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game_name {
+  border-right: 4px solid #000000;
+  border-left: 4px solid #000000;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  height: 100px;
+}
+
+.game_name option {
+  font-size: 14px;
+  text-align: center;
+}
+
+.search_player::-moz-placeholder {
+  color: #000000;
+}
+
+.search_player::placeholder {
+  color: #000000;
 }/*# sourceMappingURL=leaderboard.css.map */

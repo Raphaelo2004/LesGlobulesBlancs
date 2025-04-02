@@ -20,18 +20,25 @@
 
     <div class="number1">
         <div class="filter_bar">
-            <!-- Optionnel: ajout de barres de filtres si nécessaire -->
+           <button class="share_score para--bold para--large">Partager</button>
+            <select class="game_name para--bold para--large">
+                <option value="0">Tous les jeux</option>
+                {% for jeu in jeux %}
+                    <option value="{{ jeu.id }}" {% if jeuId == jeu.id %}selected{% endif %}>{{ jeu.nomJeu }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" class="search_player para--bold para--large" placeholder="Rechercher">
         </div>
 
         <div class="number1_position">
             <img src="{{ asset('assets/images/medaille_or.png') }}" alt="Médaille Or" />
         </div>
-
+        
         <div class="number1_utilisateur">
-            {% if leader %}
+            {% if leader is defined and leader.identifiant is defined %}
                 <p class="para--bold para--extralarge">{{ leader.identifiant }}</p>
-            {% else %}
-                <p class="para--bold para--extralarge">{{ identifiant }}</p>
+            {% elseif utilisateur is defined and utilisateur.identifiant%}
+                <p class="para--bold para--extralarge">{{ utilisateur.identifiant }}</p>
             {% endif %}
         </div>
 
@@ -56,4 +63,12 @@
     {% endif %}
 </div>
 
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('js/leaderboard/leaderboard.js') }}"></script>
+    <script src="{{ asset('js/global/global.js') }}"></script>
+    <script src="{{ asset('js/jeux/jeux_global/jeu_global.js') }}"></script>
 {% endblock %}

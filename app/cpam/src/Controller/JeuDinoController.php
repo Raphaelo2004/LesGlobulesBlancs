@@ -15,7 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ScoreRepository; 
 use Doctrine\ORM\EntityManagerInterface; 
 
-
 class JeuDinoController extends AbstractController
 {
 
@@ -28,8 +27,16 @@ class JeuDinoController extends AbstractController
     /**
      * @Route("/jeu/dino", name="app_jeu_dino")
      */
-    public function index(JeuDinoService $jeuDinoService): Response
+    public function index(Request $request, JeuDinoService $jeuDinoService): Response
     {
+        $session = $request->getSession();
+        $utilisateurId = $session->get('utilisateur_id');
+
+        // Vérifier si l'utilisateur est bien connecté
+        if (!$utilisateurId) {
+            return $this->redirectToRoute('app_connexion2');
+        }
+
         // Récupérer le classement
         $classement = $this->classementService->getClassement(3);
 
@@ -44,6 +51,7 @@ class JeuDinoController extends AbstractController
     /**
      * @Route("/jeu/dino_gameplay", name="app_jeu_dino_gameplay")
      */
+
     public function gameplay(Request $request,EntityManagerInterface $entityManager): Response
     {
         $jeuId = 3;

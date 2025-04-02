@@ -6,13 +6,15 @@ use App\Services\NavigationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Utilisateur;
 
 class AccueilController extends AbstractController
 {
     /**
      * @Route("/accueil", name="app_accueil")
      */
-    public function index(Request $request, NavigationService $navService): Response
+    public function index(Request $request, NavigationService $navService, EntityManagerInterface $entityManager): Response
     {
         $session = $request->getSession();
         $utilisateurId = $session->get('utilisateur_id');
@@ -20,6 +22,18 @@ class AccueilController extends AbstractController
         // Vérifier si l'utilisateur est bien connecté
         if (!$utilisateurId) {
             return $this->redirectToRoute('app_connexion2');
+        }
+        
+        // Récupérer l'objet utilisateur depuis la base de données
+        $utilisateur = $entityManager->getRepository(Utilisateur::class)->find($utilisateurId);
+
+        if (!$utilisateur) {
+            return $this->redirectToRoute('app_connexion2');
+        }
+
+        // Vérifier si c'est un admin
+        if ($utilisateur->getIsAdmin()) {
+            return $this->redirectToRoute('app_admin');
         }
 
         return $this->render('accueil/index.html.twig', [

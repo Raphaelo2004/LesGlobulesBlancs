@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Entity\Jeu; 
 use App\Service\ClassementService;
 use App\Services\NavigationService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,15 +39,18 @@ class LeaderboardController extends AbstractController
         if ($utilisateurId) {
             if ($jeuId) {
                 // Récupérer le score pour un jeu spécifique
-                $scoreUser = $this->classementService->getScoreUser((int) $jeuId, (int) $utilisateurId);
+                $scoreUser = $this->classementService->getScoreUtilisateur($jeuId, $utilisateurId);
+                $classement = $this->classementService->getClassement($jeuId);
             } else {
                 // Récupérer le score total de l'utilisateur
                 $scoreUser = $this->classementService->getScoreTotalUtilisateur((int) $utilisateurId);
+                $classement = $this->classementService->getClassementTotal();
             }
         }
 
-        // Récupérer le classement des utilisateurs
-        $classement = $this->classementService->getClassementTotal();
+        $jeux = $this->entityManager->getRepository(Jeu::class)->findAll();
+        
+        
 
         // Renvoyer la réponse avec le rendu de la vue
         return $this->render('leaderboard/index.html.twig', [
@@ -57,6 +61,7 @@ class LeaderboardController extends AbstractController
             'classement' => $classement,
             'scoreUser' => $scoreUser,
             'jeuId' => $jeuId,
+            'jeux' => $jeux,
         ]);
     }
 }

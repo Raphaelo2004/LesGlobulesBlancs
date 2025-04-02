@@ -32,7 +32,6 @@ class ProfilController extends AbstractController
             'controller_name' => 'ProfilController',
             'navItems' => $navService->getNavigationItems(),
             'activeNav' => 'profil', // Indique la page active
-            'isAdmin' => $utilisateur ? $utilisateur->getIsAdmin() : false
         ]);
     }
 }

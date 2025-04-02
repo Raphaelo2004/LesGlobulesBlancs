@@ -16,6 +16,13 @@ document.addEventListener("DOMContentLoaded", function () {
         let maxX = window.innerWidth - tirelire.offsetWidth + 150; // Limite droite
         newX = Math.max(150, Math.min(newX, maxX)); // Reste dans l'écran
 
+        // Inverser l'image si la tirelire se déplace vers la droite
+        if (newX > tirelire.offsetLeft) {
+            tirelire.style.transform = "translateX(-50%) scaleX(-1)"; // Image inversée
+        } else {
+            tirelire.style.transform = "translateX(-50%) scaleX(1)"; // Image normale
+        }
+
         tirelire.style.left = newX + "px";
     });
 
@@ -56,53 +63,62 @@ const goodSound = new Audio("/assets/SONS/JEU 2 - RAMASSEUR/Bruitage dans tireli
 const badSound = new Audio("/assets/SONS/JEU 2 - RAMASSEUR/FAUX.mp3");
 const applaudissement = new Audio("/assets/SONS/JEU 2 - RAMASSEUR/Applaudissement de fin.mp3");
 
+let isGamePaused = false;
+let fallingObjects = [];
+
 function createFallingObject(fallSpeed) {
     const object = document.createElement("img");
-    const isGood = Math.random() > 0.5; // 50% chance d'être un bon ou mauvais objet
-        object.src = isGood ? 
-            goodPictos[Math.floor(Math.random() * goodPictos.length)] :
-            badPictos[Math.floor(Math.random() * badPictos.length)];
-        object.classList.add("falling-object");
-        object.dataset.good = isGood; // Attribut pour identifier l'objet
+    const isGood = Math.random() > 0.5;
+    object.src = isGood ?
+        goodPictos[Math.floor(Math.random() * goodPictos.length)] :
+        badPictos[Math.floor(Math.random() * badPictos.length)];
+    object.classList.add("falling-object");
+    object.dataset.good = isGood;
 
-    // Position aléatoire sur l'axe X
-    const randomX = Math.random() * (window.innerWidth - 100); // Ajuste en fonction de la taille
+    const difficulty = getQueryParam("difficulty");
+    if (difficulty === "hard") {
+        object.classList.add("spin");
+    }
+
+    const randomX = Math.random() * (window.innerWidth - 100);
     object.style.left = `${randomX}px`;
+    object.style.top = `0px`;
 
     document.body.appendChild(object);
-
-    // Animation de la chute
+    
     let positionY = 0;
 
     function fall() {
+        if (isGamePaused) return;
+        
         if (positionY < window.innerHeight) {
             positionY += fallSpeed;
             object.style.top = `${positionY}px`;
 
-            // Vérifier collision avec la tirelire
             const tirelireRect = tirelire.getBoundingClientRect();
             const objectRect = object.getBoundingClientRect();
 
             if (
-                objectRect.bottom >= tirelireRect.top &&  // L'objet atteint le haut de la tirelire
-                objectRect.top <= tirelireRect.bottom && // L'objet est encore dans la tirelire
+                objectRect.bottom >= tirelireRect.top &&
+                objectRect.top <= tirelireRect.bottom &&
                 objectRect.left < tirelireRect.right &&
                 objectRect.right > tirelireRect.left
             ) {
                 document.body.removeChild(object);
+                fallingObjects = fallingObjects.filter(o => o.element !== object);
+                
                 if (object.dataset.good === "true") {
                     goodSound.play();
-                    score += 30; // Augmente le score
+                    score += 15;
                     updateJauge();
-                    console.log("Score:", score);
                 } else {
                     badSound.play();
+                    shakeScreen();
                     errors++;
                     updateErrors();
-                    console.log("Erreurs:", errors);
-                    if (errors == maxErrors) {
-                        sendScoreToDatabase(score,2)
-                        console.log("Perdu !");
+                    if (errors === maxErrors) {
+                        removeAllFallingObjects();
+                        sendScoreToDatabase(score, 2);
                         pauseChrono();
                         pauseCountdown();
                         updatePopupFin("perdu");
@@ -115,9 +131,31 @@ function createFallingObject(fallSpeed) {
                 requestAnimationFrame(fall);
             }
         } else {
-            document.body.removeChild(object);
+           if (document.body.contains(object)) {
+                document.body.removeChild(object);
+            }
+            fallingObjects = fallingObjects.filter(o => o.element !== object);
+
+            if (object.dataset.good === "true") {
+                badSound.play();
+                shakeScreen();
+                errors++;
+                updateErrors();
+                if (errors === maxErrors) {
+                    removeAllFallingObjects();
+                    sendScoreToDatabase(score, 2);
+                    pauseChrono();
+                    pauseCountdown();
+                    updatePopupFin("perdu");
+                    updatePopupScore(score);
+                    ouvrirPopup(".popup_score");
+                    clearInterval(gameInterval);
+                }
+            }
         }
     }
+
+    fallingObjects.push({ element: object, positionY, fallSpeed, fall });
 
     fall();
 }
@@ -143,16 +181,16 @@ function startGame() {
     
     switch (difficulty) {
         case "easy":
-            fallSpeed = 3; // Vitesse lente
-            timeBetweenObj = 4000; // temps lent
+            fallSpeed = 6; // Vitesse lente
+            timeBetweenObj = 3000; // temps lent
             break;
         case "medium":
-            fallSpeed = 4; // Vitesse moyenne
-            timeBetweenObj = 3000; // temps moyen
+            fallSpeed = 8; // Vitesse moyenne
+            timeBetweenObj = 900; // temps moyen
             break;
         case "hard":
-            fallSpeed = 6; // Vitesse rapide
-            timeBetweenObj = 1000; // temps rapide
+            fallSpeed = 12; // Vitesse rapide
+            timeBetweenObj = 500; // temps rapide
             break;
         default:
             fallSpeed = 4; // Valeur par défaut si aucune difficulté n'est définie
@@ -162,13 +200,15 @@ function startGame() {
     // Délai de 3 secondes avant de commencer à faire tomber les objets
     setTimeout(() => {
         gameInterval = setInterval(() => {
-            createFallingObject(fallSpeed);
+            if (!isGamePaused) {  // Empêche la création de nouveaux objets
+                createFallingObject(fallSpeed);
+            }
         }, timeBetweenObj);
 
         // Arrêter le jeu après 60 secondes
         setTimeout(() => {
             clearInterval(gameInterval);
-            console.log("Fin du jeu ! Plus aucun objet ne tombe.");
+            removeAllFallingObjects();
             sendScoreToDatabase(score,2)
             updatePopupScore(score);
             updatePopupFin("gagne");
@@ -184,9 +224,9 @@ function updateJauge() {
 
     const jauge = document.querySelector(".fixed-jauge");
 
-    if (score >= 800) {
+    if (score >= 1000) {
         jauge.src = "/assets/images/Jauge-05.png";
-    } else if (score >= 600) {
+    } else if (score >= 700) {
         jauge.src = "/assets/images/Jauge-04.png";
     } else if (score >= 400) {
         jauge.src = "/assets/images/Jauge-03.png";
@@ -198,14 +238,17 @@ function updateJauge() {
 function updateErrors() {
     const errorContainer = document.getElementById("error-container");
     errorContainer.innerHTML = ""; // On vide pour recréer l'affichage
+        for (let i = 0; i < errors; i++) {
+            if (i <= 2){
+                const cross = document.createElement("span");
+                cross.textContent = "❌";
+                cross.style.margin = "5px";
+                cross.style.fontSize = "32px"; // Ajuste la taille de la croix
+                errorContainer.appendChild(cross);
+            }
 
-    for (let i = 0; i < errors; i++) {
-        const cross = document.createElement("span");
-        cross.textContent = "❌";
-        cross.style.margin = "5px";
-        cross.style.fontSize = "32px"; // Ajuste la taille de la croix
-        errorContainer.appendChild(cross);
-    }
+        }
+    
 }
 
 function updatePopupFin(finPartie) {
@@ -220,4 +263,28 @@ function updatePopupFin(finPartie) {
             La complémentaire santé solidaire (C2S) est une aide pour payer ses dépenses de santé, si tes ressources sont faibles. Avec la C2S tu ne paies pas le médecin, ni tes médicaments en pharmacie. La plupart des lunettes et des soins dentaires sont pris en charge.<br><br>
             Tu peux faire une simulation sur <a href='https://www.ameli.fr' target='_blank'>ameli.fr</a> pour savoir si tu y as droit !`;
     }
+}
+
+function shakeScreen() {
+    const body = document.querySelector('body');
+    body.classList.add('shake'); // Ajoute la classe "shake" pour déclencher l'animation
+    setTimeout(() => {
+        body.classList.remove('shake'); // Retire la classe après l'animation
+    }, 500); // La durée du tremblement (500ms)
+}
+
+function removeAllFallingObjects() {
+    const fallingObjects = document.querySelectorAll('.falling-object');
+    fallingObjects.forEach((object) => {
+        object.remove(); // Supprime l'objet du DOM
+    });
+}
+
+function pauseSpecificGame() {
+    isGamePaused = true;
+}
+
+function reprendreSpecificGame() {
+    isGamePaused = false;
+    fallingObjects.forEach(obj => requestAnimationFrame(obj.fall));
 }

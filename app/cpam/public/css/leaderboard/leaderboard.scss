@@ -1,4 +1,4 @@
-@import '../style_general';
+@import '../../style_general';
 
 .main_container{
     display: flex;
@@ -38,11 +38,40 @@
     height: 1200px;
 }
 
-.filter_bar{
+.filter_bar {
     height: 100px;
-    background-color: $color-blue-main;
+    background-color: $color-white;
     border-radius: $border-radius-pop-up;
     width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 20px;
+    margin: 20px 0;
+}
 
-    margin-bottom: 30px;
+.share_score, .game_name, .search_player {
+    width: 250px;
+    background: transparent;
+    border: none;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game_name {
+    border-right: 4px solid $color-black;
+    border-left: 4px solid $color-black;
+    appearance: none; 
+    height: 100px;
+}
+
+.game_name option {
+    font-size: 14px; 
+    text-align: center;
+}
+
+.search_player::placeholder {
+    color: $color-black;
 }
