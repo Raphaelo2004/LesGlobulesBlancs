@@ -191,4 +191,18 @@ body:has(.background-alt) {
   left: calc(26% + 3vw);
   width: calc(33% - 4vw);
   height: calc(24.5% - 5vh);
+}
+
+@keyframes zoomPage {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0.4;
+  }
+}
+.zoom-transition {
+  animation: zoomPage 1.5s forwards ease-in-out;
 }/*# sourceMappingURL=accueil.css.map */
