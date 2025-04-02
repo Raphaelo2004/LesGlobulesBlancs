@@ -1,46 +1,64 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // ------------------------------------------------------------------
-    // Helper pour vérifier si le jeu est en pause en se basant sur l'animation de l'élément .needle
-    function isGamePaused() {
-        const needle = document.querySelector('.needle');
-        if (needle) {
-            return needle.style.animationPlayState === "paused";
-        }
-        return false;
+    // --- Création d'un élément factice "needle" s'il n'existe pas (pour éviter l'erreur dans pauseChrono) ---
+    if (!document.querySelector('.needle')) {
+        const dummyNeedle = document.createElement("div");
+        dummyNeedle.className = "needle";
+        dummyNeedle.style.position = "absolute";
+        dummyNeedle.style.top = "0";
+        dummyNeedle.style.left = "0";
+        dummyNeedle.style.width = "0";
+        dummyNeedle.style.height = "0";
+        document.body.appendChild(dummyNeedle);
     }
-    
-    // ------------------------------------------------------------------
-    // Création du Dino (initialement caché)
+
+    // --- Récupération initiale du niveau via l'URL (sera mis à jour dans startGame) ---
+    let urlParams = new URLSearchParams(window.location.search);
+    let difficulty = urlParams.get("difficulty") || "medium";
+    console.log("Initial difficulty:", difficulty);
+    let collisionCount = 0; // compteur pour le niveau hard
+
+    // --- Sons ---
+    const bgMusic = new Audio("/assets/SONS/JEU 3 - DINO/son ambiance Dino.mp3");
+    bgMusic.loop = true;
+    bgMusic.volume = 0.5;
+
+    const jumpSound = new Audio("/assets/SONS/JEU 3 - DINO/Saut.mp3");
+    const badSound = new Audio("/assets/SONS/JEU 3 - DINO/faux.mp3");
+    const applauseSound = new Audio("/assets/SONS/JEU 3 - DINO/Applaudissement de fin.mp3");
+
+    // --- Variables globales de pause ---
+    window.isPaused = false;
+    function isGamePaused() {
+        return window.isPaused;
+    }
+    // "canJump" empêche le saut pendant la pause, les 3,5 premières secondes et en fin de jeu
+    let canJump = false;
+
+    // --- Création du Dino ---
     const dino = document.createElement("img");
     dino.src = "/assets/images/Jeu3/dinosaure_1.png";
     dino.classList.add("dino");
     dino.style.transformOrigin = "center bottom";
     document.body.appendChild(dino);
-    
+
     let isJumping = false;
     let score = 0;
     let gameEnded = false;
     let collectedIban = [];
-    
-    // IBAN dans l'ordre souhaité
     const ibanParts = ["FR", "14", "11", "56", "12", "13", "9", "34", "12_1", "78"];
-    
-    // ------------------------------------------------------------------
-    // Création de la zone de score (initialement cachée)
+
+    // --- Zone de score ---
     const scoreContainer = document.createElement("div");
     scoreContainer.classList.add("score-container");
-    scoreContainer.style.display = "none"; // Masqué jusqu'au lancement du jeu
-    scoreContainer.innerHTML = `<h1>Score : ${score}</h1>`;
+    scoreContainer.style.display = "none";
+    scoreContainer.innerHTML = `<h1 style="display: none;">Score : ${score}</h1>`;
     document.body.appendChild(scoreContainer);
-    
-    // ------------------------------------------------------------------
-    // Mise à jour de l'affichage du score
+
     function updateScore() {
         scoreContainer.querySelector("h1").textContent = `Score : ${score}`;
     }
-    
-    // ------------------------------------------------------------------
-    // Mise à jour de l'affichage de l'IBAN (chaque zone fait exactement 80×80)
+
+    // --- Mise à jour de l'affichage de l'IBAN ---
     function updateIbanDisplay() {
         const ibanDisplay = document.getElementById("error-container");
         ibanDisplay.innerHTML = "";
@@ -51,31 +69,39 @@ document.addEventListener("DOMContentLoaded", () => {
             digitZone.style.width = "80px";
             digitZone.style.height = "80px";
             digitZone.style.margin = "0 5px";
-    
+
             if (collectedIban.includes(part)) {
                 const img = document.createElement("img");
                 img.src = `/assets/images/jeu3/${part}.png`;
                 img.alt = part;
                 img.classList.add("iban-digit");
-                img.style.width = "100%";
-                img.style.height = "100%";
+                // Pour toutes les images sauf "9", on force width et height à 100%.
+                if (part === "9") {
+                    img.style.height = "100%"; // On laisse la largeur par défaut
+                } else {
+                    img.style.width = "100%";
+                    img.style.height = "100%";
+                }
                 digitZone.appendChild(img);
             }
             ibanDisplay.appendChild(digitZone);
         });
     }
-    
-    // ------------------------------------------------------------------
-    // Fonction de saut du Dino
+
+    // --- Fonction de saut du Dino ---
     function jump() {
+        if (!canJump) return;
         if (isJumping) return;
         isJumping = true;
+        if (difficulty !== "hard") {
+            jumpSound.currentTime = 0;
+            jumpSound.play();
+        }
         let count = 0;
         const jumpHeight = 10;
         const jumpStep = 2.5;
         const intervalDelay = 30;
         const maxAngle = -25;
-    
         const upInterval = setInterval(() => {
             if (isGamePaused()) return;
             if (count >= jumpHeight) {
@@ -92,30 +118,23 @@ document.addEventListener("DOMContentLoaded", () => {
                             return;
                         }
                         count--;
-                        let newBottom = 27 + count * jumpStep;
-                        dino.style.bottom = `${newBottom}%`;
-                        let angle = maxAngle * (count / jumpHeight);
-                        dino.style.transform = `translateX(-50%) rotate(${angle}deg)`;
-                        let shadowOffset = (jumpHeight - count) * 2;
-                        dino.style.filter = `drop-shadow(0px ${shadowOffset}px ${shadowOffset}px rgba(0,0,0,0.5))`;
+                        dino.style.bottom = `${27 + count * jumpStep}%`;
+                        dino.style.transform = `translateX(-50%) rotate(${maxAngle * (count / jumpHeight)}deg)`;
+                        dino.style.filter = `drop-shadow(0px ${(jumpHeight - count) * 2}px ${(jumpHeight - count) * 2}px rgba(0,0,0,0.5))`;
                     }, intervalDelay);
                 }, 200);
             } else {
                 count++;
-                let newBottom = 27 + count * jumpStep;
-                dino.style.bottom = `${newBottom}%`;
-                let angle = maxAngle * (count / jumpHeight);
-                dino.style.transform = `translateX(-50%) rotate(${angle}deg)`;
-                let shadowOffset = (jumpHeight - count) * 2;
-                dino.style.filter = `drop-shadow(0px ${shadowOffset}px ${shadowOffset}px rgba(0,0,0,0.5))`;
+                dino.style.bottom = `${27 + count * jumpStep}%`;
+                dino.style.transform = `translateX(-50%) rotate(${maxAngle * (count / jumpHeight)}deg)`;
+                dino.style.filter = `drop-shadow(0px ${(jumpHeight - count) * 2}px ${(jumpHeight - count) * 2}px rgba(0,0,0,0.5))`;
             }
         }, intervalDelay);
     }
-    
-    // ------------------------------------------------------------------
-    // Fonctions de scheduling pour lancer les cactus et les chiffres IBAN
+
+    // --- Fonctions de scheduling pour lancer les cactus et les chiffres IBAN ---
     function scheduleCactus() {
-        let delay = Math.random() * 1500 + 1000; // entre 1000 et 2500 ms
+        let delay = Math.random() * 1500 + 1000;
         setTimeout(() => {
             if (isGamePaused()) {
                 scheduleCactus();
@@ -124,8 +143,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }, delay);
     }
+
     function scheduleIbanDigit() {
-        let delay = Math.random() * 3000 + 2000; // entre 2000 et 5000 ms
+        let delay = Math.random() * 3000 + 2000;
         setTimeout(() => {
             if (isGamePaused()) {
                 scheduleIbanDigit();
@@ -134,9 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }, delay);
     }
-    
-    // ------------------------------------------------------------------
-    // Création et animation des cactus
+
+    // --- Création et animation des cactus ---
     function createCactus() {
         if (gameEnded) return;
         const cactus = document.createElement("img");
@@ -164,36 +183,40 @@ document.addEventListener("DOMContentLoaded", () => {
                 cactus.remove();
             } else if (checkCollision(dino, cactus)) {
                 cactus.remove();
-                score -= 100;
-                updateScore();
-                updatePopupFin("perdu");
-                updatePopupScore(score);
-                ouvrirPopup(".popup_score");
-                gameEnded = true;
-                return;
+                badSound.currentTime = 0;
+                badSound.play();
+                if (difficulty === "hard") {
+                    collisionCount++;
+                    console.log("Collision count:", collisionCount);
+                    if (collisionCount >= 3) {
+                        gameEnded = true;
+                        canJump = false;
+                        updatePopupFin("perdu");
+                        updatePopupScore(score);
+                        ouvrirPopup(".popup_score");
+                        bgMusic.pause();
+                    } else {
+                        score -= 100;
+                        updateScore();
+                    }
+                } else {
+                    score -= 100;
+                    updateScore();
+                }
             } else {
                 requestAnimationFrame(animate);
             }
         }
         requestAnimationFrame(animate);
-        scheduleCactus(); // Planifie le prochain cactus
+        scheduleCactus();
     }
-    
-    // ------------------------------------------------------------------
-    // Création et animation des chiffres IBAN
+
+    // --- Création et animation des chiffres IBAN ---
     function createIbanDigit() {
         if (gameEnded) return;
-        if (collectedIban.length === ibanParts.length) {
-            gameEnded = true;
-            sendScoreToDatabase(score, 2);
-            updatePopupFin("gagne");
-            updatePopupScore(score);
-            ouvrirPopup(".popup_score");
-            return;
-        }
+        if (collectedIban.length === ibanParts.length) return;
         const remainingParts = ibanParts.filter(part => !collectedIban.includes(part));
-        const randomIndex = Math.floor(Math.random() * remainingParts.length);
-        const part = remainingParts[randomIndex];
+        const part = remainingParts[Math.floor(Math.random() * remainingParts.length)];
         const digit = document.createElement("img");
         digit.src = `/assets/images/jeu3/${part}.png`;
         digit.classList.add("iban-digit");
@@ -226,73 +249,96 @@ document.addEventListener("DOMContentLoaded", () => {
                 updateIbanDisplay();
                 if (collectedIban.length === ibanParts.length) {
                     gameEnded = true;
-                    sendScoreToDatabase(score, 2);
+                    canJump = false;
+                    sendScoreToDatabase(score, 3);
                     updatePopupFin("gagne");
                     updatePopupScore(score);
                     ouvrirPopup(".popup_score");
-                    return;
+                    applauseSound.currentTime = 0;
+                    applauseSound.play();
+                    bgMusic.pause();
                 }
-                return;
             } else {
                 requestAnimationFrame(animateDigit);
             }
         }
         requestAnimationFrame(animateDigit);
-        scheduleIbanDigit(); // Planifie le prochain chiffre
+        scheduleIbanDigit();
     }
-    
-    // ------------------------------------------------------------------
-    // Détection de collision entre le Dino et un élément
+
+    // --- Détection de collision ---
     function checkCollision(dino, element) {
         const dinoRect = dino.getBoundingClientRect();
         const elementRect = element.getBoundingClientRect();
-        return !(
-            dinoRect.top > elementRect.bottom ||
-            dinoRect.bottom < elementRect.top ||
-            dinoRect.right < elementRect.left ||
-            dinoRect.left > elementRect.right
-        );
+        return !(dinoRect.top > elementRect.bottom ||
+                 dinoRect.bottom < elementRect.top ||
+                 dinoRect.right < elementRect.left ||
+                 dinoRect.left > elementRect.right);
     }
-    
-    // ------------------------------------------------------------------
-    // Contrôles de saut (clic / toucher)
+
+    // --- Contrôles (clic et touch) ---
     document.addEventListener("click", jump);
     document.addEventListener("touchstart", jump);
-    
-    // ------------------------------------------------------------------
-    // Fonction globale de lancement du jeu, appelée après le clic sur le bouton
-    // Le jeu se lance 4 secondes après le clic, puis 2,5 secondes plus tard les éléments commencent à apparaître
+
+    // --- Lancement global du jeu ---
     window.startGame = function() {
+        // Mise à jour de la difficulté en lisant l'URL à chaque démarrage
+        urlParams = new URLSearchParams(window.location.search);
+        difficulty = urlParams.get("difficulty") || "medium";
+        console.log("Starting game with difficulty:", difficulty);
+        collisionCount = 0;
         setTimeout(function() {
-            // Réinitialisation des variables du jeu
             score = 0;
             gameEnded = false;
             collectedIban = [];
             updateScore();
             updateIbanDisplay();
-            // Affiche le Dino et la zone de score
             dino.style.display = "block";
             scoreContainer.style.display = "block";
-            // Lancement différé des éléments du jeu après 2,5 secondes supplémentaires
+            bgMusic.currentTime = 0;
+            bgMusic.play();
             setTimeout(() => {
                 scheduleCactus();
                 scheduleIbanDigit();
             }, 2500);
+            // Autoriser le saut après 3,5 secondes de jeu effectif
+            setTimeout(() => {
+                if (!gameEnded && !window.isPaused) {
+                    canJump = true;
+                }
+            }, 2000);
         }, 4000);
     };
-    
-    // ------------------------------------------------------------------
-    // Fonction pour mettre à jour la pop-up de fin de partie
+
     function updatePopupFin(finPartie) {
         const popupFinContent = document.querySelector('.popup_fin .popup-main p');
-        if (finPartie === "perdu") {
-            popupFinContent.innerHTML = `Dommage, tu as <strong>perdu</strong> !<br><br>
-            La complémentaire santé solidaire (C2S) est une aide pour payer ses dépenses de santé, si tes ressources sont faibles. Avec la C2S tu ne paies pas le médecin, ni tes médicaments en pharmacie. La plupart des lunettes et des soins dentaires sont pris en charge.<br><br>
-            Tu peux faire une simulation sur <a href='https://www.ameli.fr' target='_blank'>ameli.fr</a> pour savoir si tu y as droit !`;
-        } else if (finPartie === "gagne") {
-            popupFinContent.innerHTML = `Bravo, tu as <strong>réussi</strong> !<br><br>
-            La complémentaire santé solidaire (C2S) est une aide pour payer ses dépenses de santé, si tes ressources sont faibles. Avec la C2S tu ne paies pas le médecin, ni tes médicaments en pharmacie. La plupart des lunettes et des soins dentaires sont pris en charge.<br><br>
-            Tu peux faire une simulation sur <a href='https://www.ameli.fr' target='_blank'>ameli.fr</a> pour savoir si tu y as droit !`;
+        if (popupFinContent) {
+            if (finPartie === "perdu") {
+                popupFinContent.innerHTML = `Dommage, tu as <strong>perdu</strong> !<br>Les remboursements de l’Assurance Maladie se 
+font par virement bancaire. <br> Depuis ton compte ameli, enregistrer ton RIB c’est être sûr de recevoir les remboursements sur ton propre compte bancaire ! `;
+            } else if (finPartie === "gagne") {
+                popupFinContent.innerHTML = `Bravo, tu as <strong>réussi</strong> !<br><br>
+            Les remboursements de l’Assurance Maladie se font par virement bancaire. <br><br>
+            Depuis ton compte ameli, enregistrer ton RIB c’est être sûr de recevoir les remboursements sur ton propre compte bancaire !`;
+            }
         }
     }
+
+    // --- Gestion de la pause via l'écran de pause ---
+    window.pauseSpecificGame = function () {
+        window.isPaused = true;
+        canJump = false;
+        console.log("Jeu en pause");
+    };
+
+    window.reprendreSpecificGame = function () {
+        window.isPaused = false;
+        if (!gameEnded) {
+            canJump = true;
+        }
+        console.log("Jeu repris");
+    };
+
+    // Les fonctions sendScoreToDatabase, updatePopupScore et ouvrirPopup
+    // doivent être définies dans votre code global.
 });
