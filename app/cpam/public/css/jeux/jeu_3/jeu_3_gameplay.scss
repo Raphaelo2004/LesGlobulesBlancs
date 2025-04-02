@@ -17,20 +17,22 @@ body {
 .dino {
     position: absolute;
     bottom: 27%; // Position initiale
-    left: 50%; 
+    left: 20%; 
     transform: translateX(-50%); // Centre au départ
-    width: 300px; // Ajuste selon l'image
+    width: 150px; // Ajuste selon l'image
     height: auto;
     touch-action: none; // Empêche le comportement natif de toucher
 }
 
 .falling-object {
-    position: absolute;
-    top: 0;
-    width: 80px; // Ajuste la taille des objets
+    position: fixed; /* ou absolute si vous changez le positionnement */
+    bottom: 27%;
+    width: 30px;
     height: auto;
-    transition: transform 0.1s linear;
-}
+    z-index: 800;
+    transform: translate3d(0, 0, 0);
+  }
+  
 
 .iban-container {
     text-align: center;

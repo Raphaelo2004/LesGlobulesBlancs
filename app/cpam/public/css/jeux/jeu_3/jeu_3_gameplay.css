@@ -130,19 +130,20 @@ body {
 .dino {
   position: absolute;
   bottom: 27%;
-  left: 50%;
+  left: 20%;
   transform: translateX(-50%);
-  width: 300px;
+  width: 150px;
   height: auto;
   touch-action: none;
 }
 
 .falling-object {
-  position: absolute;
-  top: 0;
-  width: 80px;
+  position: fixed; /* ou absolute si vous changez le positionnement */
+  bottom: 27%;
+  width: 30px;
   height: auto;
-  transition: transform 0.1s linear;
+  z-index: 800;
+  transform: translate3d(0, 0, 0);
 }
 
 .iban-container {
