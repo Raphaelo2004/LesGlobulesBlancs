@@ -62,7 +62,7 @@
         conteneur_button_style: "conteneur_button_row", 
         buttons: [
             { contenue: 'Continuer', class: 'btn', onclick :"clickContinuer()" },
-            { contenue: 'Partager', class: 'btn', onclick :"clickPartager()" },
+            { contenue: 'Partager', class: 'btn share_score', onclick :"clickPartager()" },
         ]
     } %}
 
@@ -72,5 +72,6 @@
 
 {% block javascripts %}
     <script src="{{ asset('js/jeux/jeu_2/jeu_2_gameplay.js') }}"></script>
+    <script src="{{ asset('js/jeux/jeux_global/jeu_global.js') }}"></script>
     <script src="{{ asset('js/jeux/jeux_global/jeu_global.js') }}"></script>
 {% endblock %}

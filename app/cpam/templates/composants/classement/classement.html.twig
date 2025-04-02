@@ -4,12 +4,12 @@
 
 {% block javascripts %}
     <script>
-    const utilisateurId = {{ app.session.get('utilisateur_id')|json_encode|raw }};
-
-    const medailleOr = "{{ asset('assets/images/medaille_or.png') }}";
-    const medailleArgent = "{{ asset('assets/images/medaille_argent.png') }}";
-    const medailleBronze = "{{ asset('assets/images/medaille_bronze.png') }}";
-</script>
+        const utilisateurId = {{ app.session.get('utilisateur_id')|json_encode|raw }};
+        
+        const medailleOr = "{{ asset('assets/images/medaille_or.png') }}";
+        const medailleArgent = "{{ asset('assets/images/medaille_argent.png') }}";
+        const medailleBronze = "{{ asset('assets/images/medaille_bronze.png') }}";
+    </script>
 {% endblock %}
 
 <div class="classement_container">

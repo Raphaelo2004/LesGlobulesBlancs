@@ -20,7 +20,7 @@
 
     <div class="number1">
         <div class="filter_bar">
-            <button class="share_score para--bold para--large">Partager</button>
+           <button class="share_score para--bold para--large">Partager</button>
             <select class="game_name para--bold para--large">
                 <option value="0">Tous les jeux</option>
                 {% for jeu in jeux %}
@@ -69,5 +69,6 @@
 
 {% block javascripts %}
     <script src="{{ asset('js/leaderboard/leaderboard.js') }}"></script>
-     <script src="{{ asset('js/global/global.js') }}"></script>
+    <script src="{{ asset('js/global/global.js') }}"></script>
+    <script src="{{ asset('js/jeux/jeux_global/jeu_global.js') }}"></script>
 {% endblock %}
