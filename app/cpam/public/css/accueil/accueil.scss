@@ -11,3 +11,18 @@ body:has(.background-alt){
     width: calc(33% - 4vw);
     height: calc(24.5% - 5vh);
 }
+
+@keyframes zoomPage {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0.4;
+    }
+}
+
+.zoom-transition {
+    animation: zoomPage 1.5s forwards ease-in-out;
+}
