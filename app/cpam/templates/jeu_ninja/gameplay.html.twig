@@ -48,7 +48,7 @@
         texte_popup: "",
         conteneur_button_style: "conteneur_button_row", 
         buttons: [
-            { contenue: 'Rejouer', class: 'btn', route: "app_jeu_ramasseur" },
+            { contenue: 'Rejouer', class: 'btn', route: "app_jeu_ninja" },
             { contenue: 'Quitter', class: 'btn', route: "app_accueil" },
         ]
     } %}
@@ -67,4 +67,5 @@
 
 {% block javascripts %}
     <script src="{{ asset('js/jeux/jeu_4/jeu_4_gameplay.js') }}"></script>
+    <script src="{{ asset('js/jeux/jeux_global/jeu_global.js') }}"></script>
 {% endblock %}

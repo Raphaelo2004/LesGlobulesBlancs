@@ -242,7 +242,7 @@ function spawnBox() {
             box.remove();
             if (!isGood && box.dataset.sliced === "false") {
                 // Malus quand un mauvais objet tombe sans être coupé
-                score = Math.max(0, score - 5);
+                score = Math.max(0, score - 20);
                 updateScore(score);
             }
             // Rien ne se passe quand un bon objet tombe
@@ -250,13 +250,6 @@ function spawnBox() {
             requestAnimationFrame(animate);
         }
     }
-
-    // Ajout des événements de découpe
-    box.addEventListener("mouseenter", (e) => {
-        if (isPointerDown) {
-            handleBoxSlice(box);
-        }
-    });
     
     box.addEventListener("click", () => handleBoxSlice(box));
     box.addEventListener("touchstart", (e) => {
@@ -284,9 +277,6 @@ function sliceBox(box, isGood) {
 
     // Mise à jour du score
     if (isGood) {
-        // Malus et erreur quand un bon objet est coupé
-        score = Math.max(0, score - 10);
-        badSound.play();
         errors++;
         updateErrors();
         if (errors == maxErrors) {
@@ -301,12 +291,41 @@ function sliceBox(box, isGood) {
         }
     } else {
         // Bonus quand un mauvais objet est coupé
-        score += 25;
+        score += 50;
     }
     updateScore(score);
 
-    // Suppression directe de l'objet
-    box.remove();
+    // Animation simplifiée
+    box.classList.add('slice-effect');
+    createBurstEffect(box, isGood);
+
+    // Suppression après animation
+    setTimeout(() => box.remove(), 300);
+}
+
+function createBurstEffect(box, isGood) {
+    const rect = box.getBoundingClientRect();
+    const burst = document.createElement('div');
+    burst.className = 'slice-burst';
+    
+    // Couleur différente selon le type d'objet
+    burst.style.background = isGood 
+        ? 'radial-gradient(circle, rgba(255,100,100,0.8) 0%, rgba(255,100,100,0) 70%)' 
+        : 'radial-gradient(circle, rgba(100,255,100,0.8) 0%, rgba(100,255,100,0) 70%)';
+
+    burst.style.left = `${rect.left + rect.width/2 - 15}px`;
+    burst.style.top = `${rect.top + rect.height/2 - 15}px`;
+    
+    document.body.appendChild(burst);
+    
+    // Animation et suppression
+    burst.animate([
+        { transform: 'scale(0.5)', opacity: 1 },
+        { transform: 'scale(1.5)', opacity: 0 }
+    ], {
+        duration: 400,
+        easing: 'ease-out'
+    }).onfinish = () => burst.remove();
 }
 
 // Mise à jour du score

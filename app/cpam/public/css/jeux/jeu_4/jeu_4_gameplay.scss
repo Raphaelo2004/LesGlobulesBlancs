@@ -21,21 +21,6 @@ body {
     background: red;
 }
 
-.slice-effect {
-    position: absolute;
-    background: linear-gradient(transparent 45%, rgba(255, 255, 255, 0.8) 50%, transparent 55%);
-    pointer-events: none;
-    z-index: 10;
-    animation: fadeOut 1s forwards;
-}
-
-@keyframes fadeOut {
-    to {
-        opacity: 0;
-        transform: scale(1.2);
-    }
-}
-
 #touch-lines-container {
     position: absolute;
     top: 0;
@@ -66,4 +51,24 @@ body {
 
 .settings-icon {
     color: #0C419A !important;
+}
+
+@keyframes sliceFadeOut {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+.slice-animation {
+    animation: sliceFadeOut 0.3s ease-out forwards;
+    transform-origin: center;
+}
+
+.slice-burst {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10;
 }
