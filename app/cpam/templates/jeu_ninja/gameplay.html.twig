@@ -34,6 +34,34 @@
         ]
     } %}
 
+    {# Zone du jeu Ninja #}
+    <div id="game-container">
+        <div id="touch-lines-container"></div>
+    </div>
+
+    {% set classement_html %} 
+        {% include 'composants/classement/classement.html.twig' with {'classement': classement, 'isLeaderboard': false} %} 
+    {% endset %}
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "popup_fin",
+        titre_popup: "",
+        texte_popup: "",
+        conteneur_button_style: "conteneur_button_row", 
+        buttons: [
+            { contenue: 'Rejouer', class: 'btn', route: "app_jeu_ramasseur" },
+            { contenue: 'Quitter', class: 'btn', route: "app_accueil" },
+        ]
+    } %}
+    {% include 'composants/pop-up/pop-up.html.twig' with {
+        nom_popup: "popup_score",
+        titre_popup: "Score : 0",
+        texte_popup: classement_html,
+        conteneur_button_style: "conteneur_button_row", 
+        buttons: [
+            { contenue: 'Continuer', class: 'btn', onclick :"clickContinuer()" },
+            { contenue: 'Partager', class: 'btn', onclick :"clickPartager()" },
+        ]
+    } %}
 
 {% endblock %}
 
