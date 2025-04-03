@@ -11,11 +11,45 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.appendChild(dummyNeedle);
     }
 
-    // --- Récupération initiale du niveau via l'URL (sera mis à jour dans startGame) ---
+    // ===> NOUS N’UTILISONS PLUS DE #collision-container DISTINCT
+    // ===> TOUT PASSE PAR #error-container.
+
+    // Récupération du div #error-container
+    // On va y créer nos 2 sous-conteneurs :
+    const errorContainer = document.getElementById("error-container");
+
+    // Sous-conteneur pour afficher les croix de collision
+    const collisionCrossesContainer = document.createElement("div");
+    collisionCrossesContainer.id = "collision-crosses";
+    collisionCrossesContainer.style.marginBottom = "15px";
+    // On le place en haut de #error-container
+    errorContainer.appendChild(collisionCrossesContainer);
+
+    // Sous-conteneur pour l’IBAN
+    const ibanDigitsContainer = document.createElement("div");
+    ibanDigitsContainer.id = "iban-digits";
+    errorContainer.appendChild(ibanDigitsContainer);
+
+    // --- Récupération initiale du niveau via l'URL ---
     let urlParams = new URLSearchParams(window.location.search);
     let difficulty = urlParams.get("difficulty") || "medium";
     console.log("Initial difficulty:", difficulty);
-    let collisionCount = 0; // compteur pour le niveau hard
+
+    // Compteur de collisions (mode hard)
+    let collisionCount = 0; 
+
+    // --- Fonction pour afficher les croix rouges en mode hard ---
+    function updateCollisionCrosses() {
+        // On vide le conteneur de croix puis on insère 'collisionCount' croix rouges
+        collisionCrossesContainer.innerHTML = "";
+        for (let i = 0; i < collisionCount; i++) {
+            const cross = document.createElement("span");
+            cross.textContent = "❌";
+            cross.style.margin = "5px";
+            cross.style.fontSize = "32px";
+            collisionCrossesContainer.appendChild(cross);
+        }
+    }
 
     // --- Sons ---
     const bgMusic = new Audio("/assets/SONS/JEU 3 - DINO/son ambiance Dino.mp3");
@@ -31,8 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function isGamePaused() {
         return window.isPaused;
     }
-    // "canJump" empêche le saut pendant la pause, les 3,5 premières secondes et en fin de jeu
-    let canJump = false;
+    let canJump = false;  // Empêche le saut pendant la pause, etc.
 
     // --- Création du Dino ---
     const dino = document.createElement("img");
@@ -60,8 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Mise à jour de l'affichage de l'IBAN ---
     function updateIbanDisplay() {
-        const ibanDisplay = document.getElementById("error-container");
-        ibanDisplay.innerHTML = "";
+        // On vide UNIQUEMENT la zone IBAN, PAS la zone des croix
+        ibanDigitsContainer.innerHTML = "";
         ibanParts.forEach(part => {
             const digitZone = document.createElement("div");
             digitZone.classList.add("iban-digit-zone");
@@ -75,16 +108,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 img.src = `/assets/images/jeu3/${part}.png`;
                 img.alt = part;
                 img.classList.add("iban-digit");
-                // Pour toutes les images sauf "9", on force width et height à 100%.
                 if (part === "9") {
-                    img.style.height = "100%"; // On laisse la largeur par défaut
+                    img.style.height = "100%"; 
                 } else {
                     img.style.width = "100%";
                     img.style.height = "100%";
                 }
                 digitZone.appendChild(img);
             }
-            ibanDisplay.appendChild(digitZone);
+            ibanDigitsContainer.appendChild(digitZone);
         });
     }
 
@@ -132,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, intervalDelay);
     }
 
-    // --- Fonctions de scheduling pour lancer les cactus et les chiffres IBAN ---
+    // --- Scheduling pour les cactus et les chiffres IBAN ---
     function scheduleCactus() {
         let delay = Math.random() * 1500 + 1000;
         setTimeout(() => {
@@ -155,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, delay);
     }
 
-    // --- Création et animation des cactus ---
+    // --- Création & animation des cactus ---
     function createCactus() {
         if (gameEnded) return;
         const cactus = document.createElement("img");
@@ -171,6 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cactus.style.zIndex = "800";
         document.body.appendChild(cactus);
         const speed = 25;
+
         function animate() {
             if (gameEnded) return;
             if (isGamePaused()) {
@@ -185,8 +218,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 cactus.remove();
                 badSound.currentTime = 0;
                 badSound.play();
+
+                // ===> AFFICHE LES CROIX SI ON EST EN "hard"
                 if (difficulty === "hard") {
                     collisionCount++;
+                    updateCollisionCrosses();  // Mise à jour de l’affichage des ❌
+                    
                     console.log("Collision count:", collisionCount);
                     if (collisionCount >= 3) {
                         gameEnded = true;
@@ -211,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
         scheduleCactus();
     }
 
-    // --- Création et animation des chiffres IBAN ---
+    // --- Création & animation des chiffres IBAN ---
     function createIbanDigit() {
         if (gameEnded) return;
         if (collectedIban.length === ibanParts.length) return;
@@ -270,10 +307,12 @@ document.addEventListener("DOMContentLoaded", () => {
     function checkCollision(dino, element) {
         const dinoRect = dino.getBoundingClientRect();
         const elementRect = element.getBoundingClientRect();
-        return !(dinoRect.top > elementRect.bottom ||
-                 dinoRect.bottom < elementRect.top ||
-                 dinoRect.right < elementRect.left ||
-                 dinoRect.left > elementRect.right);
+        return !(
+            dinoRect.top > elementRect.bottom ||
+            dinoRect.bottom < elementRect.top ||
+            dinoRect.right < elementRect.left ||
+            dinoRect.left > elementRect.right
+        );
     }
 
     // --- Contrôles (clic et touch) ---
@@ -282,11 +321,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Lancement global du jeu ---
     window.startGame = function() {
-        // Mise à jour de la difficulté en lisant l'URL à chaque démarrage
         urlParams = new URLSearchParams(window.location.search);
         difficulty = urlParams.get("difficulty") || "medium";
         console.log("Starting game with difficulty:", difficulty);
         collisionCount = 0;
+        updateCollisionCrosses(); // On remet à zéro l’affichage des ❌
+        
         setTimeout(function() {
             score = 0;
             gameEnded = false;
@@ -301,7 +341,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 scheduleCactus();
                 scheduleIbanDigit();
             }, 2500);
-            // Autoriser le saut après 3,5 secondes de jeu effectif
+            // Autoriser le saut après 2s de jeu effectif
             setTimeout(() => {
                 if (!gameEnded && !window.isPaused) {
                     canJump = true;
@@ -314,12 +354,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const popupFinContent = document.querySelector('.popup_fin .popup-main p');
         if (popupFinContent) {
             if (finPartie === "perdu") {
-                popupFinContent.innerHTML = `Dommage, tu as <strong>perdu</strong> !<br>Les remboursements de l’Assurance Maladie se 
-font par virement bancaire. <br> Depuis ton compte ameli, enregistrer ton RIB c’est être sûr de recevoir les remboursements sur ton propre compte bancaire ! `;
+                popupFinContent.innerHTML = `Dommage, tu as <strong>perdu</strong> !<br>
+                    Les remboursements de l’Assurance Maladie se font par virement bancaire. <br>
+                    Depuis ton compte ameli, enregistrer ton RIB c’est être sûr de recevoir les remboursements sur ton propre compte bancaire ! `;
             } else if (finPartie === "gagne") {
                 popupFinContent.innerHTML = `Bravo, tu as <strong>réussi</strong> !<br><br>
-            Les remboursements de l’Assurance Maladie se font par virement bancaire. <br><br>
-            Depuis ton compte ameli, enregistrer ton RIB c’est être sûr de recevoir les remboursements sur ton propre compte bancaire !`;
+                    Les remboursements de l’Assurance Maladie se font par virement bancaire. <br><br>
+                    Depuis ton compte ameli, enregistrer ton RIB c’est être sûr de recevoir les remboursements sur ton propre compte bancaire !`;
             }
         }
     }
