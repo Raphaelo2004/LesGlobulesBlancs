@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Création du Dino ---
     const dino = document.createElement("img");
-    dino.src = "/assets/images/Jeu3/dinosaure_1.png";
+    dino.src = "/assets/images/jeu3/dinosaure_1.png";
     dino.classList.add("dino");
     dino.style.transformOrigin = "center bottom";
     document.body.appendChild(dino);
@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (gameEnded) return;
         const cactus = document.createElement("img");
         const type = Math.floor(Math.random() * 3) + 1;
-        cactus.src = `/assets/images/Jeu3/cactus_${type}.png`;
+        cactus.src = `/assets/images/jeu3/cactus_${type}.png`;
         cactus.classList.add("falling-object");
         let left = window.innerWidth;
         cactus.style.transform = `translateX(${left}px)`;
