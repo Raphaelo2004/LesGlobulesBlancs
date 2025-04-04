@@ -7,6 +7,14 @@ let jeuCommence = false;
 let jeuTermine = false;
 let deplacements = 0;  // Variable pour compter les déplacements
 
+const bgMusic = new Audio("/assets/SONS/JEU 1 - TAQUIN/Son ambiance - taquin.mp3");
+bgMusic.loop = true;
+bgMusic.volume = 0.5; // Volume réduit pour ne pas être trop intrusif
+
+const whooshSound = new Audio("/assets/SONS/JEU 1 - TAQUIN/SWSH_Whoosh 4 (ID 1796)_LS.mp3");
+whooshSound.volume = 1.5;
+const applaudissement = new Audio("/assets/SONS/JEU 1 - TAQUIN/CRWDApls_Applaudissements 1 (ID 2363)_LS.mp3");
+
 function startGame() {
     let lignes = 3; // Les lignes sont identiques pour normal et difficile
     let colonnes = 4; // Colonnes pour normal
@@ -14,6 +22,7 @@ function startGame() {
 
     let { grille, vide } = genererGrilleMelangee(lignes, colonnes);
     afficherTaquin(grille, lignes, colonnes, vide, difficulty);
+    bgMusic.play();
 
     // Bloquer les déplacements avant le début du jeu
     jeuCommence = false;
@@ -97,7 +106,7 @@ function afficherTaquin(grille, lignes, colonnes, vide, difficulty) {
 
     function deplacerPiece(row, col) {
         if (!jeuCommence) return; // Bloquer les déplacements si le jeu n'a pas commencé
-    
+        whooshSound.play()
         // Déplacer une ligne entière si la case est à l'extrémité de la ligne
         if (row === vide.row) {
             if (col < vide.col) {  // Déplacer la ligne à gauche
@@ -128,6 +137,7 @@ function afficherTaquin(grille, lignes, colonnes, vide, difficulty) {
         document.getElementById("score-value").textContent = deplacements;
         if (verifierVictoire()) {
             setTimeout(() => afficherImageComplete(), 200);
+            applaudissement.play();
         }
     }
     
