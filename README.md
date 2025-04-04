@@ -209,7 +209,6 @@ Exécutez les commandes suivantes :
 1) ./install.sh + chmod +x install.sh
 contenu de install.sh
 #!/bin/bash
-# Script par Dorian Police
 set -e
 cd ~
 if [ -d "web.new" ]; then
