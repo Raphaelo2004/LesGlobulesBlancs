@@ -1,17 +1,17 @@
 // Variables globales du jeu
 const goodObjects = [
-    "/assets/images/jeu4/good/Banane.png",
-    "/assets/images/jeu4/good/Brocoli.png",
-    "/assets/images/jeu4/good/Carotte.png",
+    "/assets/images/jeu4/good/BANANE.png",
+    "/assets/images/jeu4/good/brocoli.png",
+    "/assets/images/jeu4/good/carotte.png",
     "/assets/images/jeu4/good/Pomme1.png",
     "/assets/images/jeu4/good/Pomme2.png"
 ];
 
 const badObjects = [
-    "/assets/images/jeu4/bad/Frites.png",
-    "/assets/images/jeu4/bad/Hamburger.png",
-    "/assets/images/jeu4/bad/Kebab.png",
-    "/assets/images/jeu4/bad/Pizza.png",
+    "/assets/images/jeu4/bad/frites.png",
+    "/assets/images/jeu4/bad/hamburger.png",
+    "/assets/images/jeu4/bad/KEBAB.png",
+    "/assets/images/jeu4/bad/PIZZA.png",
     "/assets/images/jeu4/bad/Soda1.png",
     "/assets/images/jeu4/bad/Soda2.png"
 ];
