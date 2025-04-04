@@ -197,7 +197,65 @@ Les constantes doivent être en UPPER_SNAKE_CASE (NOMBRE_MAX).
 6. **Acceder à l'application** :
    entrez "localhost:8000" dans votre navigateur
 
+
 ---
+
+## 🔧 Installation du Projet
+
+### 1️⃣ Installation Automatique avec `install.sh`
+
+Exécutez les commandes suivantes :
+
+1) ./install.sh + chmod +x install.sh
+contenu de install.sh
+#!/bin/bash
+# Script par Dorian Police
+set -e
+cd ~
+if [ -d "web.new" ]; then
+    echo "Removing failed attempt..."
+    rm -rf web.new/* web.new/.*
+    rmdir web.new
+fi
+echo "Cloning remote..."
+mkdir web.new
+git clone git@github.com:Raphaelo2004/LesGlobulesBlancs.git web.new
+echo "Installing new version..."
+if [ -d "web.old" ]; then
+    rm -rf web.old/* web.old/.*
+    rmdir web.old
+fi
+mv web web.old
+mv web.new web
+echo "Running composer install..."
+cd "web/app/cpam"
+composer install
+echo "Linking html folder..."
+cd ~/web
+ln -s "app/cpam/public" html
+echo "Success !"
+exit 0
+
+2) ln -s app/cpam/public html
+3) nano .env (Symfony(/web/app/cpam) + Environnement(/web))
+4) nano .htaccess (/web/app/cpam/public)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [L]
+</IfModule>
+ 
+5) php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+6) php -r "if (hash_file('sha384', 'composer-setup.php') === 'dac665fdc30fdd8ec78b38b9800061b4150413ff2e3b6f88543c636f7cd84f6db9189d43a81e5503cda447da73c7e5b6') { echo 'Installer verified'.PHP_EOL; } else { echo 'Installer corrupt'.PHP_EOL; unlink('composer-setup.php'); exit(1); }"
+7) php composer-setup.php
+8) php -r "unlink('composer-setup.php');"
+9) php composer.phar install
+
+
+---
+
 
 ## 👥 Membres de l'équipe
 
