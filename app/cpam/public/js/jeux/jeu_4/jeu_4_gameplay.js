@@ -31,6 +31,11 @@ let currentLine = null;
 let lines = [];
 let isPointerDown = false; // Nouvelle variable pour suivre l'état de pression
 
+const applaudissement = new Audio("/assets/SONS/JEU 5 - NETTOYAGE/Applaudissement de fin.mp3");
+const bgMusic = new Audio("/assets/SONS/JEU 4 - FRUIT NINJA/Son-ambiance.mp3");
+const epee = new Audio("/assets/SONS/JEU 4 - FRUIT NINJA/Epée.mp3");
+const splash = new Audio("/assets/SONS/JEU 4 - FRUIT NINJA/Splash.mp3");
+
 // Initialisation de l'effet de ligne
 function initTouchEffect() {
     const gameContainer = document.getElementById("game-container");
@@ -82,7 +87,7 @@ function handleTouchStart(e) {
 // Gestion du mouvement
 function handleTouchMove(e) {
     if (!isDrawing) return;
-
+    epee.play();
     const x = e.clientX || (e.touches && e.touches[0].clientX);
     const y = e.clientY || (e.touches && e.touches[0].clientY);
     
@@ -176,9 +181,7 @@ function lancerMinuteur() {
         sendScoreToDatabase(score,4);
         updatePopupScore(score);
         updatePopupFin("gagne");
-        if (typeof applaudissement !== 'undefined') {
-            applaudissement.play();
-        }
+        applaudissement.play();
         ouvrirPopup(".popup_score");
     }, 60000);
 }
@@ -274,7 +277,7 @@ function handleBoxSlice(box) {
 function sliceBox(box, isGood) {
     const gameArea = document.getElementById("game-container");
     if (!gameArea) return;
-
+    splash.play();
     // Mise à jour du score
     if (isGood) {
         errors++;
@@ -288,6 +291,7 @@ function sliceBox(box, isGood) {
             updatePopupScore(score);
             ouvrirPopup(".popup_score");
             clearInterval(gameInterval);
+            applaudissement.play();
         }
     } else {
         // Bonus quand un mauvais objet est coupé
@@ -368,10 +372,13 @@ function updatePopupFin(finPartie) {
 // Initialisation du jeu
 function startGame() {
     initTouchEffect();
-    
+        bgMusic.loop = true;
+        bgMusic.volume = 0.5; // Volume réduit pour ne pas être trop intrusif
+        bgMusic.play();
     jeuCommence = false;
     setTimeout(() => {
         jeuCommence = true;
+        
         lancerMinuteur();
     }, 3000);
 }
