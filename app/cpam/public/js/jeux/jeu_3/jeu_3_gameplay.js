@@ -52,12 +52,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- Sons ---
-    const bgMusic = new Audio("/assets/SONS/JEU 3 - DINO/son ambiance Dino.mp3");
+    const bgMusic = new Audio("/assets/SONS/JEU 3 - DINO/Son ambiance DINO.mp3");
     bgMusic.loop = true;
     bgMusic.volume = 0.5;
 
     const jumpSound = new Audio("/assets/SONS/JEU 3 - DINO/Saut.mp3");
-    const badSound = new Audio("/assets/SONS/JEU 3 - DINO/faux.mp3");
+    const badSound = new Audio("/assets/SONS/JEU 3 - DINO/FAUX.mp3");
     const applauseSound = new Audio("/assets/SONS/JEU 3 - DINO/Applaudissement de fin.mp3");
 
     // --- Variables globales de pause ---
