@@ -10,19 +10,19 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
-    const tableauLink = document.querySelector(".tableau_acceuil");
+    // const tableauLink = document.querySelector(".tableau_acceuil");
 
-    if (tableauLink) {
-        tableauLink.addEventListener("click", function(event) {
-            event.preventDefault(); // Empêche la redirection immédiate
+    // if (tableauLink) {
+    //     tableauLink.addEventListener("click", function(event) {
+    //         event.preventDefault(); // Empêche la redirection immédiate
 
-            // Ajoute l'effet de zoom sur le body
-            document.body.classList.add("zoom-transition");
+    //         // Ajoute l'effet de zoom sur le body
+    //         document.body.classList.add("zoom-transition");
 
-            // Attends 1 seconde (durée de l'animation) avant de rediriger
-            setTimeout(() => {
-                window.location.href = tableauLink.href;
-            }, 1000);
-        });
-    }
+    //         // Attends 1 seconde (durée de l'animation) avant de rediriger
+    //         setTimeout(() => {
+    //             window.location.href = tableauLink.href;
+    //         }, 1000);
+    //     });
+    // }
 });
